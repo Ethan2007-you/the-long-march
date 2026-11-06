@@ -36,4 +36,4 @@
 ## 标题字体与配乐
 
 - 首页「长」采用志莽行书，「征」采用 [流江毛草](https://github.com/google/fonts/tree/main/ofl/liujianmaocao)，章节和展图标题采用 [志莽行书](https://github.com/google/fonts/tree/main/ofl/zhimangxing)。本地 WOFF2 只包含展览标题字形，授权在 `public/fonts`。
-- 配乐 [Helios](https://www.scottbuckley.com.au/library/helios/) 由 Scott Buckley 作曲，采用 [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)。随包提供转码后的 MP3，默认静音，点击导航栏的配乐按钮播放。
+- 配乐 [Helios](https://www.scottbuckley.com.au/library/helios/) 由 Scott Buckley 作曲，采用 [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)。MP3 按字节分段随包提供，网页会在播放时还原完整曲目。默认静音，点击导航栏的配乐按钮播放。

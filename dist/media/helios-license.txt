@@ -1,0 +1,5 @@
+Helios by Scott Buckley
+Source: https://www.scottbuckley.com.au/library/helios/
+License: Creative Commons Attribution 4.0 International
+https://creativecommons.org/licenses/by/4.0/
+Change: Full recording re-encoded to MP3 and bundled as byte segments for local playback.
