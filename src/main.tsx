@@ -2,7 +2,7 @@ import React, {useEffect,useRef,useState} from 'react';
 import {createRoot} from 'react-dom/client';
 import {flushSync} from 'react-dom';
 import {motion,useReducedMotion,useScroll,useSpring} from 'framer-motion';
-import {ArrowUpRight,Compass,Maximize2,Minus,Pause,Play,Plus,RotateCcw,Volume2,VolumeX,X} from 'lucide-react';
+import {ArrowUpRight,Compass,Maximize2,Minus,Plus,RotateCcw,Volume2,VolumeX,X} from 'lucide-react';
 import {reunion,sources,stops,themes} from './data';
 import rivers from './rivers.json';
 import chishuiMap from './chishui-map.json';
@@ -272,17 +272,12 @@ function Route(){
 }
 
 function App(){
- const heroMedia=useRef<HTMLDivElement>(null);
  const main=useRef<HTMLElement>(null);
  const pendingPhoto=useRef<SharedPhoto|null>(null);
  const dialog=useRef<HTMLDialogElement>(null);
  const [enlarged,open]=useState<Exhibit|null>(null);
  const [active,setActive]=useState(currentPage);
  const [scrolled,setScrolled]=useState(false);
- const [playVideo,setPlayVideo]=useState(false);
- const [hasVideo,setHasVideo]=useState(true);
- const [paused,setPaused]=useState(false);
- const video=useRef<HTMLVideoElement>(null);
  const music=useRef<HTMLAudioElement>(null);
  const [musicPlaying,setMusicPlaying]=useState(false);
  const [musicUnavailable,setMusicUnavailable]=useState(false);
@@ -310,16 +305,6 @@ function App(){
  const {scrollYProgress}=useScroll();
  const spring=useSpring(scrollYProgress,{stiffness:180,damping:40,mass:.25});
  useEffect(()=>{
-  const mode=window.matchMedia('(min-width: 850px) and (prefers-reduced-motion: no-preference)');
-  const sync=()=>setPlayVideo(mode.matches);
-  sync();mode.addEventListener('change',sync);
-  return ()=>mode.removeEventListener('change',sync);
- },[]);
- useEffect(()=>{
-  const film=video.current;if(!film)return;
-  if(active!=='home'||paused)film.pause();else void film.play().catch(()=>{});
- },[active,paused,playVideo]);
- useEffect(()=>{
   const sync=()=>setScrolled(window.scrollY>42);
   sync();window.addEventListener('scroll',sync,{passive:true});
   return ()=>window.removeEventListener('scroll',sync);
@@ -346,8 +331,8 @@ function App(){
  return <div className="site">
   <a className="skip" href={'#'+active}>跳到展览正文</a>
   <motion.div className="progress pointer-events-none" aria-hidden="true" style={{scaleX:reduce?scrollYProgress:spring}}/>
-  <header className={'masthead '+(active!=='home'||scrolled?'solid':'')}><a href="#home" className="brand" onClick={navigateChapter}><span className="seal">征</span><span>长征 · 不朽征途</span></a>
-   <nav id="site-nav" aria-label="展览导航">{nav.map(([id,label])=><a key={id} href={'#'+id} onClick={navigateChapter} aria-current={active===id?'location':undefined}>{label}</a>)}</nav>
+  <header className={'masthead '+(active!=='home'||scrolled?'solid':'')}><a href="#home" className="brand" onClick={navigateChapter}><img className="brand-emblem" src={import.meta.env.BASE_URL+'march-emblem.svg'} width="44" height="44" alt="" aria-hidden="true"/><span className="brand-title">长征 · 不朽征途</span></a>
+   <nav id="site-nav" aria-label="展览导航">{nav.map(([id,label])=><a key={id} className="chapter-tab" href={'#'+id} onClick={navigateChapter} aria-current={active===id?'location':undefined}>{label}</a>)}</nav>
    <button className="music-toggle" type="button" onClick={toggleMusic}
     disabled={musicUnavailable||musicLoading} aria-pressed={musicPlaying} aria-label="展览配乐">
     {musicPlaying?<Volume2 size={17}/>:<VolumeX size={17}/>}
@@ -358,10 +343,9 @@ function App(){
    onPlay={()=>setMusicPlaying(true)} onPause={()=>setMusicPlaying(false)}
    onError={()=>{setMusicPlaying(false);setMusicUnavailable(true);}}/>
   <main ref={main}>
-   <section hidden={active!=='home'} id="home" className="hero" onPointerMove={e=>{if(reduce||e.pointerType!=='mouse')return;const box=e.currentTarget.getBoundingClientRect();heroMedia.current?.style.setProperty('--mx',((e.clientX/box.width-.5)*15)+'px');heroMedia.current?.style.setProperty('--my',(((e.clientY-box.top)/box.height-.5)*10)+'px');}} onPointerLeave={()=>{heroMedia.current?.style.setProperty('--mx','0px');heroMedia.current?.style.setProperty('--my','0px');}}>
-    <div className="hero-layer"><div className="hero-visual" ref={heroMedia}>
+   <section hidden={active!=='home'} id="home" className="hero">
+    <div className="hero-layer"><div className="hero-visual">
      <picture><source media="(max-width: 849px)" srcSet={media('hero-mobile')+'?v=poster'}/><img className="hero-poster" src={media('hero')+'?v=poster'} alt="" fetchPriority="high"/></picture>
-     {playVideo&&hasVideo&&<video ref={video} className="hero-film" src={import.meta.env.BASE_URL+'media/hero.webm?v=poster'} poster={media('hero')+'?v=poster'} muted autoPlay={!paused} loop playsInline preload="metadata" aria-hidden="true" onError={()=>setHasVideo(false)}/>}
     </div></div>
     <div className="hero-veil"/><div className="hero-dissolve"/>
     <div className="hero-body wrap">
@@ -372,7 +356,6 @@ function App(){
       <p className="hero-line">从于都到吴起镇，沿九处站点读懂长征的行军选择。</p>
      </div>
     </div>
-    <div className="hero-foot wrap hero-intro"><div className="hero-meta">{playVideo&&hasVideo&&<button className="round-arrow" aria-label={paused?'播放背景影像':'暂停背景影像'} onClick={()=>{setPaused(value=>!value)}}>{paused?<Play size={15}/>:<Pause size={15}/>}</button>}</div></div>
     <div className="hero-dates hero-intro"><span>1934</span><i/><span>1936</span></div>
    </section>
    <section hidden={active!=='origin'} id="origin" className="section origin">
