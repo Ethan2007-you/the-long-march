@@ -20,8 +20,8 @@ function framePhoto(
  return {
   clip,src:photo.currentSrc||photo.src,naturalWidth,naturalHeight,
   image:{
-   left:bounds.left+positionOffset(x,bounds.width-width)-clip.left,
-   top:bounds.top+positionOffset(y,bounds.height-height)-clip.top,
+   left:bounds.left+positionOffset(x,bounds.width-width),
+   top:bounds.top+positionOffset(y,bounds.height-height),
    width,height,
   },
  };
@@ -70,9 +70,7 @@ export function flySharedPhoto(source:SharedPhoto, route:HTMLElement, done:()=>v
  const photo=document.createElement('img');
  photo.src=source.src;
  photo.alt='';
- const light=document.createElement('div');
- light.className='shared-flight-light';
- windowFrame.append(photo,light);
+ windowFrame.append(photo);
  overlay.append(veil,windowFrame);
  if(source.caption&&source.captionFrame){
   source.caption.classList.add('shared-flight-caption');
@@ -84,7 +82,29 @@ export function flySharedPhoto(source:SharedPhoto, route:HTMLElement, done:()=>v
 
  figure.classList.add('shared-photo-target');
  const text=route.querySelectorAll<HTMLElement>('.atlas-text h3, .atlas-text .atlas-date, .story-copy, .atlas-column, .section-title');
- const timeline=gsap.timeline({defaults:{ease:'power3.inOut'}});
+ const timeline=gsap.timeline();
+ const travel={progress:0};
+ const viewportWidth=document.documentElement.clientWidth;
+ const viewportHeight=window.innerHeight;
+ const between=(from:number,to:number)=>from+(to-from)*travel.progress;
+
+ // The mask corners and the undistorted image plane follow the same progress.
+ // The destination is measured before frame zero, so no layout handoff can move the image sideways.
+ function draw(){
+  const left=between(source.clip.left,dest!.clip.left);
+  const top=between(source.clip.top,dest!.clip.top);
+  const right=between(source.clip.left+source.clip.width,dest!.clip.left+dest!.clip.width);
+  const bottom=between(source.clip.top+source.clip.height,dest!.clip.top+dest!.clip.height);
+  windowFrame.style.clipPath=`inset(${top}px ${viewportWidth-right}px ${viewportHeight-bottom}px ${left}px)`;
+
+  const x=between(source.image.left,dest!.image.left);
+  const y=between(source.image.top,dest!.image.top);
+  const scale=between(1,dest!.image.width/source.image.width);
+  photo.style.transform=`translate3d(${x}px,${y}px,0) scale(${scale})`;
+ }
+ photo.style.width=source.image.width+'px';
+ photo.style.height=source.image.height+'px';
+ draw();
  const interruptions=['resize','wheel','touchmove','pointerdown'] as const;
 
  function cleanup(){
@@ -102,15 +122,10 @@ export function flySharedPhoto(source:SharedPhoto, route:HTMLElement, done:()=>v
  for(const event of interruptions)window.addEventListener(event,cancel,{passive:true});
 
  timeline
-  .set(windowFrame,source.clip,0)
-  .set(photo,source.image,0)
-  .to(windowFrame,{...dest.clip,duration:.84},.02)
-  .to(photo,{...dest.image,duration:.84},.02)
-  .fromTo(veil,{opacity:.82},{opacity:0,duration:.68,ease:'power2.out'},.13)
-  .fromTo(light,{opacity:0,xPercent:-120},{opacity:.75,xPercent:125,duration:.55,ease:'power2.inOut'},.16)
+  .to(travel,{progress:1,duration:.84,ease:'power2.out',onUpdate:draw},0)
+  .fromTo(veil,{opacity:.82},{opacity:0,duration:.72,ease:'power2.out'},0)
   .fromTo(text,{opacity:0,y:21},{opacity:1,y:0,duration:.5,stagger:.044,ease:'power3.out'},.24);
  if(source.caption)timeline.to(source.caption,{opacity:0,y:-22,duration:.21,ease:'power2.in'},0);
- timeline.to(windowFrame,{boxShadow:'0 0 0 1px #e5b27800',duration:.16},.72);
  timeline.eventCallback('onComplete',cleanup);
  return cancel;
 }

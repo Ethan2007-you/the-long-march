@@ -619,12 +619,10 @@ body{background:#351a1c;color:#f7e7d0}
 .history-gallery figcaption a{pointer-events:auto}
 .shared-flight{position:fixed;inset:0;z-index:19;overflow:hidden;pointer-events:none}
 .shared-flight-veil{position:absolute;inset:0;background:#281715}
-.shared-flight-window{position:absolute;overflow:hidden;box-shadow:0 0 0 1px #e5b278b0}
-.shared-flight-window img{position:absolute;display:block;max-width:none;max-height:none}
-.shared-flight-light{
- position:absolute;inset:-25%;
- background:linear-gradient(110deg,transparent 41%,#f5c68c28 48%,#f4c9a447 50%,transparent 59%);
- mix-blend-mode:screen;
+.shared-flight-window{position:absolute;inset:0;overflow:hidden;will-change:clip-path}
+.shared-flight-window img{
+ position:absolute;top:0;left:0;display:block;max-width:none;max-height:none;
+ transform-origin:top left;will-change:transform;
 }
 .shared-flight-caption{position:absolute;color:#fae8d1;padding:clamp(20px,5vw,75px)}
 .shared-flight-caption time{font-size:clamp(13px,1.5vw,20px);letter-spacing:.17em}
@@ -633,6 +631,7 @@ body{background:#351a1c;color:#f7e7d0}
 .shared-flight-caption h3 svg{width:.36em;height:.36em;color:#f1bd90}
 .shared-flight-caption p{max-width:36em;margin:8px 0;font-size:clamp(14px,1.5vw,19px)}
 .station-image.shared-photo-target{visibility:hidden}
+body:has([data-shared-photo]){overflow-anchor:none}
 [data-shared-photo] .station-image img,.station-image.shared-photo-landed img{animation:none}
 .atlas-text h3:focus{outline:none}
 @media(max-width:720px){.shared-flight-caption{padding:22px}}
