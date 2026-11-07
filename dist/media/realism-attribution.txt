@@ -1,0 +1,42 @@
+Historical background and Chishui map assets
+
+origin-yudu-ferry.webp
+Photo by Zhangzhugang, 30 May 2014.
+Central Red Army Long March starting-point ferry memorial, Yudu.
+Source https://commons.wikimedia.org/wiki/File:Yudu_Zhongyang_Hongjun_Changzheng_Diyi_Dukou_2014.05.30_11-12-33.jpg
+License CC BY-SA 3.0 https://creativecommons.org/licenses/by-sa/3.0/
+Changes resized, encoded as WebP, cropped in the layout. The adapted image retains CC BY-SA 3.0.
+
+conference.webp
+Photo by Xiquinho Silva, 20 June 2024.
+Photograph of a commemorative relief, not a wartime photograph.
+Source https://commons.wikimedia.org/wiki/File:Zunyi_Conference_Site.jpg
+License CC BY 4.0 https://creativecommons.org/licenses/by/4.0/
+Changes resized, encoded as WebP, cropped in the layout.
+
+archive.webp
+Unknown photographer, 1930s. A cadre addresses Red Army personnel.
+The available metadata does not identify this as a photograph taken at Yudu in October 1934.
+Source https://commons.wikimedia.org/wiki/File:Long-march.jpg
+Public domain as recorded on the source file page, PD-China / PD-1996.
+
+chishui-relief.webp
+Hillshade and hypsometric shading calculated from Mapzen Terrain Tiles aggregated elevation data.
+Public AWS Terrarium data https://registry.opendata.aws/terrain-tiles/
+Attribution https://www.mapzen.com/rights/
+Source-provider attribution https://github.com/tilezen/joerd/blob/master/docs/attribution.md
+USGS SRTM and other applicable aggregated source data. This is a present-day terrain rendering.
+Bounds in WGS84 west 105.60, south 27.67, east 106.63, north 28.47. Projection Web Mercator.
+
+chishui-map-data.json and the geographic data in src/chishui-map.json
+River geometry and most place localities © OpenStreetMap contributors, ODbL 1.0.
+https://www.openstreetmap.org/copyright
+https://opendatacommons.org/licenses/odbl/1-0/
+Retrieved 7 November 2026 through the Overpass API.
+The derived geographic data are made available in chishui-map-data.json under ODbL 1.0.
+Jiuxikou locality coordinates use NGA-derived geographical-name data at
+https://geographic.org/geographic_names/name.php?c=china&fid=1184&uni=10847436
+The place markers represent approximate localities. They do not identify surveyed locations of 1935 pontoon bridges.
+Short arrows indicate the historically documented crossing direction, not exact marching tracks.
+Historical sequence https://www.cac.gov.cn/2016-08/22/c_1119430867.htm
+Jiuxikou historical description https://www.sdcs1935.com/html/yanjiu/sdcsyz/202101/32fdc7ee66c9ef9c.shtml

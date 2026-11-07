@@ -278,20 +278,12 @@ footer{padding:65px 0 42px;background:var(--ink);border-top:1px solid var(--line
 .map-stamp{opacity:.85;font-size:11px}
 .atlas-text{grid-area:copy}
 .station-nav{grid-area:nav;display:flex;align-items:center;justify-content:space-between;padding:4px 10px;background:#22241e;font-size:13px;gap:10px}
-.station-nav button,.crossing-steps button{min-width:44px;min-height:44px;padding:6px 10px;border:1px solid #bca78568;background:#24231c;color:#f4dfc2}
+.station-nav button{min-width:44px;min-height:44px;padding:6px 10px;border:1px solid #bca78568;background:#24231c;color:#f4dfc2}
 .station-nav button:disabled{opacity:.42}
-.crossing-entry{margin:7px 0}
-.crossing-exhibit,.route-recap{display:grid;grid-template-columns:minmax(0,1.75fr) minmax(260px,1fr);border:1px solid #ae96635b;background:#22231c}
-.crossing-map{padding:18px}
-.crossing-map h3{margin:0 0 10px;font:600 32px var(--serif)}
-.crossing-map h3 small{font:12px var(--sans);color:#ddbd97}
-.crossing-diagram,.route-overview{display:block;width:100%;height:auto}
-.crossing-copy,.route-recap>div{padding:clamp(16px,2.6vw,34px)}
-.crossing-copy h3{font:600 clamp(24px,2.5vw,38px) var(--serif);margin:8px 0}
-.crossing-steps,.recap-actions{display:flex;gap:6px;flex-wrap:wrap;margin:14px 0}
-.crossing-steps button[aria-pressed=true]{border-color:#f2b87b;background:#693c27}
-.crossing-direction{font-weight:700;color:#efad75;margin-bottom:8px}
-.crossing-method{color:var(--muted);font-size:12px;margin-top:12px}
+.route-recap{display:grid;grid-template-columns:minmax(0,1.75fr) minmax(260px,1fr);border:1px solid #ae96635b;background:#22231c}
+.route-overview{display:block;width:100%;height:auto}
+.route-recap>div{padding:clamp(16px,2.6vw,34px)}
+.recap-actions{display:flex;gap:6px;flex-wrap:wrap;margin:14px 0}
 .crossing-preview,.snow-feature{margin:0}
 .crossing-preview figcaption,.snow-feature figcaption{font-size:13px;color:var(--muted);margin:8px 0}
 .snow-feature img{width:100%;aspect-ratio:2.5;object-fit:cover}
@@ -307,7 +299,7 @@ footer{padding:65px 0 42px;background:var(--ink);border-top:1px solid var(--line
 }
 @media(max-width:800px){
  .atlas{grid-template-columns:minmax(0,1fr);grid-template-areas:"map" "nav" "copy"}
- .crossing-exhibit,.route-recap{grid-template-columns:minmax(0,1fr)}
+ .route-recap{grid-template-columns:minmax(0,1fr)}
 }
 @media(max-width:720px){
  .route{scroll-margin-top:62px}
@@ -322,9 +314,7 @@ footer{padding:65px 0 42px;background:var(--ink);border-top:1px solid var(--line
  .marker.selected .pin-halo{r:16px}
  .hero-foot .route-cta{gap:8px;padding-inline:10px}
  .hero-line{max-width:20em}
- .crossing-map{padding:10px}
 }
-#route .crossing-map h3,.crossing-entry{scroll-margin-top:80px}
 .stop-list[hidden]{display:none}
 
 /* Exhibition palette: iron red, aged lacquer and uncoated paper. */
@@ -341,7 +331,7 @@ body{background:#351a1c;color:#f7e7d0}
 .hero-dissolve{background:linear-gradient(0deg,#351a1c 6%,#351a1ce6 36%,transparent)}
 .origin{background:radial-gradient(ellipse at 87% 8%,#82473885,transparent 53%),linear-gradient(140deg,#351a1c,#532729 68%,#382021)}
 .route{background:radial-gradient(ellipse at 8% 0%,#8950457a,transparent 55%),linear-gradient(150deg,#512a29,#351e20)}
-.atlas-text,.crossing-exhibit,.route-recap{background:#472a28}
+.atlas-text,.route-recap{background:#472a28}
 .station-nav{background:#51302c}
 .events{overflow:hidden;background:linear-gradient(155deg,#69332c,#402022 35%,#562a2a 70%,#3b2022)}
 .spirit{background:radial-gradient(ellipse at 75% 10%,#8e4b405e,transparent 50%),#542b2b}
@@ -374,9 +364,6 @@ body{background:#351a1c;color:#f7e7d0}
 
 .site [hidden]{display:none!important}
 .site main>.origin,.site main>div>.route{padding-top:clamp(100px,10vw,150px)}
-.crossing-diagram{border:1px solid #d2a7785c;background:#402624}
-.crossing-map{background:linear-gradient(135deg,#51322b,#2e1c1e)}
-.crossing-copy .crossing-direction{color:#ffd1a0}
 @media(max-width:720px){
  .masthead nav{display:flex;flex-wrap:wrap;justify-content:flex-start;gap:0 12px;background:#401c21;padding:0 12px}
  .masthead nav a{font-size:12px;min-height:38px}
@@ -490,7 +477,7 @@ body{background:#351a1c;color:#f7e7d0}
 .route .section-title h2{margin-bottom:18px}
 .route .atlas{
  display:grid;
- grid-template-columns:minmax(0,1.18fr) minmax(0,1fr);
+ grid-template-columns:minmax(0,.95fr) minmax(0,1.25fr);
  grid-template-areas:none;
  grid-template-rows:auto;
  background:#322521;
@@ -510,7 +497,6 @@ body{background:#351a1c;color:#f7e7d0}
 .route .atlas-svg .route-line{stroke:#f2a965;stroke-width:4}
 .route .map-stamp{top:12px;left:13px;background:#17211deb;padding:6px 8px;color:#fff0cb;opacity:1}
 .route .map-controls{position:static;justify-content:flex-end;padding:5px 7px;border-top:1px solid #ead2a73d}
-.route .map-controls .map-detail{width:auto;padding-inline:10px;font-size:13px}
 .route .marker .pin-label{font-size:16px;font-weight:600}
 .route .marker.selected .pin-label{
  display:block;font-size:25px;font-weight:800;fill:#fff5d0;stroke:#332016;stroke-width:6px;
@@ -533,9 +519,99 @@ body{background:#351a1c;color:#f7e7d0}
 .route .atlas-text .story-copy{margin:20px 0 0;padding-top:15px}
 .route .story-copy p{max-width:none;font-size:15px;line-height:1.85}
 .route .story-copy p:last-child{margin-bottom:0}
-.route .crossing-exhibit{display:block;border:0}
+.crossing-entry{
+ display:grid;grid-template-columns:84px minmax(0,1fr) 27px;gap:14px;
+ align-items:center;width:100%;min-height:118px;padding:15px 18px;margin:0;
+ text-align:left;font-family:var(--sans);color:#ffe9c7;
+ border:0;border-block:1px solid #dfae776e;
+ background:linear-gradient(120deg,#793b2d,#512a24 72%,#673a28);
+}
+.crossing-entry-preview{display:block;border-right:1px solid #f5c18d45;padding-right:12px}
+.crossing-entry-preview svg{display:block;width:100%;height:auto}
+.crossing-entry-copy{display:grid;gap:6px;min-width:0}
+.crossing-entry-copy strong{font-size:clamp(17px,1.45vw,21px);line-height:1.45;font-weight:650}
+.crossing-entry-copy>span{font-size:12px;line-height:1.65;color:#f1caaa}
+.crossing-entry>svg{color:#ffdc9e}
+.crossing-entry:is(:hover,:focus-visible){background:linear-gradient(120deg,#924d37,#633026 72%,#825036)}
+.crossing-entry:focus-visible{outline:2px solid #ffdc9e;outline-offset:-5px}
+.crossing-exhibit{background:linear-gradient(145deg,#393b2e,#282b24);min-width:0}
+.crossing-map{padding:18px}
+.crossing-header{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.crossing-header h3{margin:0;font:600 clamp(23px,2.2vw,32px)/1.4 var(--serif);scroll-margin-top:100px}
+.crossing-header h3 small{display:block;font:12px/1.6 var(--sans);color:#dfbc98}
+.crossing-header .route-action{flex:none;min-height:44px;padding:6px 11px;font-size:12px;background:#281f1b;border:1px solid #b18d65;color:#f4dfc2}
+.crossing-steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin:18px 0 12px}
+.crossing-steps button{display:grid;gap:4px;min-width:0;min-height:62px;padding:7px 3px;border:1px solid #af906d66;border-bottom-width:3px;background:#3a2823;color:#f3d4b1;font-family:var(--sans)}
+.crossing-steps button>span{font-size:17px;line-height:1.4}
+.crossing-steps button>small{font:10px/1.4 var(--mono)}
+.crossing-steps button[aria-selected=true]{background:#ead2aa;color:#41251e;border-color:#ffdda0;font-weight:700;border-bottom-color:#d47d47}
+.crossing-steps button:not([aria-selected=true]):hover{background:#674132;border-color:#d8af7f}
+.crossing-cartography{margin:0}
+.crossing-diagram{display:block;width:100%;height:auto;border:1px solid #bda47a63;background:#283529}
+.terrain-rivers path{fill:none;stroke-linejoin:round;stroke-linecap:round}
+.terrain-river-edge{stroke:#101f1e;stroke-width:7;opacity:.85}
+.terrain-river-water{stroke:#8caea4;stroke-width:3.4}
+.terrain-region{font:400 42px var(--serif);fill:#dbcfaa;letter-spacing:.24em;opacity:.38}
+.terrain-crossing{fill:none;stroke:#f2c28c;stroke-width:4.2;stroke-linecap:round;stroke-linejoin:round}
+.terrain-crossing.is-previous{stroke:#b79067;stroke-width:2.5;stroke-dasharray:6 6;opacity:.5}
+.terrain-port circle{fill:#28362b;stroke:#d5c7a3;stroke-width:2.5}
+.terrain-port text{font:500 24px var(--sans);fill:#e4dec8;paint-order:stroke;stroke:#1d2a22;stroke-width:6;stroke-linejoin:round}
+.terrain-label-line{fill:none;stroke:#d5c7a3;stroke-width:1.2;opacity:.65}
+.terrain-port.is-current circle{fill:#9e3c28;stroke:#f8db9f;stroke-width:3}
+.terrain-port.is-current text{font-size:29px;font-weight:650;fill:#ffe5ad}
+.terrain-port.is-current .terrain-label-line{stroke:#f8db9f;opacity:1}
+.terrain-north,.terrain-scale{fill:#e0d5b6;font:18px var(--sans)}
+.terrain-north path,.terrain-scale path{fill:none;stroke:#e0d5b6;stroke-width:2}
+.crossing-cartography figcaption{display:flex;justify-content:space-between;flex-wrap:wrap;gap:4px 12px;padding-top:9px;color:#c5baa0;font-size:10px;line-height:1.6}
+.crossing-cartography figcaption a{border-bottom:1px solid #c5baa040}
+.crossing-copy{padding:0 20px 20px;color:#e9d2bd;font-size:14px;line-height:1.8}
+.crossing-copy p{margin:0}
+.crossing-copy .crossing-direction{font-weight:650;color:#ffcb94;margin:0 0 5px}
+.crossing-overview{border-top:1px solid #d0a77a42;margin:0 20px;padding:18px 0 24px;color:#dbc0a9}
+.crossing-overview h4{font:600 20px/1.5 var(--serif);margin:0 0 8px;color:#ffe0b7}
+.crossing-overview p{font-size:14px;line-height:1.9;margin:0}
+.route .story-copy .crossing-story-date{font:12px/1.7 var(--mono);color:#f5bd8d;margin-bottom:7px}
+.route .story-copy .crossing-story-port{color:#f3ceac;font-size:14px;margin:8px 0 20px}
+.crossing-analysis{margin:0}
+.crossing-analysis>div{display:grid;grid-template-columns:78px minmax(0,1fr);gap:16px;padding:18px 0;border-top:1px solid #d5b28e3b}
+.crossing-analysis dt{font-size:13px;line-height:1.9;color:#f4bb8e;font-weight:600}
+.crossing-analysis dd{margin:0;font-size:15px;line-height:1.9;color:#e7cebf}
+.spirit-explanation{min-width:0}
+.spirit-explanation p+p{margin-top:14px}
+.site main>.origin{padding:108px 0 65px}
+.origin-heading{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);align-items:end;gap:44px;margin-bottom:28px}
+.origin .section-title h2{margin:0;font-size:clamp(52px,6vw,82px);line-height:1.15}
+.origin-facts{display:grid;grid-template-columns:1.3fr 1fr 1fr;margin:0;border-block:1px solid #c4a17755;padding:12px 0}
+.origin-facts>div{padding:0 18px}
+.origin-facts>div:first-child{padding-left:0}
+.origin-facts>div+div{border-left:1px solid #c4a17745}
+.origin-facts dt{font-size:11px;color:#d7b797;margin-bottom:4px}
+.origin-facts dd{font:400 44px/1 var(--latin);color:#e7c391;margin:0;white-space:nowrap}
+.origin-facts dd span{font:12px var(--sans)}
+.origin .origin-grid{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);grid-template-areas:"copy ferry" "copy pair";column-gap:44px;row-gap:18px;align-items:start}
+.origin-copy{grid-area:copy}
+.origin-ferry{grid-area:ferry}
+.origin-copy h3{font-size:clamp(31px,3.45vw,50px);margin:12px 0 18px;line-height:1.25}
+.origin-copy p{font-size:15px;line-height:1.95;margin:0 0 15px}
+.origin-copy .reference{margin-top:0}
+.origin-sources{display:flex;flex-wrap:wrap;gap:6px 20px}
+.origin-evidence{display:grid;gap:18px;min-width:0}
+.origin-evidence .origin-ferry img{aspect-ratio:2.3;object-position:45% 49%;filter:saturate(.75)}
+.origin-evidence-pair{grid-area:pair;display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start}
+.origin-evidence-pair img{aspect-ratio:1.5;object-position:center;filter:saturate(.65)}
+.origin-evidence .photo figcaption{display:block;padding-top:7px;min-height:48px;font-size:11px;line-height:1.7}
+.origin-evidence .photo figcaption small{display:block;text-align:left;font-size:9px;margin-top:2px;color:#baa48b}
+.origin-context{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px;list-style:none;padding:24px 0 0;margin:30px 0 0;border-top:1px solid #c4a17766}
+.origin-context li{position:relative;padding:0 0 0 16px;border-left:2px solid #b56b4d}
+.origin-context time{font:11px/1.6 var(--mono);color:#ecc08a}
+.origin-context h3{font:600 22px/1.5 var(--serif);margin:8px 0 5px;color:#f3dec3}
+.origin-context p{font-size:13px;line-height:1.8;color:#d5bcaa;margin:0}
 @media(max-width:900px){
  .route .stop-list{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .origin-heading,.origin .origin-grid{gap:26px;grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+ .origin-facts dd{font-size:34px}
+ .origin-facts>div{padding-inline:10px}
+ .origin-facts dd span{font-size:10px}
 }
 @media(max-width:800px){
  .route .atlas{grid-template-columns:minmax(0,1fr)}
@@ -549,6 +625,42 @@ body{background:#351a1c;color:#f7e7d0}
  .route .marker.selected .pin-label{font-size:27px}
  .route .stop-list button{font-size:12px}
  .route .stop-list button small{margin-right:4px}
+ .crossing-entry{grid-template-columns:64px minmax(0,1fr) 20px;gap:11px;min-height:112px;padding:14px}
+ .crossing-entry-copy strong{font-size:18px}
+ .crossing-entry-copy>span{font-size:11px}
+ .crossing-entry>svg{width:20px}
+ .crossing-map{padding:12px}
+ .crossing-header h3{scroll-margin-top:116px}
+ .crossing-steps button>small{font-size:9px}
+ .crossing-copy{padding:0 14px 17px}
+ .crossing-overview{margin:0 14px;padding-bottom:20px}
+ .crossing-analysis>div{display:block;padding:16px 0}
+ .crossing-analysis dt{margin-bottom:6px}
+ .spirit-explanation{grid-column:2}
+ .site main>.origin{padding-top:124px;padding-bottom:40px}
+ .origin-heading,.origin .origin-grid{grid-template-columns:minmax(0,1fr);gap:22px}
+ .origin .origin-grid{grid-template-areas:"ferry" "copy" "pair"}
+ .origin-heading{margin-bottom:24px}
+ .origin-facts{padding:12px 0}
+ .origin-facts dd{font-size:35px}
+ .origin-facts dd span{font-size:11px}
+ .origin-evidence{gap:14px}
+ .origin-evidence-pair{gap:12px}
+ .origin-evidence .origin-ferry img{aspect-ratio:1.75;object-position:35% 50%}
+ .origin-evidence-pair img{aspect-ratio:1.05}
+ .origin-evidence .photo figcaption{min-height:61px;font-size:10px}
+ .origin-evidence .photo figcaption small{font-size:8px}
+ .origin-context{grid-template-columns:1fr 1fr;gap:22px 18px;margin-top:24px}
+ .origin-context li{padding-left:12px}
+ .origin-context h3{font-size:20px}
+ .origin-context p{font-size:12px}
+ .terrain-port text{font-size:36px;stroke-width:7}
+ .terrain-port.is-current text{font-size:40px}
+ .terrain-port circle{r:7px}
+ .terrain-port.is-current circle{r:11px}
+ .terrain-region{font-size:50px}
+ .terrain-crossing{stroke-width:5}
+ .terrain-river-water{stroke-width:4.5}
 }
 
 @media (prefers-reduced-motion:no-preference) {

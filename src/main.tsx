@@ -5,8 +5,9 @@ import {motion,useReducedMotion,useScroll,useSpring} from 'framer-motion';
 import {ArrowUpRight,Compass,Maximize2,Minus,Pause,Play,Plus,RotateCcw,Volume2,VolumeX,X} from 'lucide-react';
 import {reunion,sources,stops,themes} from './data';
 import rivers from './rivers.json';
-import {eventNotes,spiritNotes} from './exhibit-notes';
-import {crossings} from './crossings';
+import chishuiMap from './chishui-map.json';
+import {originNotes,eventNotes,spiritNotes} from './exhibit-notes';
+import {crossings,crossingOverview} from './crossings';
 import {useChapterMotion,type Chapter} from './chapter-motion';
 import {captureSharedPhoto,type SharedPhoto} from './shared-photo';
 import {loadSoundtrack} from './soundtrack';
@@ -64,7 +65,9 @@ function linkedStation(){
 }
 type Exhibit={file:string;label:string;credit?:string;url?:string};
 const historyImages:Record<string,Exhibit>={
- archive:{file:'archive',label:'长征时期红军影像（约 1930 年代）',credit:'作者不详 · PD-China',url:'https://commons.wikimedia.org/wiki/File:Long-march.jpg'},
+ archive:{file:'archive',label:'红军干部向部队讲话 · 1930 年代资料照片',credit:'作者不详 · PD-China',url:'https://commons.wikimedia.org/wiki/File:Long-march.jpg'},
+ ferry:{file:'origin-yudu-ferry',label:'于都东门渡口 · 2014 年现址照片',credit:'Zhangzhugang · CC BY-SA 3.0 · 裁切',url:'https://commons.wikimedia.org/wiki/File:Yudu_Zhongyang_Hongjun_Changzheng_Diyi_Dukou_2014.05.30_11-12-33.jpg'},
+ relief:{file:'conference',label:'长征纪念浮雕 · 2024 年实拍',credit:'Xiquinho Silva · CC BY 4.0 · 裁切',url:'https://commons.wikimedia.org/wiki/File:Zunyi_Conference_Site.jpg'},
  mao:{file:'mao',label:'毛泽东（1937）',credit:'埃德加·斯诺 · CC0',url:'https://commons.wikimedia.org/wiki/File:Mao_Zedong_1937.jpg'},
  zhou:{file:'zhou',label:'周恩来（1937 年 12 月）',credit:'作者不详 · PD-China',url:'https://commons.wikimedia.org/wiki/File:Zhou_Enlai_1937.jpg'},
 };
@@ -79,29 +82,44 @@ function Photo({image,open,className=''}:{image:Exhibit;open:(image:Exhibit)=>vo
 }
 
 function CrossingDiagram({step}:{step:number}){
- const river='M324 -16 C385 49 284 89 321 122 S329 181 302 221 S300 254 299 264 S336 299 310 326 S252 362 278 401';
- const id='crossing-step';
- const arrowId=id+'-arrow';
- return <svg viewBox="0 0 600 385" className="crossing-diagram" role="img" aria-label="四渡赤水历史示意图，展示渡河次序和东西渡河方向">
-  <defs>
-   <marker id={arrowId} markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#ffcc96"/></marker>
-   <linearGradient id={id+'-shade'} x2="1" y2="1"><stop stopColor="#311a1a" stopOpacity=".62"/><stop offset="1" stopColor="#271819" stopOpacity=".91"/></linearGradient>
-   <pattern id={id+'-grid'} width="50" height="50" patternUnits="userSpaceOnUse"><path d="M50 0H0V50" stroke="#f7c694" strokeOpacity=".13" fill="none"/></pattern>
-  </defs>
-  <rect width="600" height="385" fill="#402624"/>
-  <image href={media('battle-chishui')} width="600" height="385" preserveAspectRatio="xMidYMid slice" opacity=".68"/>
-  <rect width="600" height="385" fill={`url(#${id}-shade)`}/>
-  <rect width="600" height="385" fill={`url(#${id}-grid)`}/>
-  <path d={river} stroke="#231919" strokeWidth="43" opacity=".62" fill="none"/>
-  <path d={river} stroke="#809995" strokeWidth="25" fill="none"/>
-  <path d={river} stroke="#b9c4a9" strokeWidth="1" strokeDasharray="3 8" opacity=".72" fill="none"/>
-  <g fill="#f4dac0" fontSize="20" fontWeight="600"><text x="45" y="48">川南 · 西岸</text><text x="440" y="48">黔北 · 东岸</text><text x="345" y="78" fontSize="15">赤水河</text></g>
-  {crossings.slice(0,step+1).map((crossing,index)=><g key={crossing.name} opacity={index===step?1:.43}>
-   <path d={crossing.path} fill="none" stroke="#251716" strokeWidth={index===step?10:6}/>
-   <path d={crossing.path} fill="none" stroke="#ffcc96" strokeDasharray={index===step?undefined:"5 5"} strokeWidth={index===step?5:3} markerEnd={index===step?`url(#${arrowId})`:undefined}/>
-   <circle cx={crossing.point[0]} cy={crossing.point[1]} r="7" fill="#a7473b" stroke="#ffe4b5" strokeWidth="2"/>
-   <text x={index%2?103:451} y={crossing.point[1]+(index===3?45:5)} fill="#f4e4ca" fontSize="19">{crossing.name}</text>
-  </g>)}
+ const arrowId='crossing-direction-arrow';
+ const places=chishuiMap.places;
+ return <figure className="crossing-cartography">
+  <svg viewBox={`0 0 ${chishuiMap.width} ${chishuiMap.height}`} className="crossing-diagram" role="img" aria-label={`${crossings[step].name}赤水地形图，${crossings[step].port}，${crossings[step].direction}，箭头表示渡河方向`}>
+   <defs>
+    <marker id={arrowId} markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto"><path d="M0 0L5 2.5L0 5Z" fill="#f2c28c"/></marker>
+    <linearGradient id="crossing-map-edge" x1="0" y1="0" x2="0" y2="1"><stop stopColor="#15201b" stopOpacity=".24"/><stop offset=".5" stopColor="#17201c" stopOpacity="0"/><stop offset="1" stopColor="#111b18" stopOpacity=".55"/></linearGradient>
+   </defs>
+   <image href={media('chishui-relief')} width={chishuiMap.width} height={chishuiMap.height}/>
+   <g className="terrain-rivers">{chishuiMap.riverPaths.map((river,index)=><g key={index}><path d={river} className="terrain-river-edge"/><path d={river} className="terrain-river-water"/></g>)}</g>
+   <rect width={chishuiMap.width} height={chishuiMap.height} fill="url(#crossing-map-edge)"/>
+   {chishuiMap.towns.map(town=><text className="terrain-region" key={town.name} x={town.point[0]} y={town.point[1]} transform={`rotate(${town.angle} ${town.point.join(' ')})`}>{town.name}</text>)}
+   {places.filter(place=>place.steps.some(index=>index<=step)).map(place=>{
+    const active=place.steps.includes(step);
+    return <path key={place.id} d={place.crossingPath} className={`terrain-crossing ${active?'is-current':'is-previous'}`} markerEnd={active?`url(#${arrowId})`:undefined}/>;
+   })}
+   {places.map(place=>{
+    const active=place.steps.includes(step);
+    const [x,y]=place.point;
+    const [dx,dy]=place.label;
+    return <g key={place.id} className={`terrain-port ${active?'is-current':''}`} transform={`translate(${x} ${y})`}>
+     <path d={`M0 0L${dx*.7} ${dy*.7}H${dx}`} className="terrain-label-line"/>
+     <circle r={active?9:5}/>
+     <text x={dx} y={dy} textAnchor={place.anchor as 'start'|'end'} dominantBaseline="middle">{place.name}</text>
+    </g>;
+   })}
+   <g className="terrain-north" transform={`translate(${chishuiMap.width-56} 38)`}><text textAnchor="middle" y="0">北</text><path d="M0 61V18M-7 30L0 18L7 30"/></g>
+   <g className="terrain-scale" transform={`translate(38 ${chishuiMap.height-40})`}><path d="M0-8V0H99V-8M49.5-5V0"/><text x="0" y="24">0</text><text x="99" y="24" textAnchor="end">10 km</text></g>
+  </svg>
+  <figcaption><span>赤水河谷 · 渡河方向示意</span><span><a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">© OpenStreetMap</a> · <a href="https://www.mapzen.com/rights/" target="_blank" rel="noreferrer">Mapzen</a></span></figcaption>
+ </figure>;
+}
+
+function CrossingPreview(){
+ return <svg viewBox={`0 0 ${chishuiMap.width} ${chishuiMap.height}`} aria-hidden="true">
+  <image href={media('chishui-relief')} width={chishuiMap.width} height={chishuiMap.height}/>
+  {chishuiMap.riverPaths.map((river,index)=><path key={index} d={river} fill="none" stroke="#abc0b5" strokeWidth="12"/>)}
+  {chishuiMap.places.map(place=><circle key={place.id} cx={place.point[0]} cy={place.point[1]} r="18" fill="#e7bc83"/>)}
  </svg>;
 }
 
@@ -134,6 +152,7 @@ function Route(){
  const drag=useRef<{x:number;y:number;ox:number;oy:number}|null>(null);
  const stop=routeStories[selected];
  const story=eventNotes[selected];
+ const crossing=crossings[step];
  function zoom(value:number){
   const next=Math.max(1,Math.min(2.6,value));
   setScale(next);
@@ -149,12 +168,22 @@ function Route(){
      <strong>{stop.place}</strong>
     </div>
    {local?<div className="crossing-exhibit">
-   <div className="crossing-map"><h3 ref={localHeading} tabIndex={-1}>四渡赤水 <small>路线示意</small></h3><CrossingDiagram step={step}/></div>
-   <div className="crossing-copy">
-    <button className="route-action" onClick={returnToOverview}>← 返回全线</button>
-    <div className="crossing-steps" aria-label="渡河步骤">{crossings.map((crossing,index)=><button key={crossing.name} aria-pressed={index===step} onClick={()=>setStep(index)}>{crossing.name}</button>)}</div>
-    <div aria-live="polite"><p className="eyebrow">{crossings[step].date}</p><h3>{crossings[step].port}</h3><p className="crossing-direction">{crossings[step].direction}</p><p>{crossings[step].note}</p></div>
+   <div className="crossing-map">
+    <div className="crossing-header"><h3 ref={localHeading} tabIndex={-1}>四渡赤水 <small>河谷地形与渡河方向</small></h3><button type="button" className="route-action" onClick={returnToOverview}>← 返回全线</button></div>
+    <div className="crossing-steps" role="tablist" aria-label="四次渡河">{crossings.map((item,index)=><button type="button" key={item.name} id={`crossing-tab-${index}`} role="tab" aria-selected={index===step} aria-controls="crossing-story" tabIndex={index===step?0:-1} data-step={index} onClick={()=>setStep(index)} onKeyDown={event=>{
+     let next=index;
+     if(event.key==='ArrowRight')next=(index+1)%crossings.length;
+     else if(event.key==='ArrowLeft')next=(index+crossings.length-1)%crossings.length;
+     else if(event.key==='Home')next=0;
+     else if(event.key==='End')next=crossings.length-1;
+     else return;
+     event.preventDefault();setStep(next);
+     event.currentTarget.parentElement?.querySelector<HTMLButtonElement>(`[data-step="${next}"]`)?.focus();
+    }}><span>{item.name}</span><small>{item.shortDate}</small></button>)}</div>
+    <CrossingDiagram step={step}/>
    </div>
+   <div className="crossing-copy" aria-live="polite"><p className="crossing-direction">{crossing.direction}</p><p>{crossing.note}</p></div>
+   <div className="crossing-overview"><h4>{crossingOverview.title}</h4><p>{crossingOverview.significance}</p></div>
   </div>:<div className="atlas-map">
     <div className="map-stamp"><Compass size={23}/> <span>中央红军长征路线<br/><small>1934—1935 · 另标 1936 年会师地</small></span></div>
     <svg className={'atlas-svg '+(scale>1?'is-zoomed':'')} viewBox="0 0 790 540" aria-label="中央红军长征关键地点经纬度示意图"
@@ -193,13 +222,17 @@ function Route(){
      </g>
     </svg>
     <div className="map-controls">
-     {selected===3&&<button ref={localEntry} className="map-detail" onClick={()=>{setStep(0);setLocal(true);}}>赤水局部</button>}
      <button onClick={()=>zoom(scale+.4)} disabled={scale>=2.6} aria-label="放大地图"><Plus size={18}/></button>
      <button onClick={()=>zoom(scale-.4)} disabled={scale<=1} aria-label="缩小地图"><Minus size={18}/></button>
      <button onClick={resetMap} aria-label="返回全线"><RotateCcw size={15}/></button>
     </div>
    </div>}
    {!local&&<>
+    {selected===3&&<button type="button" ref={localEntry} className="crossing-entry" aria-expanded={false} onClick={()=>{setStep(0);setLocal(true);}}>
+     <span className="crossing-entry-preview"><CrossingPreview/></span>
+     <span className="crossing-entry-copy"><strong>进入四渡赤水图解</strong><span>沿四次渡河，看清战局、选择与结果</span></span>
+     <ArrowUpRight size={27} aria-hidden="true"/>
+    </button>}
     <div className="station-nav" aria-label="前后站点">
      <button disabled={selected===0} onClick={()=>selectStation(selected-1)}>← 上一站</button>
      <button disabled={selected===routeStories.length-1} onClick={()=>selectStation(selected+1)}>下一站 →</button>
@@ -213,16 +246,25 @@ function Route(){
     </div>
    </>}
    </div>
-   <article className="atlas-text" aria-live="polite">
+   <article className={'atlas-text'+(local?' is-crossing-story':'')} aria-live="polite">
     <p className="atlas-date">{stop.date} / {stop.place}</p>
     <h3 className="type-event" tabIndex={-1}>{stop.title}</h3>
     <figure key={selected} className={`station-image battle-${battleArt[selected]}`}>
      <img src={media('battle-'+battleArt[selected])} alt={captions[selected]+'（情境插画）'} decoding="async"/>
     </figure>
-    <div className="story-copy">
+    {local?<div className="story-copy crossing-story" id="crossing-story" role="tabpanel" aria-labelledby={`crossing-tab-${step}`}>
+     <p className="crossing-story-date">{crossing.name} · {crossing.date}</p>
+     <h4>{crossing.heading}</h4>
+     <p className="crossing-story-port">{crossing.port}</p>
+     <dl className="crossing-analysis">
+      <div><dt>当时局势</dt><dd>{crossing.context}</dd></div>
+      <div><dt>行动选择</dt><dd>{crossing.decision}</dd></div>
+      <div><dt>带来的变化</dt><dd>{crossing.result}</dd></div>
+     </dl>
+    </div>:<div className="story-copy">
      <h4>{story.heading}</h4>
      {story.paragraphs.map(paragraph=><p key={paragraph}>{paragraph}</p>)}
-    </div>
+    </div>}
    </article>
   </div>
   </div>
@@ -335,13 +377,21 @@ function App(){
    </section>
    <section hidden={active!=='origin'} id="origin" className="section origin">
     <div className="wrap">
-     <Heading>征途的起点</Heading>
-     
-     <div className="origin-grid">
-      <div className="origin-copy"><div className="eyebrow"><span>1934.10</span><i/> 江西于都</div><h3 className="type-chapter">为什么从于都出发</h3><p>1934 年秋，第五次反“围剿”失利。为保存革命力量，中共中央和中央红军主力撤离中央苏区，在于都集结渡河，开始战略转移。</p><p>于都的渡口为集中渡河提供了条件。当地群众筹集材料、协助架桥，部队利用夜间分批过河，降低了行踪暴露的风险。</p>{sourceLink(0)}</div>
-      <Photo image={historyImages.archive} open={open}/>
+     <div className="origin-heading"><Heading>征途的起点</Heading>
+      <dl className="origin-facts"><div><dt>集结兵力</dt><dd>8.6<span> 万余人</span></dd></div><div><dt>主力军团</dt><dd>5<span> 个</span></dd></div><div><dt>主要渡口</dt><dd>8<span> 处</span></dd></div></dl>
      </div>
-     <div className="numbers"><div><strong>1934<span> 年</span></strong><p>中央红军开始战略转移</p></div><div><strong>8.6<span> 万余人</span></strong><p>中央红军长征出发时人数</p></div><div><strong>1936<span> 年</span></strong><p>红军三大主力相继会师</p></div></div>
+     
+     <div className="origin-grid origin-evidence">
+      <Photo image={historyImages.ferry} open={open} className="origin-ferry"/>
+      <div className="origin-copy"><div className="eyebrow"><span>1934.10</span><i/> 江西于都</div><h3 className="type-chapter">为什么从于都出发</h3>{originNotes.map(paragraph=><p key={paragraph}>{paragraph}</p>)}<div className="origin-sources">{sourceLink(2,'出发地考证')}{sourceLink(11,'渡河计划档案')}</div></div>
+      <div className="origin-evidence-pair"><Photo image={historyImages.archive} open={open}/><Photo image={historyImages.relief} open={open}/></div>
+     </div>
+     <ol className="origin-context" aria-label="从战略转移到转兵黔北">
+      <li><time>1934 年秋</time><h3>保存主力</h3><p>第五次反“围剿”失利，原有作战空间缩小，中央红军准备突围转移。</p></li>
+      <li><time>1934 年 10 月</time><h3>于都出发</h3><p>主力集结补充，军民协作架桥、摆渡，部队利用夜间分批渡河。</p></li>
+      <li><time>1934 年 11—12 月</time><h3>湘江之后</h3><p>突破第四道封锁线付出重大代价，继续向湘西北行军又面临重兵堵截。</p></li>
+      <li><time>1934 年 12 月</time><h3>转兵黔北</h3><p>黎平会议决定改向贵州北部。此后渡过乌江、进入遵义，迎来新的转折。</p></li>
+     </ol>
      
     </div>
    </section>
@@ -370,7 +420,7 @@ function App(){
        <li key={first}>
         <span className="spirit-number" aria-hidden="true">{String(index+1).padStart(2,'0')}</span>
         <h3 className="type-spirit">{first}、{second}</h3>
-        <p>{spiritNotes[index]}</p>
+        <div className="spirit-explanation">{spiritNotes[index].map(paragraph=><p key={paragraph}>{paragraph}</p>)}</div>
        </li>
       ))}
      </ol>

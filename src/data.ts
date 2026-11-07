@@ -9,7 +9,8 @@ export const sources = [
  ['中国纪检监察杂志','长征中的六次会师','https://zgjjjc.ccdi.gov.cn/bqml/bqxx/201610/t20161025_88539.html'],
  ['Mapzen','地形高程数据及署名','https://www.mapzen.com/rights/'],
  ['Natural Earth','河流数据和使用条款','https://www.naturalearthdata.com/about/terms-of-use/'],
- ['国防部 · 中国国防报','夹金山上吹响胜利号角','https://www.mod.gov.cn/gfbw/gfjy_index/js_214151/16487941.html'],
+ ['国防部 · 中国国防报','夹金山上吹响胜利号角','https://www.mod.gov.cn/gfbw/gfjy_index/16487940.html'],
+ ['中国军网 · 解放军报','两份绝密计划有力证明：红军长征是有组织的战略转移','https://www.81.mil.cn/yw_208727/16478204.html'],
 ] as const;
 
 type Stop = {place:string; title:string; date:string; coords:[number,number]; image:string; summary:string; significance:string; source:number; label?:[number,number]};
