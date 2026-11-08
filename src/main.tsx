@@ -3,7 +3,7 @@ import {createRoot} from 'react-dom/client';
 import {flushSync} from 'react-dom';
 import {motion,useReducedMotion,useScroll,useSpring} from 'framer-motion';
 import {ArrowUpRight,Compass,Maximize2,Minus,Plus,RotateCcw,Volume2,VolumeX,X} from 'lucide-react';
-import {reunion,sources,stops,themes} from './data';
+import {sources,stops,themes} from './data';
 import rivers from './rivers.json';
 import chishuiMap from './chishui-map.json';
 import {originNotes,eventNotes,spiritNotes} from './exhibit-notes';
@@ -12,53 +12,19 @@ import {useChapterMotion,type Chapter} from './chapter-motion';
 import {captureSharedPhoto,type SharedPhoto} from './shared-photo';
 import {loadSoundtrack} from './soundtrack';
 import './style.css';
+import {coordinates,waypoints,path,routeStories,mapLocations} from './route-geometry';
+import {HomeRoute} from './home-route';
+import {exhibits,coverExhibit} from './exhibits';
 
 const nav=[['home','首页'],['origin','历史背景'],['events','重要历史'],['route','征途路线'],['spirit','长征精神']] as const;
 function currentPage():Chapter{
  const hash=window.location.hash.slice(1);
  if(/^route-(?:[1-9]|10)$/.test(hash))return 'route';
+ if(/^events-(?:[1-9]|10)$/.test(hash))return 'events';
  return nav.find(([id])=>id===hash)?.[0]??'home';
 }
 const media=(name:string)=>import.meta.env.BASE_URL+'media/'+name+'.webp';
-const coordinates=([lon,lat]:[number,number])=>[(lon-96)*36+30,(39-lat)*32+32];
-const waypoints: {after:number; name:string; coords:[number,number]}[] = [
- {after:1,name:'黎平',coords:[109.14,26.23]},
- {after:4,name:'安顺场',coords:[102.28,29.23]},
- {after:6,name:'懋功',coords:[102.37,31.0]},
- {after:7,name:'腊子口',coords:[103.84,34.14]},
- {after:7,name:'哈达铺',coords:[104.23,34.23]},
- {after:7,name:'榜罗镇',coords:[105.07,34.89]},
- {after:7,name:'六盘山',coords:[106.20,35.67]},
-];
-const path=stops.flatMap((s,i)=>[s.coords,...waypoints.filter(point=>point.after===i).map(point=>point.coords)])
- .map((point,i)=>(i?'L':'M')+coordinates(point).join(',')).join(' ');
-const routeStories=[...stops,reunion];
-const reunionPlaces:{name:string;coords:[number,number];label:[number,number]}[]=[
- {name:'会宁',coords:[105.059,35.697],label:[-92,34]},
- {name:'将台堡',coords:[105.84,35.818],label:[31,36]},
-];
-const mapLocations=[
- ...stops.map((stop,index)=>({
-  name:stop.place.split(' · ')[1].replace('一带',''),
-  coords:stop.coords,
-  label:stop.label??[12,-12],
-  index,
- })),
- ...reunionPlaces.map(place=>({...place,index:stops.length})),
-];
 const battleArt=['yudu','xiang','zunyi','chishui','jinsha','luding','snow','marsh','wuqi','reunion'];
-const captions=[
- '中央红军在于都集结，夜渡于都河。',
- '红军强渡湘江，突破第四道封锁线。',
- '中共中央在遵义总结战事，调整军事领导。',
- '中央红军四次渡过赤水，在追击中争取主动。',
- '主力经皎平渡跨过金沙江，跳出包围圈。',
- '红四团夺取泸定桥，为主力渡过大渡河打开通路。',
- '中央红军翻越夹金山，随后在懋功地区会师。',
- '红军穿过川西北水草地，继续向甘南转进。',
- '陕甘支队抵达吴起镇，中央红军长征到达陕北。',
- '红军三大主力在会宁、将台堡相继会师。',
-];
 function linkedStation(){
  const match=window.location.hash.match(/^#route-([1-9]|10)$/);
  return match?Number(match[1])-1:null;
@@ -250,8 +216,9 @@ function Route(){
     <p className="atlas-date">{stop.date} / {stop.place}</p>
     <h3 className="type-event" tabIndex={-1}>{stop.title}</h3>
     <figure key={selected} className={`station-image battle-${battleArt[selected]}`}>
-     <img src={media('battle-'+battleArt[selected])} alt={captions[selected]+'（情境插画）'} decoding="async"/>
+     <img src={media(exhibits[selected].file)} alt={exhibits[selected].label} loading="lazy" decoding="async"/>
     </figure>
+    <p className="station-credit"><a href={exhibits[selected].url} target="_blank" rel="noreferrer">{exhibits[selected].kind} · {exhibits[selected].credit} ↗</a></p>
     {local?<div className="story-copy crossing-story" id="crossing-story" role="tabpanel" aria-labelledby={`crossing-tab-${step}`}>
      <p className="crossing-story-date">{crossing.name} · {crossing.date}</p>
      <h4>{crossing.heading}</h4>
@@ -316,16 +283,25 @@ function App(){
   document.body.style.overflow='hidden';
   return ()=>{document.body.style.overflow=previous;};
  },[enlarged]);
- function navigateChapter(event:React.MouseEvent<HTMLAnchorElement>){
+ function navigateChapter(event:React.MouseEvent<HTMLAnchorElement|SVGAElement>){
   if(event.button!==0||event.ctrlKey||event.metaKey||event.altKey||event.shiftKey)return;
-  const hash=event.currentTarget.hash;
-  if(hash===window.location.hash)return;
+  const hash=event.currentTarget.getAttribute('href')??'';
+  if(hash===window.location.hash){
+   if(hash==='#home'){
+    event.preventDefault();
+    const map=event.currentTarget.hasAttribute('data-home-map');
+    history.replaceState(map?{homeMap:true}:null,'',hash);
+    document.getElementById(map?'home-route':'home')?.scrollIntoView({behavior:reduce?'instant':'smooth'});
+   }
+   return;
+  }
   event.preventDefault();
-  if(!reduce&&active==='events'&&hash.startsWith('#route-')){
+  if(!reduce&&active==='events'&&hash.startsWith('#route-')&&event.currentTarget instanceof HTMLAnchorElement){
    pendingPhoto.current=captureSharedPhoto(event.currentTarget);
   }
   // Keep real anchors and browser history, without jumping to the section mid-transition.
-  history.pushState(null,'',hash);
+  if(active==='home'&&hash.startsWith('#events-'))history.replaceState({homeMap:true},'',window.location.hash||'#home');
+  history.pushState(event.currentTarget.hasAttribute('data-home-map')?{homeMap:true}:null,'',hash);
   flushSync(()=>window.dispatchEvent(new HashChangeEvent('hashchange')));
  }
  return <div className="site">
@@ -343,9 +319,10 @@ function App(){
    onPlay={()=>setMusicPlaying(true)} onPause={()=>setMusicPlaying(false)}
    onError={()=>{setMusicPlaying(false);setMusicUnavailable(true);}}/>
   <main ref={main}>
-   <section hidden={active!=='home'} id="home" className="hero">
+   <div hidden={active!=='home'} className="home-chapter">
+   <section id="home" className="hero">
     <div className="hero-layer"><div className="hero-visual">
-     <picture><source media="(max-width: 849px)" srcSet={media('hero-mobile')+'?v=poster'}/><img className="hero-poster" src={media('hero')+'?v=poster'} alt="" fetchPriority="high"/></picture>
+     <img className="hero-poster" src={media(coverExhibit.file)} alt={coverExhibit.label} fetchPriority="high"/>
     </div></div>
     <div className="hero-veil"/><div className="hero-dissolve"/>
     <div className="hero-body wrap">
@@ -353,11 +330,14 @@ function App(){
      <h1 className="hero-word type-cover" aria-label="长征"><span className="hero-readable">长</span><span>征</span></h1>
      <div className="hero-caption hero-intro">
       
-      <p className="hero-line">从于都到吴起镇，沿九处站点读懂长征的行军选择。</p>
+      <p className="hero-line">从于都出发，越过万水千山。沿着地图，重访长征的重要时刻。</p>
      </div>
     </div>
     <div className="hero-dates hero-intro"><span>1934</span><i/><span>1936</span></div>
+    <div className="home-cover-foot"><a href="#home-route" className="home-scroll">向下滚动 · 展开征途 <span aria-hidden="true">↓</span></a><a className="cover-credit" href={coverExhibit.url} target="_blank" rel="noreferrer">{coverExhibit.label} · 局部 · {coverExhibit.credit} ↗</a></div>
    </section>
+   {active==='home'&&<HomeRoute navigate={navigateChapter} reduced={Boolean(reduce)}/>}
+   </div>
    <section hidden={active!=='origin'} id="origin" className="section origin">
     <div className="wrap">
      <div className="origin-heading"><Heading>征途的起点</Heading>
@@ -378,24 +358,34 @@ function App(){
      
     </div>
    </section>
-   <section hidden={active!=='events'} id="events" className="events" aria-label="重要历史 · 情境插画">
+   <section hidden={active!=='events'} id="events" className="events" aria-label="重要历史 · 史料与艺术作品">
+    <header className="history-heading wrap"><div className="eyebrow">第三章 / IMPORTANT MOMENTS</div><Heading>征途中的十个时刻</Heading><p>从史料与艺术作品中，回望一次次艰难的选择。</p><a href="#home" data-home-map onClick={navigateChapter} className="reference">← 返回首页路线图</a></header>
     <div className="history-gallery">
-     {routeStories.map((stop,index)=><figure className={'battle-scene battle-'+battleArt[index]} key={stop.title}>
-      <img src={media('battle-'+battleArt[index])} alt="" loading={index===0?'eager':'lazy'} decoding="async"/>
-      <a className="event-image-link" href={'#route-'+(index+1)} onClick={navigateChapter} tabIndex={-1} aria-hidden="true"/>
-      <figcaption>
-       <time>{stop.date}</time>
-       <h3 className="type-event"><a href={'#route-'+(index+1)} onClick={navigateChapter} aria-label={'到征途路线阅读'+stop.title}>{stop.title} <ArrowUpRight aria-hidden="true"/></a></h3>
-       <p>{captions[index]}</p>
-      </figcaption>
-     </figure>)}
+     {routeStories.map((stop,index)=>{
+      const exhibit=exhibits[index];
+      return <figure id={'events-'+(index+1)} className={'battle-scene battle-'+battleArt[index]} key={stop.title}>
+       <div className="event-artwork"><img src={media(exhibit.file)} width={exhibit.width} height={exhibit.height} alt={exhibit.label} loading="lazy" decoding="async"/>
+        <button type="button" className="artwork-expand" aria-label={'放大查看 '+exhibit.label} onClick={()=>open(exhibit)}><Maximize2 size={18}/></button>
+       </div>
+       <figcaption>
+        <div className="eyebrow"><span>{String(index+1).padStart(2,'0')} / 10</span><i/>{stop.place}</div>
+        <time>{stop.date}</time>
+        <h3 className="type-event" tabIndex={-1}>{stop.title}</h3>
+        <p>{stop.summary}</p>
+        <p className="event-significance">{stop.significance}</p>
+        <a className="event-story-link reference" href={'#route-'+(index+1)} onClick={navigateChapter}>进入路线详解 <ArrowUpRight size={16}/></a>
+        <a className="event-map-back reference" href="#home" data-home-map onClick={navigateChapter}>返回首页地图</a>
+        <div className="artwork-credit"><span>{exhibit.kind} · {exhibit.label}</span><a href={exhibit.url} target="_blank" rel="noreferrer">{exhibit.credit} · 来源 ↗</a></div>
+       </figcaption>
+      </figure>;
+     })}
     </div>
    </section>
    <div hidden={active!=='route'}><Route/></div>
    <section hidden={active!=='spirit'} id="spirit" className="spirit">
     <div className="spirit-cover">
-     <img src={media('battle-snow')} alt="" loading="lazy" decoding="async"/>
-     <div className="wrap"><Heading>长征精神</Heading></div>
+     <img src={media(coverExhibit.file)} alt="" loading="lazy" decoding="async"/>
+     <div className="wrap"><Heading>长征精神</Heading><a className="spirit-cover-credit" href={coverExhibit.url} target="_blank" rel="noreferrer">{coverExhibit.label} · 局部 · {coverExhibit.credit} ↗</a></div>
     </div>
     <div className="wrap spirit-reading">
      <ol className="spirit-list">

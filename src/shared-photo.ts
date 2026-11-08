@@ -13,7 +13,8 @@ function framePhoto(
 ):PhotoFrame|null{
  const bounds=photo.getBoundingClientRect();
  if(!naturalWidth||!naturalHeight||bounds.width<1||bounds.height<1)return null;
- const cover=Math.max(bounds.width/naturalWidth,bounds.height/naturalHeight);
+ const fit=getComputedStyle(photo).objectFit;
+ const cover=(fit==='contain'?Math.min:Math.max)(bounds.width/naturalWidth,bounds.height/naturalHeight);
  const width=naturalWidth*cover;
  const height=naturalHeight*cover;
  const [x,y]=getComputedStyle(photo).objectPosition.split(' ');

@@ -40,3 +40,81 @@ The place markers represent approximate localities. They do not identify surveye
 Short arrows indicate the historically documented crossing direction, not exact marching tracks.
 Historical sequence https://www.cac.gov.cn/2016-08/22/c_1119430867.htm
 Jiuxikou historical description https://www.sdcs1935.com/html/yanjiu/sdcsyz/202101/32fdc7ee66c9ef9c.shtml
+
+Image replacements — 8 November 2026
+
+Selection: contemporary records first (including eyewitness sketches), later artworks
+second, documented present-day photographs third. No AI depiction remains in the
+active exhibition. Maps are geographic data renderings, not generated landscapes.
+New files below are resized/re-encoded as WebP without retouching or invented detail.
+The gallery displays the complete images. The cover and chapter panels crop at display time.
+Copyright in the new artworks and publication photographs remains with the respective
+rights holders. No blanket open license is asserted; the source pages are provenance,
+not licenses. Existing Commons assets above retain their original license conditions.
+
+File: evidence-yudu.webp
+Title: 星夜渡过雩都河
+Artist: 黄镇 (Huang Zhen), eyewitness sketch from the Long March.
+Source: 天津日报, 从亲历者黄镇速写看红军长征, 28 September 2026.
+https://epaper.tianjinwe.com/tjrb/html/2026-09/28/content_143090_3879160.htm
+Image: https://epaper.tianjinwe.com/tjrb/resfile/2026-09-28/07/p1_b.jpg
+The source corrects an older misidentification as 过湘江; this depicts Yudu, not Xiang River.
+
+File: evidence-luding.webp
+Title: 泸定桥
+Artist: 黄镇 (Huang Zhen), eyewitness sketch.
+Same Tianjin Daily source; image:
+https://epaper.tianjinwe.com/tjrb/resfile/2026-09-28/07/p2_b.jpg
+
+File: art-xiang.webp
+Title: 湘江·1934
+Artist: 张庆涛 (Zhang Qingtao).
+Source: 深圳大学传播学院, 红军故事｜湘江战役 英魂永存！
+https://cmc.szu.edu.cn/info/1127/1762.htm
+The original publication's image includes its watermark, retained unchanged.
+The source says completed in 2010; no year is asserted in the image caption because
+other publications use differing creation dates.
+
+File: art-zunyi.webp
+Title: 遵义会议; artist: 沈尧伊 (Shen Yaoyi).
+File: art-jinsha.webp
+Title: 巧渡金沙江 (1951); artist: 张漾兮 (Zhang Yangxi).
+File: art-snow.webp
+Title: 红军过雪山 (1957); artist: 艾中信 (Ai Zhongxin).
+File: art-marsh.webp
+Title: 革命理想高于天 (1975); artist: 沈尧伊 (Shen Yaoyi).
+Source for these four digital reproductions: 共产党员网,
+“图步”长征路，纪念长征胜利85周年, 21 October 2021.
+https://www.12371.cn/2021/10/21/ARTI1634810104798403.shtml
+Image URLs, in the order listed above:
+https://p4.img.cctvpic.com/photoworkspace/contentimg/2021/10/21/2021102118562096188.jpg
+https://p3.img.cctvpic.com/photoworkspace/contentimg/2021/10/21/2021102118565918629.jpg
+https://p4.img.cctvpic.com/photoworkspace/contentimg/2021/10/21/2021102118580624918.jpg
+https://p5.img.cctvpic.com/photoworkspace/contentimg/2021/10/21/2021102118585251329.jpg
+These are later artistic interpretations, not photographs of 1934–1935 events.
+The source publication's frames are retained in the gallery.
+
+File: art-chishui.webp
+Title: 四渡赤水 (1976).
+Artists: 申根源、梅肖青、孙向阳、王天任.
+Source: 北京组工, 庆祝中国共产党成立100周年.
+https://zt.bjdj.gov.cn/rdztarticle/29714.html
+Image: https://ks3-cn-beijing.ksyun.com/zgw/article/29714/content/20210519161525_171.jpg
+
+File: memorial-wuqi.webp
+Subject: victory-reunion memorial sculpture, Central Red Army Long March Victory
+Memorial Museum, Shengli Mountain, Wuqi. This is a modern memorial photograph.
+Source: 中国纪检监察报 / 延安纪检监察网, 胜利山上再出发.
+https://yanan.qinfeng.gov.cn/info/1178/27011.htm
+Image: https://yanan.qinfeng.gov.cn/__local/F/66/A8/7997F6A570DFA716350C464010D_219FABF1_397E0.png
+The publication provides no named photographer or sculptor in its caption;
+they are not invented here.
+
+File: evidence-reunion.webp
+Subject: cadres of the First, Second and Fourth Front Armies, 1936, Gonghe town,
+Gansu (甘肃宫和镇, as specified by the source caption). Photographer unknown.
+Source: 共产党员网, 百年瞬间丨红军三大主力胜利会师, 9 October 2021.
+https://www.12371.cn/2021/10/09/VIDE1633740241787329.shtml
+Image: https://p1.img.cctvpic.com/photoworkspace/contentimg/2021/10/09/2021100909234150671.jpg
+This is a related group portrait, not a photograph claimed to show the Huining
+or Jiangtaibao reunion ceremony itself.
