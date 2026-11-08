@@ -40,14 +40,23 @@
     timers.clear();
     const restoreFocus = screen.contains(document.activeElement);
     updateReady();
-    html.classList.add('intro-revealing');
-    screen.classList.add('is-leaving');
     screen.inert = true;
     screen.setAttribute('aria-hidden', 'true');
+    let transition = null;
+    const sourceLetters = [...screen.querySelectorAll('.intro-word > span')];
+    const heroLetters = [...document.querySelectorAll('.hero-word > span')];
+    const names = ['march-long', 'march-zheng'];
+    const interrupt = () => transition?.skipTransition();
+    let completed = false;
     function complete() {
+      if (completed) return;
+      completed = true;
       root.inert = false;
       root.removeAttribute('aria-hidden');
-      html.classList.remove('intro-pending', 'intro-revealing');
+      html.classList.remove('intro-pending', 'intro-revealing', 'intro-title-transfer');
+      html.style.removeProperty('--intro-flight-duration');
+      for (const letter of [...sourceLetters, ...heroLetters]) letter.style.removeProperty('view-transition-name');
+      window.removeEventListener('resize', interrupt);
       screen.remove();
       window.removeEventListener('march:ready', mount);
       if (restoreFocus || directLink) {
@@ -64,8 +73,33 @@
       }
       window.dispatchEvent(new Event('march:entered'));
     }
-    if (reduced) complete();
-    else setTimeout(complete, 680);
+    if (reduced) { complete(); return; }
+    const homeVisible = document.querySelector('.home-chapter')?.hidden === false;
+    if (!directLink && homeVisible && sourceLetters.length === 2 && heroLetters.length === 2 && document.startViewTransition) {
+      // Both words share typography. Named glyph snapshots preserve their exact
+      // painted bounds while the browser interpolates position and uniform scale.
+      html.classList.add('intro-title-transfer');
+      html.style.setProperty('--intro-flight-duration', skipped ? '420ms' : '1050ms');
+      sourceLetters.forEach((letter, index) => { letter.style.viewTransitionName = names[index]; });
+      try {
+        transition = document.startViewTransition(() => {
+          screen.remove();
+          html.dataset.introLanded = 'true';
+          heroLetters.forEach((letter, index) => { letter.style.viewTransitionName = names[index]; });
+        });
+        window.addEventListener('resize', interrupt, {passive: true});
+        transition.ready.catch(() => {}); // Hidden tabs/resizes can skip snapshots.
+        transition.finished.then(complete, complete);
+        return;
+      } catch {
+        sourceLetters.forEach(letter => letter.style.removeProperty('view-transition-name'));
+        html.classList.remove('intro-title-transfer');
+      }
+    }
+    // Older browsers and direct chapter links retain a lightweight fade.
+    html.classList.add('intro-revealing');
+    screen.classList.add('is-leaving');
+    setTimeout(complete, 680);
   }
   function settled() {
     if (finished) return;
