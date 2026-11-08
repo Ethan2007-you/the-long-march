@@ -18,6 +18,19 @@ export function useChapterMotion(
   if(!content)return;
   let cancelFlight:(()=>void)|null=null;
 
+  const positionLinkedContent=(chapter:Chapter)=>{
+   const hash=window.location.hash;
+   if(chapter==='events'&&/^#events-(?:[1-9]|10)$/.test(hash)){
+    const target=document.getElementById(hash.slice(1));
+    target?.scrollIntoView({block:'start',behavior:'instant'});
+    target?.querySelector<HTMLElement>('h3')?.focus({preventScroll:true});
+   }else if(chapter==='home'&&(hash==='#home-route'||history.state?.homeMap)){
+    document.getElementById('home-route')?.scrollIntoView({block:'start',behavior:'instant'});
+   }else if(chapter==='home'&&hash==='#home'){
+    window.scrollTo({top:0,behavior:'instant'});
+   }
+  };
+
   const show=(chapter:Chapter, shared=false)=>{
    shown.current=chapter;
    flushSync(()=>commit(chapter));
@@ -34,13 +47,14 @@ export function useChapterMotion(
     const heading=route.querySelector<HTMLElement>(shared?'.atlas-text h3':'#route-title');
     heading?.focus({preventScroll:true});
    }
+   positionLinkedContent(chapter);
    return route;
   };
   function changeChapter(){
    const next=readChapter();
    const photo=pendingPhoto.current;
    pendingPhoto.current=null;
-   if(next===shown.current)return;
+   if(next===shown.current){positionLinkedContent(next);return;}
 
    cancelFlight?.();
    if(reduced||!photo||shown.current!=='events'||next!=='route'){
@@ -60,7 +74,9 @@ export function useChapterMotion(
   }
 
   window.addEventListener('hashchange',changeChapter);
+  const initialFrame=requestAnimationFrame(()=>positionLinkedContent(readChapter()));
   return ()=>{
+   cancelAnimationFrame(initialFrame);
    window.removeEventListener('hashchange',changeChapter);
    cancelFlight?.();
   };
