@@ -1,2 +1,45 @@
-<!doctype html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" type="image/svg+xml" href="./march-emblem.svg"><meta name="theme-color" content="#090a0c"><meta name="description" content="以中央红军路线为主线，回望长征历史与长征精神的数字展览。"><title>长征 · 不朽征途 | THE LONG MARCH</title>  <script defer src="./assets/index-C43GGuJf.js"></script>
-</head><body><div id="root"></div></body></html>
+<!doctype html>
+<html lang="zh-CN" class="intro-pending">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#090a0c">
+  <meta name="description" content="以中央红军路线为主线，回望长征历史与长征精神的数字展览。">
+  <title>长征 · 不朽征途 | THE LONG MARCH</title>
+  <link rel="icon" type="image/svg+xml" href="./march-emblem.svg">
+  <style>html,body{margin:0;background:#090a0c}html.intro-pending{overflow:hidden}</style>
+  <link rel="stylesheet" href="./intro.css">
+  <script defer src="./intro.js"></script>
+  <script defer src="./assets/index-2RrRHhs0.js"></script>
+</head>
+<body>
+  <!-- This opening paints before the application bundle arrives. -->
+  <div id="march-intro" class="intro-screen" role="region" aria-label="长征展览开场">
+    <svg class="intro-mountains" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <g fill="none" stroke="currentColor" stroke-width="1">
+        <path d="M-80 630 90 555 197 589 353 422 440 475 589 289 722 411 837 331 1013 478 1133 427 1510 597"/>
+        <path d="M-80 670 95 592 206 622 360 461 445 512 594 329 723 446 842 370 1013 514 1137 463 1510 635"/>
+        <path d="M-80 710 100 628 215 659 367 502 450 550 599 370 725 483 847 410 1014 553 1141 501 1510 675"/>
+        <path d="M-80 750 105 664 224 695 374 542 455 589 604 410 727 520 852 450 1014 592 1145 539 1510 715"/>
+        <path d="M-80 790 110 702 233 731 381 583 460 627 609 451 729 557 857 490 1015 630 1149 577 1510 755"/>
+        <path d="M-80 830 115 739 242 767 388 623 465 666 614 492 731 594 862 530 1016 669 1153 615 1510 795"/>
+        <path d="M-80 870 120 777 251 803 395 664 470 704 619 533 733 631 867 570 1017 708 1157 653 1510 835"/>
+      </g>
+    </svg>
+    <div class="intro-top"><span>长征 · 不朽征途</span><span>1934 <i></i> 1936</span></div>
+    <div class="intro-center">
+      <p class="intro-kicker">万水千山 · 征途将启</p>
+      <div class="intro-word" aria-hidden="true"><span>长</span><span>征</span></div>
+      <p class="intro-poem">红军不怕远征难，万水千山只等闲。</p>
+      <div class="intro-journey" aria-hidden="true">
+        <div class="intro-journey-line"><span></span><i></i><i></i><i></i><i></i></div>
+        <div class="intro-journey-labels"><span>展卷</span><span>山河</span><span>启程</span></div>
+      </div>
+      <p id="intro-status" class="intro-status" role="status" aria-live="polite">展览正在准备</p>
+    </div>
+    <div class="intro-bottom"><span>沿着足迹，走进历史</span><button id="intro-skip" type="button">跳过开场 <span aria-hidden="true">↗</span></button><a id="intro-retry" href="" hidden>重新载入 ↻</a></div>
+  </div>
+  <div id="root" inert aria-hidden="true"></div>
+  <noscript><style>#march-intro{display:none}html.intro-pending{overflow:auto}</style><p style="padding:40px;color:#eae5dc">请启用 JavaScript 后查看长征数字展览。</p></noscript>
+</body>
+</html>
