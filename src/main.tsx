@@ -15,6 +15,7 @@ import './style.css';
 import {coordinates,waypoints,path,routeStories,mapLocations} from './route-geometry';
 import {HomeRoute} from './home-route';
 import {exhibits,coverExhibit} from './exhibits';
+import {prepareStation} from './station-media';
 
 const nav=[['home','首页'],['origin','历史背景'],['events','重要历史'],['route','征途路线'],['spirit','长征精神']] as const;
 function currentPage():Chapter{
@@ -89,7 +90,7 @@ function CrossingPreview(){
  </svg>;
 }
 
-function Route(){
+function Route({navigate}:{navigate:(event:React.MouseEvent<HTMLAnchorElement|SVGAElement>)=>void}){
  const [selected,setSelected]=useState(()=>linkedStation()??0);
  const [local,setLocal]=useState(false);
  const [step,setStep]=useState(0);
@@ -124,8 +125,8 @@ function Route(){
   setScale(next);
   setOffset(({x,y})=>({x:Math.max(-395*(next-1),Math.min(395*(next-1),x)),y:Math.max(-270*(next-1),Math.min(270*(next-1),y))}));
  }
- return <section id="route" className="section route">
-  <div className="wrap"><header className="section-title"><h2 className="type-chapter" id="route-title" tabIndex={-1}>山河为证</h2></header>
+ return <section id="route" className="section route" data-station={selected}>
+  <div className="wrap"><header className="section-title"><h2 className="type-chapter" id="route-title" tabIndex={-1}>山河为证</h2><a className="route-return" href="#home" data-home-map onClick={navigate}>← 返回首页地图</a></header>
   
   <div className="atlas">
    <div className="atlas-column">
@@ -165,7 +166,7 @@ function Route(){
       {([[97,32,'横断山脉'],[101.4,35.8,'岷 山'],[109.2,33.8,'秦 岭'],[111.5,30.4,'长 江'],[103.5,28.8,'金沙江'],[114,29.35,'鄱阳湖流域']] as const).map(([lon,lat,label])=>{const [x,y]=coordinates([lon,lat]);return <text key={label} className="region-label" x={x} y={y}>{label}</text>;})}
       <path d={path} className="route-shadow" fill="none"/>
       <path d={path} className="route-line" pathLength="1" fill="none"/>
-      {waypoints.map(({name,coords})=>{const [x,y]=coordinates(coords);return <g className="atlas-waypoint" key={name} transform={`translate(${x} ${y})`}><circle r="2.8"/><title>{name} · 路线参考点</title></g>;})}
+      {waypoints.map(({name,coords})=>{const [x,y]=coordinates(coords);return <g className="atlas-waypoint" key={name} transform={`translate(${x} ${y})`}><circle r="2.8"/><title>{name+' · 路线参考点'}</title></g>;})}
       {[...mapLocations].sort((first,second)=>Number(first.index===selected)-Number(second.index===selected)).map(({name,coords,label:[dx,dy],index})=>{
        const [x,y]=coordinates(coords);
        const active=selected===index;
@@ -216,7 +217,7 @@ function Route(){
     <p className="atlas-date">{stop.date} / {stop.place}</p>
     <h3 className="type-event" tabIndex={-1}>{stop.title}</h3>
     <figure key={selected} className={`station-image battle-${battleArt[selected]}`}>
-     <img src={media(exhibits[selected].file)} alt={exhibits[selected].label} loading="lazy" decoding="async"/>
+     <img src={media(exhibits[selected].file)} width={exhibits[selected].width} height={exhibits[selected].height} alt={exhibits[selected].label} loading="lazy" decoding="async"/>
     </figure>
     <p className="station-credit"><a href={exhibits[selected].url} target="_blank" rel="noreferrer">{exhibits[selected].kind} · {exhibits[selected].credit} ↗</a></p>
     {local?<div className="story-copy crossing-story" id="crossing-story" role="tabpanel" aria-labelledby={`crossing-tab-${step}`}>
@@ -241,6 +242,7 @@ function Route(){
 function App(){
  const main=useRef<HTMLElement>(null);
  const pendingPhoto=useRef<SharedPhoto|null>(null);
+ const navigationIntent=useRef(0);
  const dialog=useRef<HTMLDialogElement>(null);
  const [enlarged,open]=useState<Exhibit|null>(null);
  const [active,setActive]=useState(currentPage);
@@ -269,6 +271,12 @@ function App(){
  }
  const reduce=useReducedMotion();
  useEffect(()=>{
+  const cancelPending=()=>{navigationIntent.current+=1;};
+  window.addEventListener('hashchange',cancelPending);
+  window.addEventListener('popstate',cancelPending);
+  return ()=>{window.removeEventListener('hashchange',cancelPending);window.removeEventListener('popstate',cancelPending);};
+ },[]);
+ useEffect(()=>{
   document.documentElement.dataset.exhibitReady='true';
   // A failed optional opening script must never leave the working exhibition inert.
   if(document.documentElement.dataset.introController!=='ready'){
@@ -294,25 +302,36 @@ function App(){
   document.body.style.overflow='hidden';
   return ()=>{document.body.style.overflow=previous;};
  },[enlarged]);
- function navigateChapter(event:React.MouseEvent<HTMLAnchorElement|SVGAElement>){
+ async function navigateChapter(event:React.MouseEvent<HTMLAnchorElement|SVGAElement>){
   if(event.button!==0||event.ctrlKey||event.metaKey||event.altKey||event.shiftKey)return;
-  const hash=event.currentTarget.getAttribute('href')??'';
+  const intent=++navigationIntent.current;
+  const link=event.currentTarget;
+  const hash=link.getAttribute('href')??'';
+  const returnToMap=link.hasAttribute('data-home-map');
+  const returnStation=Number(document.getElementById('route')?.dataset.station??0);
+  const homeReturn=history.state?.homeReturn;
   if(hash===window.location.hash){
    if(hash==='#home'){
     event.preventDefault();
-    const map=event.currentTarget.hasAttribute('data-home-map');
+    const map=returnToMap;
     history.replaceState(map?{homeMap:true}:null,'',hash);
     document.getElementById(map?'home-route':'home')?.scrollIntoView({behavior:reduce?'instant':'smooth'});
    }
    return;
   }
   event.preventDefault();
-  if(!reduce&&active==='events'&&hash.startsWith('#route-')&&event.currentTarget instanceof HTMLAnchorElement){
-   pendingPhoto.current=captureSharedPhoto(event.currentTarget);
+  if(!reduce&&active==='events'&&hash.startsWith('#route-')&&link instanceof HTMLAnchorElement){
+   pendingPhoto.current=captureSharedPhoto(link);
+  }
+  const station=hash.match(/^#route-([1-9]|10)$/);
+  if(active==='home'&&station){
+   await prepareStation(Number(station[1])-1);
+   if(intent!==navigationIntent.current)return;
   }
   // Keep real anchors and browser history, without jumping to the section mid-transition.
-  if(active==='home'&&hash.startsWith('#events-'))history.replaceState({homeMap:true},'',window.location.hash||'#home');
-  history.pushState(event.currentTarget.hasAttribute('data-home-map')?{homeMap:true}:null,'',hash);
+  const fromHome=active==='home'&&station?{scroll:window.scrollY,width:window.innerWidth}:null;
+  if(fromHome&&station)history.replaceState({homeMap:true,homeStation:Number(station[1])-1,homeScroll:fromHome.scroll,homeWidth:fromHome.width},'',window.location.hash||'#home');
+  history.pushState(returnToMap?{homeMap:true,homeStation:returnStation,homeScroll:homeReturn?.scroll,homeWidth:homeReturn?.width}:fromHome?{homeReturn:fromHome}:null,'',hash);
   flushSync(()=>window.dispatchEvent(new HashChangeEvent('hashchange')));
  }
  return <div className="site">
@@ -392,7 +411,7 @@ function App(){
      })}
     </div>
    </section>
-   <div hidden={active!=='route'}><Route/></div>
+   <div hidden={active!=='route'}><Route navigate={navigateChapter}/></div>
    <section hidden={active!=='spirit'} id="spirit" className="spirit">
     <div className="spirit-cover">
      <img src={media(coverExhibit.file)} alt="" loading="lazy" decoding="async"/>

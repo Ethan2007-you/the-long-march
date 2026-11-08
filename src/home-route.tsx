@@ -3,31 +3,35 @@ import {motion,useScroll,useTransform} from 'framer-motion';
 import {ArrowUpRight,Compass} from 'lucide-react';
 import rivers from './rivers.json';
 import {coordinates,mapLocations,path,routeStories,waypoints} from './route-geometry';
+import {warmStation} from './station-media';
 
 type Props={navigate:(event:React.MouseEvent<HTMLAnchorElement|SVGAElement>)=>void;reduced:boolean};
 const media=(name:string)=>import.meta.env.BASE_URL+'media/'+name+'.webp';
 
 export function HomeRoute({navigate,reduced}:Props){
  const scene=useRef<HTMLElement>(null);
- const [selected,setSelected]=useState(0);
+ const [selected,setSelected]=useState(()=>{
+  const index=history.state?.homeStation;
+  return Number.isInteger(index)&&index>=0&&index<routeStories.length?index:0;
+ });
  const {scrollYProgress}=useScroll({target:scene,offset:['start end','end end']});
  const scale=useTransform(scrollYProgress,[0,.52,1],[.88,1,1]);
  const titleY=useTransform(scrollYProgress,[0,.5],[50,0]);
  const drawing=useTransform(scrollYProgress,[.12,.8],[0,1]);
  const selectedStop=routeStories[selected];
- const select=(index:number)=>setSelected(index);
+ const select=(index:number)=>{setSelected(index);void warmStation(index);};
  return <>
   <section id="home-route" ref={scene} className="home-route" aria-labelledby="home-route-title">
    <div className="home-route-stage wrap">
     <motion.header className="home-route-heading" style={reduced?undefined:{y:titleY}}>
      <p className="eyebrow">沿着红色的足迹 / 1934—1936</p>
      <h2 id="home-route-title">万水千山，<br className="mobile-break"/>一程一故事。</h2>
-     <p>从于都河畔到陕北吴起，从出发到会师。<br/>点击地图上的地点，走进第三章「重要历史」。</p>
+     <p>从于都河畔到陕北吴起，从出发到会师。<br/>点击地图上的地点，沿「征途路线」走进这一站。</p>
     </motion.header>
     <motion.div className="home-atlas" style={reduced?undefined:{scale}}>
      <div className="home-map-frame">
       <div className="home-map-heading"><Compass size={23}/><span>中央红军长征路线<small>九个行军节点 · 另标 1936 年会师地</small></span><span className="home-map-north" aria-hidden="true">北 ↑</span></div>
-      <svg className="home-route-svg" viewBox="120 65 670 455" role="group" aria-label="长征路线示意图，点击地点查看重要历史">
+      <svg className="home-route-svg" viewBox="120 65 670 455" role="group" aria-label="长征路线示意图，点击地点进入征途路线对应站点">
        <defs><linearGradient id="home-map-shade" x1="0" x2="1"><stop stopColor="#111813" stopOpacity=".4"/><stop offset="1" stopColor="#111813" stopOpacity=".05"/></linearGradient></defs>
        <image href={media('atlas-relief')} width="790" height="540"/>
        <rect width="790" height="540" fill="url(#home-map-shade)"/>
@@ -37,11 +41,11 @@ export function HomeRoute({navigate,reduced}:Props){
        })}
        <path d={path} className="home-route-track"/>
        <motion.path d={path} className="home-route-drawing" style={reduced?undefined:{pathLength:drawing}}/>
-       {waypoints.map(({name,coords})=>{const [x,y]=coordinates(coords);return <circle key={name} cx={x} cy={y} r="2" className="home-waypoint"><title>{name} · 途经地点</title></circle>;})}
+       {waypoints.map(({name,coords})=>{const [x,y]=coordinates(coords);return <circle key={name} cx={x} cy={y} r="2" className="home-waypoint"><title>{name+' · 途经地点'}</title></circle>;})}
        {mapLocations.map(({name,coords,label:[dx,dy],index})=>{
         const [x,y]=coordinates(coords);
-        return <a key={name} href={'#events-'+(index+1)} onClick={navigate} onMouseEnter={()=>select(index)} onFocus={()=>select(index)} aria-label={name+'：'+routeStories[index].title+'，查看第三章介绍'} className={'home-map-stop'+(selected===index?' is-selected':'')+(index===9?' is-reunion':'')}>
-         <title>{name} · {routeStories[index].date} · {routeStories[index].title}</title>
+        return <a key={name} href={'#route-'+(index+1)} onClick={navigate} onMouseEnter={()=>select(index)} onFocus={()=>select(index)} aria-label={name+'：'+routeStories[index].title+'，进入征途路线对应站点'} className={'home-map-stop'+(selected===index?' is-selected':'')+(index===9?' is-reunion':'')}>
+         <title>{name+' · '+routeStories[index].date+' · '+routeStories[index].title}</title>
          <circle cx={x} cy={y} r="17" className="home-stop-target"/>
          <path d={`M${x} ${y}l${dx*.75} ${dy*.75}`} className="home-stop-leader"/>
          <circle cx={x} cy={y} r="7" className="home-stop-ring"/>
@@ -58,11 +62,11 @@ export function HomeRoute({navigate,reduced}:Props){
       <h3>{selectedStop.title}</h3>
       <p className="home-preview-place">{selectedStop.place}</p>
       <p>{selectedStop.significance}</p>
-      <a className="home-read-story" href={'#events-'+(selected+1)} onClick={navigate}>走进这一站 <ArrowUpRight size={19}/></a>
+      <a className="home-read-story" href={'#route-'+(selected+1)} onClick={navigate}>走进这一站 <ArrowUpRight size={19}/></a>
       <div className="home-atlas-note">地形与河流仅供地理参照。路线依历史先后连接关键地点，省略实际绕行，并非精确行军轨迹。</div>
      </aside>
     </motion.div>
-    <ol className="home-route-index" aria-label="地点目录，与地图节点对应">{routeStories.map((stop,index)=><li key={stop.title}><a href={'#events-'+(index+1)} onClick={navigate} onMouseEnter={()=>select(index)} onFocus={()=>select(index)}><span>{String(index+1).padStart(2,'0')}</span>{stop.title}<ArrowUpRight size={13}/></a></li>)}</ol>
+    <ol className="home-route-index" aria-label="地点目录，与地图节点对应">{routeStories.map((stop,index)=><li key={stop.title}><a href={'#route-'+(index+1)} onClick={navigate} onMouseEnter={()=>select(index)} onFocus={()=>select(index)}><span>{String(index+1).padStart(2,'0')}</span>{stop.title}<ArrowUpRight size={13}/></a></li>)}</ol>
     <p className="home-map-source">地理底图：<a href="https://www.mapzen.com/rights/" target="_blank" rel="noreferrer">Mapzen 高程数据</a> · <a href="https://www.naturalearthdata.com/about/terms-of-use/" target="_blank" rel="noreferrer">Natural Earth 河流数据</a> · 地点按近似经纬度标注</p>
    </div>
   </section>

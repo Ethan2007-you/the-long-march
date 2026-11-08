@@ -946,3 +946,26 @@ body:has([data-shared-photo]){overflow-anchor:none}
 .home-map-stop .home-stop-label{pointer-events:all}
 
 .home-stop-preview h3{text-wrap:balance}
+
+/* Shared atlas transition: persistent navigation, moving map, quiet story reveal. */
+.route .section-title{display:flex;align-items:center;justify-content:space-between;gap:22px}
+.route-return{flex:none;display:inline-flex;align-items:center;min-height:44px;color:#d6b88e;font-size:12px;border-bottom:1px solid #c5a36a50}
+.route-return:hover{color:#ffe0aa;border-color:#d6b88e}
+::view-transition{pointer-events:none}
+html.chapter-transition::view-transition-group(march-atlas){animation-duration:820ms;animation-timing-function:cubic-bezier(.22,.78,.18,1)}
+html.chapter-transition::view-transition-old(march-atlas){animation:atlas-old .65s ease both;mix-blend-mode:normal}
+html.chapter-transition::view-transition-new(march-atlas){animation:atlas-new .65s ease both;mix-blend-mode:normal}
+html.chapter-transition::view-transition-group(march-masthead){animation:none}
+html.chapter-transition::view-transition-old(march-masthead){display:none}
+html.chapter-transition::view-transition-new(march-masthead){animation:none}
+html.chapter-transition::view-transition-old(root){animation:chapter-out .3s ease both}
+html.chapter-transition::view-transition-new(root){animation:chapter-in .5s .06s ease both}
+html.chapter-transition::view-transition-new(march-route-story){animation:route-story-enter .55s .13s cubic-bezier(.22,.78,.18,1) both}
+html.chapter-transition::view-transition-new(march-route-heading){animation:route-story-enter .5s .06s cubic-bezier(.22,.78,.18,1) both}
+@keyframes chapter-out{to{opacity:0}}
+@keyframes chapter-in{from{opacity:0}to{opacity:1}}
+@keyframes atlas-old{to{opacity:0}}
+@keyframes atlas-new{from{opacity:0}to{opacity:1}}
+@keyframes route-story-enter{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:720px){.route .section-title{align-items:baseline;gap:10px}.route-return{font-size:11px}.route .section-title h2{white-space:nowrap}}
+@media(prefers-reduced-motion:reduce){::view-transition-group(*),::view-transition-old(*),::view-transition-new(*){animation:none!important}}
