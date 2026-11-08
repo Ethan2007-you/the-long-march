@@ -268,6 +268,17 @@ function App(){
   }
  }
  const reduce=useReducedMotion();
+ useEffect(()=>{
+  document.documentElement.dataset.exhibitReady='true';
+  // A failed optional opening script must never leave the working exhibition inert.
+  if(document.documentElement.dataset.introController!=='ready'){
+   const root=document.getElementById('root');
+   if(root){root.inert=false;root.removeAttribute('aria-hidden');}
+   document.documentElement.classList.remove('intro-pending','intro-revealing');
+   document.getElementById('march-intro')?.remove();
+  }
+  window.dispatchEvent(new Event('march:ready'));
+ },[]);
  useChapterMotion(currentPage,setActive,Boolean(reduce),main,pendingPhoto);
  const {scrollYProgress}=useScroll();
  const spring=useSpring(scrollYProgress,{stiffness:180,damping:40,mass:.25});

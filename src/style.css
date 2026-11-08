@@ -398,20 +398,6 @@ body{background:#351a1c;color:#f7e7d0}
 .history-gallery .battle-scene h3 a{scroll-margin-top:125px}
 
 /* Display faces are scoped by the heading's editorial role. */
-@font-face {
- font-family:"March Brush";
- src:url("./fonts/march-cursive.woff2?inline") format("woff2");
- font-style:normal;
- font-weight:400;
- font-display:swap;
-}
-@font-face {
- font-family:"March Running";
- src:url("./fonts/march-running.woff2?inline") format("woff2");
- font-style:normal;
- font-weight:400;
- font-display:swap;
-}
 .type-cover,.type-chapter,.type-event,.type-spirit{font-synthesis:none}
 .hero-word.type-cover {
  font:400 clamp(150px, min(27vw, 47vh), 470px)/.99 "March Brush",var(--serif);
