@@ -3,7 +3,8 @@ import {motion,useScroll,useTransform} from 'framer-motion';
 import {ArrowUpRight,Compass} from 'lucide-react';
 import rivers from './rivers.json';
 import {warmStation} from './station-media';
-import {coordinates,mapLocations,path,routeStories,waypoints} from './route-geometry';
+import {InkRoute,MapSurface} from './cartography';
+import {coordinates,mapLocations,routeStories,waypoints} from './route-geometry';
 
 type Props={navigate:(event:React.MouseEvent<HTMLAnchorElement|SVGAElement>)=>void;reduced:boolean};
 const media=(name:string)=>import.meta.env.BASE_URL+'media/'+name+'.webp';
@@ -23,21 +24,20 @@ export function HomeRoute({navigate,reduced}:Props){
     <motion.header className="home-route-heading" style={reduced?undefined:{y:titleY}}>
      <p className="eyebrow">沿着红色的足迹 / 1934—1936</p>
      <h2 className="type-chapter" id="home-route-title">万水千山，<br className="mobile-break"/>一程一故事。</h2>
-     <p>从于都河畔到陕北吴起，再到红军三大主力会师。<br/>点击地图上的地点，走进第三章「重要历史」。</p>
+     <p>这条主线连接中央红军1934—1935年的行军节点，终点是吴起镇。<br/>另标会宁、将台堡，交代1936年三大主力相继会师。点击地点，了解事件中的决策与影响。</p>
     </motion.header>
     <motion.div className="home-atlas" style={reduced?undefined:{scale}}>
      <div className="home-map-frame">
-      <div className="home-map-heading"><Compass size={23}/><span>中央红军长征路线<small>九个行军节点 · 另标 1936 年会师地</small></span><span className="home-map-north" aria-hidden="true">北 ↑</span></div>
+      <div className="home-map-heading"><Compass size={23}/><span>中央红军长征路线<small>九个行军节点 · 另标 1936 年会师地</small></span></div>
       <svg className="home-route-svg" viewBox="120 65 670 455" role="group" aria-label="长征路线示意图，点击地点查看重要历史">
-       <defs><linearGradient id="home-map-shade" x1="0" x2="1"><stop stopColor="#111813" stopOpacity=".4"/><stop offset="1" stopColor="#111813" stopOpacity=".05"/></linearGradient></defs>
-       <image href={media('atlas-relief')} width="790" height="540"/>
-       <rect width="790" height="540" fill="url(#home-map-shade)"/>
+       <desc>原有地理节点之间的概化连线，以朱砂笔迹呈现，不是精确实测行军轨迹。</desc>
+       <image className="cartographic-terrain" href={media('atlas-relief')} width="790" height="540"/>
+       <MapSurface id="home-etching" frame={[132,77,646,431]}/>
        <g className="home-map-rivers">{rivers.map((river,index)=><path key={index} d={river}/>)}</g>
        {([[98.6,32.3,'横断山脉'],[104.5,31.3,'四川'],[108.5,28.7,'贵州'],[101,25.6,'云南'],[113.7,27.7,'江西'],[110.1,34,'秦岭'],[103.4,37.7,'甘肃'],[110.4,37.8,'陕西']] as const).map(([lon,lat,name])=>{
         const [x,y]=coordinates([lon,lat]);return <text key={name} className="home-map-region" x={x} y={y}>{name}</text>;
        })}
-       <path d={path} className="home-route-track"/>
-       <motion.path d={path} className="home-route-drawing" style={reduced?undefined:{pathLength:drawing}}/>
+       <InkRoute id="home-ink" progress={reduced?undefined:drawing}/>
        {waypoints.map(({name,coords})=>{const [x,y]=coordinates(coords);return <circle key={name} cx={x} cy={y} r="2" className="home-waypoint"><title>{name} · 途经地点</title></circle>;})}
        {mapLocations.map(({name,coords,label:[dx,dy],index})=>{
         const [x,y]=coordinates(coords);
@@ -45,6 +45,7 @@ export function HomeRoute({navigate,reduced}:Props){
          <title>{name} · {routeStories[index].date} · {routeStories[index].title}</title>
          <circle cx={x} cy={y} r="17" className="home-stop-target"/>
          <path d={`M${x} ${y}l${dx*.75} ${dy*.75}`} className="home-stop-leader"/>
+         <path d={`M${x},${y-10}l10,10 -10,10 -10,-10Z`} className="home-stop-seal"/>
          <circle cx={x} cy={y} r="7" className="home-stop-ring"/>
          <circle cx={x} cy={y} r="2.5" className="home-stop-dot"/>
          <text x={x+dx} y={y+dy} className="home-stop-label">{name}</text>

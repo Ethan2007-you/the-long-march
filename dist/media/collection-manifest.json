@@ -12,36 +12,6 @@
       "treatment": "Encoded as WebP without generative alteration. Cropped only by the shared 16:9 layout."
     },
     {
-      "file": "collection-snow.webp",
-      "providedFile": "翻阅夹金山/2258402a3966ed64d24669d137b7e0fe_720.png",
-      "originalSize": [
-        472,
-        305
-      ],
-      "originalSHA256": "1f771e31eb451a3ba4362d5d24c146a52e8b69e2e2a04ee033da5d0d990ef874",
-      "treatment": "Encoded as WebP without generative alteration. Cropped only by the shared 16:9 layout."
-    },
-    {
-      "file": "collection-grass.webp",
-      "providedFile": "过草地/9e52c921fe835df4212c01ef1d16af57_720.png",
-      "originalSize": [
-        397,
-        268
-      ],
-      "originalSHA256": "6e0274a6adba112c1a76fdae5db0a737977d7f83b411c2261317ab036f080e45",
-      "treatment": "Encoded as WebP without generative alteration. Cropped only by the shared 16:9 layout."
-    },
-    {
-      "file": "collection-decision.webp",
-      "providedFile": "遵义会议/cbc368219ea77b768af9175633ce90d0_720.png",
-      "originalSize": [
-        800,
-        376
-      ],
-      "originalSHA256": "36e9c2f6d446f50aa38b640a92cc66d70ddcc5b32f68944666d5adfe37122903",
-      "treatment": "Encoded as WebP without generative alteration. Cropped only by the shared 16:9 layout."
-    },
-    {
       "file": "collection-luding.webp",
       "providedFile": "飞夺泸定桥/6376f2a8920a887eebc0f565e065b821_720.png",
       "originalSize": [
@@ -52,5 +22,6 @@
       "treatment": "Encoded as WebP without generative alteration. Cropped only by the shared 16:9 layout."
     }
   ],
-  "rights": "User-provided online images; copyright remains with original rightsholders. No open-license claim."
+  "rights": "User-provided online images; copyright remains with original rightsholders. No open-license claim.",
+  "selectedCount": 2
 }

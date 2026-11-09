@@ -2,7 +2,7 @@ import {useEffect, useRef, type RefObject} from 'react';
 import {flushSync} from 'react-dom';
 import {flySharedPhoto, type SharedPhoto} from './shared-photo';
 
-export type Chapter = 'home' | 'origin' | 'events' | 'route' | 'spirit';
+export type Chapter = 'home' | 'origin' | 'events' | 'route' | 'spirit' | 'people';
 
 export function useChapterMotion(
  readChapter:()=>Chapter,
@@ -54,6 +54,10 @@ export function useChapterMotion(
    if(route){
     const heading=route.querySelector<HTMLElement>(shared?'.atlas-text h3':'#route-title');
     heading?.focus({preventScroll:true});
+   }else{
+    const selector=chapter==='home'?'#home h1':'#'+chapter+' h2';
+    const heading=content.querySelector<HTMLElement>(selector);
+    if(heading){heading.tabIndex=-1;heading.focus({preventScroll:true});}
    }
    positionLinkedContent(chapter);
    return route;

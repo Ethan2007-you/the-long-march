@@ -9,13 +9,13 @@ from fontTools import subset
 from fontTools.ttLib import TTFont
 root=Path(__file__).resolve().parents[1]
 text=''
-for name in ('main.tsx','home-route.tsx'):
+for name in ('main.tsx','home-route.tsx','people.tsx','spirit-film.tsx','editorial.tsx'):
  source=(root/'src'/name).read_text(encoding='utf-8')
  text+=''.join(re.findall(r'<Heading>(.*?)</Heading>',source,re.S))
  text+=''.join(re.findall(r'<h[234][^>]+className="type-(?:chapter|event|detail|spirit)"[^>]*>(.*?)</h[234]>',source,re.S))
-for name in ('data.ts','exhibit-notes.ts','crossings.ts','spirit-scenes.ts'):
+for name in ('data.ts','exhibit-notes.ts','crossings.ts','people-stories.ts','exhibit-interactions.ts','spirit-film-data.ts','narrative-data.ts','route-context.ts'):
  source=(root/'src'/name).read_text(encoding='utf-8')
- text+=''.join(re.findall(r'(?:heading|title)\s*:\s*[\"\x27]([^\"\x27]+)',source))
+ text+=''.join(re.findall(r'(?:heading|title|name|quality|question)\s*:\s*[\"\x27]([^\"\x27]+)',source))
  source=source.split('export const themes')[-1].split('export const people')[0] if name=='data.ts' else ''
  pairs=re.findall(r"\[\s*'([^']+)'\s*,\s*'([^']+)'",source)
  text+=''.join(first+second for first,second in pairs)

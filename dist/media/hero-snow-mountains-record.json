@@ -1,0 +1,12 @@
+{
+  "role": "首页左侧无人雪山背景",
+  "originalFile": "art-snow-unframed.webp",
+  "crop": [
+    0,
+    0,
+    1692,
+    385
+  ],
+  "treatment": "Exact crop of an existing painting. No people in this crop. Lossless encoding; no generative editing.",
+  "composition": "与右侧既有油画经CSS透明蒙版衔接，统一灰蓝调；标题背后保留真实山势和云雪。"
+}

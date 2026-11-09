@@ -1,0 +1,61 @@
+
+
+/* Cover introduction. */
+.hero .hero-caption{max-width:min(510px,48vw)}
+
+.hero .hero-introduction{font:14px/1.95 var(--sans);letter-spacing:.015em;color:#e3d0ba;max-width:36em;margin:0}
+
+/* Historical readings keep short, connected paragraphs beside each artwork. */
+.event-image-column{min-width:0}
+.history-gallery .event-reading-title,.route-reading .type-detail,.force-overview .type-detail{
+ font-family:"March Running",var(--serif);font-weight:400;font-style:normal;font-synthesis:none;
+}
+.history-gallery .event-reading-title{font-size:clamp(25px,2.15vw,34px);line-height:1.35;margin:0 0 22px;color:#edd1a9}
+.history-gallery .event-reading-prose p{font:14px/1.95 var(--sans);color:#d9d0c0;max-width:none;margin:0 0 16px}
+.history-gallery .event-reading-prose p:last-child{margin-bottom:0}
+
+/* A geographic reading lives under the same station picture in all ten states. */
+.route .route-reading-lead{font:14px/1.8 var(--sans);color:#ddc1aa;margin:0 0 22px;max-width:65em}
+.route .station-figure{margin:0;min-width:0}
+.route .station-figure .station-image{margin:0}
+.route .route-reading h4{font-size:clamp(26px,2.3vw,35px);line-height:1.4;margin:0 0 21px;color:#f2d4ae}
+.route .station-reading-prose p,.route .crossing-analysis p{font:15px/1.95 var(--sans);color:#ead5c2;max-width:none;margin:0 0 19px}
+.route .station-reading-prose p:last-child,.route .crossing-analysis p:last-child{margin-bottom:0}
+
+/* Background photographs fill three equal frames beside the reading. */
+.site .origin .origin-evidence-gallery .photo{display:grid;grid-template-rows:minmax(0,1fr);overflow:visible;aspect-ratio:auto}
+.site .origin .origin-evidence-gallery .photo img{grid-row:1;min-height:0}
+.force-overview{margin-top:65px;padding-top:38px;border-top:1px solid #d6ad7b51}
+.force-overview>header{display:grid;grid-template-columns:minmax(240px,.8fr) minmax(0,1.2fr);gap:44px;align-items:end;margin-bottom:32px}
+.force-overview h3{font-size:clamp(35px,3.65vw,54px);line-height:1.25;color:#f0d2aa;margin:0}
+.force-overview>header p{font:15px/1.95 var(--sans);margin:0;color:#dec4ae;max-width:45em}
+.force-overview ol{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 44px}
+.force-overview li{padding:25px 0;border-top:1px solid #d6ad7b38}
+.force-overview time{font:12px/1.8 var(--mono);color:#d1ab7e}
+.force-overview h4{font-size:32px;line-height:1.3;color:#f1d5af;margin:9px 0 12px}
+.force-overview li p{font:15px/1.95 var(--sans);color:#dfc9b5;margin:0;max-width:40em}
+
+@media(max-width:1100px) and (min-width:721px){
+ .hero .hero-caption{max-width:45vw}.hero .hero-introduction{font-size:13px}
+ .force-overview>header{gap:28px}
+}
+@media(max-width:720px){
+ .hero .hero-caption{max-width:calc(100vw - 56px)}
+
+ .hero .hero-introduction{font-size:12.5px;line-height:1.85;margin-top:0;max-width:27em}
+ .history-gallery .event-reading-title{font-size:27px;line-height:1.4;margin-bottom:20px}
+ .route .route-reading-lead{font-size:13px;line-height:1.85;margin-bottom:19px}
+ .route .route-reading h4{font-size:28px;line-height:1.4}
+ .route .station-reading-prose p,.route .crossing-analysis p{font-size:14px}
+ .site .origin .origin-evidence-gallery .photo{grid-template-rows:auto}
+ .site .origin .origin-evidence-gallery .photo img{height:auto;aspect-ratio:16/9;object-fit:cover}
+ .force-overview{margin-top:42px;padding-top:29px}
+ .force-overview>header{grid-template-columns:minmax(0,1fr);gap:16px;margin-bottom:26px}
+ .force-overview h3{font-size:38px}
+ .force-overview>header p{font-size:14px}
+ .force-overview ol{grid-template-columns:minmax(0,1fr);gap:0}
+ .force-overview h4{font-size:30px}.force-overview li p{font-size:14px}
+ .spirit-film .film-scene{display:block;padding-bottom:50px}
+ .spirit-film .film-composition{width:100%}
+}
+@media(max-width:355px){.hero .hero-introduction{font-size:12px}}

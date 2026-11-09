@@ -19,7 +19,7 @@ main = (root / "src/main.tsx").read_text(encoding="utf-8")
 navigation = re.search(r"const nav=\[(.*?)\] as const", main).group(1)
 labels = re.findall(r"\['[^']+','([^']+)'\]", navigation)
 brand = re.search(r'<span className="brand-title">([^<]+)</span>', main).group(1)
-assert len(labels) == 5
+assert len(labels) >= 5
 
 for source, name, text, weight in (
     (sys.argv[1], "march-navigation", "".join(labels), 600),

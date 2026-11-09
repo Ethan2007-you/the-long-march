@@ -1,0 +1,77 @@
+/* Engraved terrain and cinnabar ink: shared by the two atlas views. */
+.route .atlas-svg .cartographic-terrain,.home-route-svg .cartographic-terrain{
+ filter:sepia(.58) saturate(.77) contrast(.93) brightness(1.02);
+ opacity:.93;
+}
+.cartographic-route path{pointer-events:none;stroke-linecap:round;stroke-linejoin:round}
+.ink-route-ground{fill:none;stroke:#24251b;stroke-width:3.1;stroke-opacity:.58}
+.ink-route-wash{fill:none;stroke:#cb7950;stroke-width:1.05;stroke-opacity:.3}
+.ink-route-body{stroke:none}
+.ink-route-grain{fill:none;stroke:#f1bd8a;stroke-width:.32;stroke-opacity:.13;stroke-dasharray:17 8 7 5 26 11}
+.route .atlas-rivers path,.home-route-svg .home-map-rivers path{stroke:#a5b7aa;stroke-width:.73;stroke-opacity:.38;opacity:1}
+.route .atlas-svg .region-label{fill:#cfc5a4;stroke:#292e23;stroke-width:1.4;opacity:.42;letter-spacing:.14em;font-size:12px}
+.home-route-svg .home-map-region{fill:#c6c1a2;opacity:.37;font-size:13px;letter-spacing:.18em}
+.route .atlas-waypoint{fill:#c99f6d;stroke:#2b2c20;stroke-width:.7;opacity:.67}
+.home-route-svg .home-waypoint{fill:#c6a377;opacity:.65;r:1.3px}
+
+.map-neatline{display:none}
+.map-neatline>path{stroke-width:1.3}
+.map-compass-rose{stroke:#ccb58a;stroke-width:.65;fill:none;opacity:.48}
+.map-compass-rose .compass-ink{fill:#cdb284;stroke:none}
+.map-compass-rose text{fill:#d3bc94;stroke:none;font:12px var(--sans)}
+/* Quiet map pins read as small ink seals, instead of equal transit-line rings. */
+.route .marker .pin-halo{r:5.4px;fill:#433326;stroke:#d1b381;stroke-width:.95;opacity:1}
+.route .marker .pin{r:1.75px;fill:#dfbb84;stroke:none}
+.route .marker .pin-seal{fill:none;stroke:#e8c68d;stroke-width:.8;opacity:0;pointer-events:none;transition:opacity .2s}
+.route .marker .pin-leader{stroke:#c9b68d;stroke-width:.65;stroke-opacity:.6}
+.route .marker .pin-label{font-family:var(--sans);font-style:normal;font-synthesis:none;font-size:15px;font-weight:500;fill:#e6d7b5;stroke:#23291e;stroke-width:3;letter-spacing:.035em}
+.route .marker.selected .pin-halo{r:7.2px;fill:#a54c36;stroke:#efcf98;stroke-width:1.4}
+.route .marker.selected .pin{r:2.6px;fill:#ffe6b5}
+.route .marker.selected .pin-seal,.route .marker:hover .pin-seal,.route .marker:focus-visible .pin-seal{opacity:.8}
+.route .marker.selected .pin-label{font-size:23px;font-weight:500;fill:#f8dfaf;stroke:#282719;stroke-width:4}
+.route .marker.selected .pin-leader{stroke:#e2bc83;stroke-width:.9;stroke-opacity:.8}
+/* Meeting-place names stay visible in both atlas views, including compact screens. */
+.route .marker.meeting-pin .pin-label,.route .marker.meeting-pin .pin-leader{display:block}
+.route .marker.meeting-pin .pin-number{display:none}
+.route .marker.meeting-pin:not(.selected) .pin-halo{r:5.6px;fill:#30392b;stroke:#bcb18d;stroke-dasharray:1.5 2.5;stroke-width:.85}
+.route .marker.endpoint:not(.selected) .pin-halo{r:6.2px;stroke:#dfbf86}
+.route .marker{outline:none}
+.route .marker:focus-visible .pin-seal{stroke-width:1.7}
+.home-route-svg .home-stop-ring{r:4.8px;fill:#443326;stroke:#dac08e;stroke-width:.95}
+.home-route-svg .home-stop-dot{r:1.5px;fill:#e9c893}
+.home-route-svg .home-stop-seal{fill:none;stroke:#edc893;stroke-width:.75;opacity:0;transition:opacity .2s;pointer-events:none}
+.home-route-svg .home-stop-leader{stroke:#c5b28b;stroke-width:.6;opacity:.55}
+.home-route-svg .home-stop-label{font-size:13px;font-weight:500;fill:#ebd8b4;stroke:#24291e;stroke-width:2.8;letter-spacing:.025em}
+.home-route-svg .home-map-stop:is(.is-selected,:hover,:focus-visible) .home-stop-ring{r:6.1px;fill:#a6513b;stroke:#f2d39b;stroke-width:1.2}
+.home-route-svg .home-map-stop:is(.is-selected,:hover,:focus-visible) .home-stop-seal{opacity:.8}
+.home-route-svg .home-map-stop:is(.is-selected,:hover,:focus-visible) .home-stop-label{fill:#ffe2b0}
+.home-route-svg .home-map-stop.is-reunion .home-stop-ring{r:4.7px;fill:#30372a;stroke:#c2b38d;stroke-dasharray:1.5 2}
+
+/* Warm edges sit inside the exhibition's red-brown palette. */
+.home-map-frame,.route .atlas-map{background:#262b22}
+.home-map-frame{box-shadow:none}
+.home-map-heading{padding-bottom:17px;color:#dec49b;background:linear-gradient(110deg,#302c23,#252c23);border-bottom:1px solid #cfb18024}
+.home-map-legend{color:#bcad8c;background:linear-gradient(110deg,#302c23,#252c23);border-top:1px solid #cfb18024}
+.home-map-legend span:first-child i{height:2px;background:#c47c54;transform:rotate(-5deg);border-radius:70% 25% 60% 30%}
+.route .map-stamp{color:#d7c29b;border-color:#b99766;background:linear-gradient(90deg,#20271ee8,#20271e9e);font-size:10px;padding:7px 10px}
+.route .map-stamp small{color:#b6aa8d;font-size:8px;letter-spacing:.025em}
+.route .map-stamp svg{width:18px;height:18px;stroke-width:1.2}
+.route .map-controls{background:#272b22;border-color:#b49b6b2b}
+.route .map-controls button{background:#25291f;border-color:#bca16d45;color:#d7bf94}
+
+/* The Chishui close-up keeps the verified crossing directions and river shape. */
+.artistic-local-map .cartographic-terrain{filter:sepia(.24) saturate(.61) contrast(.92) brightness(1.12)}
+.artistic-local-map .terrain-river-edge{stroke:#24312b;opacity:.7}
+.artistic-local-map .terrain-river-water{stroke:#b0c0b1;opacity:.78}
+.artistic-local-map .terrain-crossing.is-current{stroke:#e7ad70;stroke-width:4;filter:drop-shadow(0 1px 1px #2a1e13)}
+.artistic-local-map .terrain-crossing.is-previous{stroke:#bd9570;stroke-width:2;stroke-dasharray:3 7;opacity:.45}
+.artistic-local-map .terrain-region{opacity:.27}
+@media(max-width:720px){
+ .route .marker .pin-label{font-size:20px}
+ .route .marker.selected .pin-label{font-size:26px}
+ .route .marker.selected .pin-halo{r:8px}
+ .route .marker.selected .pin-seal{stroke-width:1.3}
+ .route .map-stamp{top:7px;left:7px;padding:4px 6px}
+ .route .map-stamp small{font-size:7px}
+}
+@media(prefers-reduced-motion:reduce){.home-stop-seal,.pin-seal{transition:none}}

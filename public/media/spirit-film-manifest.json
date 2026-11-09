@@ -1,0 +1,82 @@
+[
+  {
+    "id": "conviction",
+    "file": "spirit-film-conviction.webp",
+    "title": "《万里征程诗不尽》",
+    "author": "林岗、庞壔",
+    "year": "1977",
+    "kind": "油画",
+    "source": "https://www.cafa.com.cn/cn/news/details/8332585",
+    "width": 1600,
+    "height": 966,
+    "original_sha256": "864760ee7568d37af2beb938909a2749d9005471085e529130ba29baa3613192",
+    "note": "图像是后世绘画或会址照片，不作为1930年代现场影像。"
+  },
+  {
+    "id": "sacrifice",
+    "file": "spirit-film-sacrifice.webp",
+    "title": "《红军师长陈树湘》",
+    "author": "白展望",
+    "year": "2005",
+    "kind": "油画",
+    "source": "https://www.12371.cn/2021/09/28/VIDE1632842401980322.shtml",
+    "width": 1600,
+    "height": 900,
+    "original_sha256": "becc82404255fd43abd9fe4c564e0eabb7a80bcbe33689a7df48738229de75d9",
+    "note": "图像是后世绘画或会址照片，不作为1930年代现场影像。"
+  },
+  {
+    "id": "truth",
+    "file": "spirit-film-truth.webp",
+    "title": "遵义会议会址会议室",
+    "author": "",
+    "year": "",
+    "kind": "现址照片",
+    "source": "https://cpc.people.com.cn/GB/67481/458868/index.html",
+    "width": 1000,
+    "height": 573,
+    "original_sha256": "52d0c52fe02a840834a6fad468f5e090f6becd0f4d3390d84b7efc0bf3efe2bb",
+    "note": "图像是后世绘画或会址照片，不作为1930年代现场影像。",
+    "image_url": "https://cpc.people.com.cn/NMediaFile/2025/0120/MAIN1737360384347QT8DNHLFHH.png"
+  },
+  {
+    "id": "discipline",
+    "file": "spirit-film-discipline-unframed.webp",
+    "title": "《飞夺泸定桥》",
+    "author": "刘国枢",
+    "year": "1959",
+    "kind": "油画",
+    "source": "https://news.cri.cn/uc-eco/20210622/7cd41be9-317c-1743-ad7d-3093a30f3147.html",
+    "width": 1022,
+    "height": 739,
+    "original_sha256": "ba7ac71a0221a7ad39c05a4c9c67e6cf4d04d88ca8dc01526f96c00f92be38b9",
+    "note": "后世绘画或会址照片，不是1930年代现场影像。泸定桥作品另见用户图片库的同一作品；使用较清晰的彩色版本。",
+    "treatment": "Removed photographed physical gold frame by exact rectangular crop, with no generative alteration."
+  },
+  {
+    "id": "people",
+    "file": "spirit-film-people.webp",
+    "title": "《半条被子》",
+    "author": "高毅",
+    "year": "",
+    "kind": "绘画",
+    "source": "https://www.81.cn/ss_208539/16495477.html",
+    "width": 1600,
+    "height": 900,
+    "original_sha256": "9df03b1b7ae3e51830a007630f14b17f16a5b5978c389d47016ae453cac6153d",
+    "note": "图像是后世绘画或会址照片，不作为1930年代现场影像。"
+  },
+  {
+    "id": "endurance",
+    "file": "spirit-film-endurance.webp",
+    "title": "《过雪山》",
+    "author": "吴作人",
+    "year": "1951",
+    "kind": "油画",
+    "source": "https://www.chnmuseum.cn/portals/0/web/zt/20160922longmarch/",
+    "width": 720,
+    "height": 1016,
+    "original_sha256": "935d9a30978db9f6ea7c4f374262c3306d271936ce4c605558f2dd36caa9a5b4",
+    "note": "图像是后世绘画或会址照片，不作为1930年代现场影像。"
+  }
+]

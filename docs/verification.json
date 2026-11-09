@@ -1,0 +1,69 @@
+{
+  "browser": "Microsoft Edge",
+  "productionEntry": "dist/index.html",
+  "build": "TypeScript and Vite production build passed",
+  "results": [
+    {
+      "width": 1440,
+      "height": 900,
+      "offline": true,
+      "reducedMotion": true,
+      "chapters": 6,
+      "eventReadings": 10,
+      "routeStations": 10,
+      "crossingSteps": 4,
+      "spiritScenes": 6,
+      "portraits": 6,
+      "keyboard": true,
+      "mapZoomReset": true,
+      "unframedArtLoaded": true,
+      "deletedSectionsAbsent": true,
+      "sourceLabelsAbsent": true,
+      "overflow": false,
+      "pose": {
+        "titleRight": 715.015625,
+        "titleTop": 258.703125,
+        "figuresLeft": 763.1875,
+        "figuresBottom": 900
+      },
+      "musicDuration": 358.088912,
+      "errors": [],
+      "failed": []
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "offline": true,
+      "reducedMotion": true,
+      "chapters": 6,
+      "eventReadings": 10,
+      "routeStations": 10,
+      "crossingSteps": 4,
+      "spiritScenes": 6,
+      "portraits": 6,
+      "keyboard": true,
+      "mapZoomReset": true,
+      "unframedArtLoaded": true,
+      "deletedSectionsAbsent": true,
+      "sourceLabelsAbsent": true,
+      "overflow": false,
+      "pose": {
+        "titleRight": 354,
+        "titleTop": 452.328125,
+        "figuresLeft": 0,
+        "figuresBottom": 344
+      },
+      "musicDuration": null,
+      "errors": [],
+      "failed": []
+    },
+    {
+      "normalMotion": true,
+      "pointerShift": {
+        "x": 3.944,
+        "y": 2.361
+      },
+      "sharedImageTransition": true
+    }
+  ]
+}

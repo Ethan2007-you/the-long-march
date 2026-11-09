@@ -1,0 +1,26 @@
+/* Continuous snow, rock and cloud; only the right side carries the human figures. */
+.home-chapter .hero{background:#414548}
+.home-chapter .hero .hero-visual{animation:none;transform:scale(1.025);transform-origin:70% 48%}
+.hero-parallax{position:absolute;inset:0;overflow:hidden;transform:translate3d(var(--hero-pan-x,0px),var(--hero-pan-y,0px),0)}
+.hero-landscape{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:100% center;filter:saturate(.52) contrast(.94) brightness(1.05)}
+.hero-figure-plane{position:absolute;inset:0 0 0 53%;mask-image:linear-gradient(90deg,transparent,#000 24%);overflow:hidden}
+.home-chapter .hero-poster{object-position:80% 48%;filter:saturate(.55) contrast(.96) brightness(.93)}
+.home-chapter .hero-veil{background:linear-gradient(90deg,#20272f70 0%,#232a303b 38%,transparent 72%),linear-gradient(0deg,#192128e8 0%,#19212875 20%,transparent 63%)}
+.home-chapter .hero-body{max-width:49vw}
+.home-chapter .hero-caption{max-width:min(510px,40vw)}
+@media(max-width:1100px) and (min-width:721px){
+ .home-chapter .hero .hero-word{font-size:25vw}
+ .home-chapter .hero-caption{max-width:41vw}
+ .home-chapter .hero .hero-introduction{font-size:12px;line-height:1.85}
+}
+@media(max-width:720px){
+ .hero-parallax{transform:none}
+ .home-chapter .hero{height:max(100svh,720px);min-height:720px}
+ .hero-landscape{object-position:71% center}
+ .hero-figure-plane{inset:0 0 auto;height:min(44%,max(220px,calc(100% - 500px)));mask-image:linear-gradient(0deg,transparent,#000 30%)}
+ .home-chapter .hero-poster{object-position:83% 40%;filter:saturate(.55) contrast(.96) brightness(.93)}
+ .home-chapter .hero-veil{background:linear-gradient(0deg,#192128 0%,#192128bc 24%,#19212852 50%,#19212810 74%)}
+ .home-chapter .hero-body{max-width:none}
+ .home-chapter .hero-caption{max-width:calc(100vw - 56px)}
+}
+@media(prefers-reduced-motion:reduce){.hero-parallax{transform:none}.home-chapter .hero .hero-visual{transform:scale(1.025);animation:none}}

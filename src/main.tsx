@@ -3,23 +3,28 @@ import {createRoot} from 'react-dom/client';
 import {flushSync} from 'react-dom';
 import {motion,useReducedMotion,useScroll,useSpring} from 'framer-motion';
 import {ArrowUpRight,Compass,Minus,Plus,RotateCcw,Volume2,VolumeX} from 'lucide-react';
-import {stops,themes} from './data';
+import {stops} from './data';
 import rivers from './rivers.json';
 import chishuiMap from './chishui-map.json';
-import {originNotes,eventNotes,spiritNotes} from './exhibit-notes';
+import {originNotes} from './exhibit-notes';
 import {routeContexts} from './route-context';
 import {crossings,crossingOverview} from './crossings';
 import {useChapterMotion,type Chapter} from './chapter-motion';
 import {captureSharedPhoto,type SharedPhoto} from './shared-photo';
 import {loadSoundtrack} from './soundtrack';
 import './style.css';
-import {coordinates,waypoints,path,routeStories,mapLocations} from './route-geometry';
+import {coordinates,waypoints,routeStories,mapLocations} from './route-geometry';
+import {InkRoute,MapSurface} from './cartography';
 import {HomeRoute} from './home-route';
 import {prepareStation} from './station-media';
-import {exhibits,coverExhibit} from './exhibits';
-import {spiritScenes} from './spirit-scenes';
+import {exhibits} from './exhibits';
+import {SpiritFilm} from './spirit-film';
+import {People} from './people';
+import {HeroArtwork} from './hero-artwork';
+import {ForceOverview} from './editorial';
+import {historyReadings,routeReadings} from './narrative-data';
 
-const nav=[['home','首页'],['origin','历史背景'],['events','重要历史'],['route','征途路线'],['spirit','长征精神']] as const;
+const nav=[['home','首页'],['origin','历史背景'],['events','重要历史'],['route','征途路线'],['spirit','长征精神'],['people','征途群像']] as const;
 function currentPage():Chapter{
  const hash=window.location.hash.slice(1);
  if(/^route-(?:[1-9]|10)$/.test(hash))return 'route';
@@ -51,12 +56,13 @@ function CrossingDiagram({step}:{step:number}){
  const arrowId='crossing-direction-arrow';
  const places=chishuiMap.places;
  return <figure className="crossing-cartography">
-  <svg viewBox={`0 0 ${chishuiMap.width} ${chishuiMap.height}`} className="crossing-diagram" role="img" aria-label={`${crossings[step].name}赤水地形图，${crossings[step].port}，${crossings[step].direction}，箭头表示渡河方向`}>
+  <svg viewBox={`0 0 ${chishuiMap.width} ${chishuiMap.height}`} className="crossing-diagram artistic-local-map" role="img" aria-label={`${crossings[step].name}赤水地形图，${crossings[step].port}，${crossings[step].direction}，箭头表示渡河方向`}>
    <defs>
     <marker id={arrowId} markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto"><path d="M0 0L5 2.5L0 5Z" fill="#f2c28c"/></marker>
     <linearGradient id="crossing-map-edge" x1="0" y1="0" x2="0" y2="1"><stop stopColor="#15201b" stopOpacity=".24"/><stop offset=".5" stopColor="#17201c" stopOpacity="0"/><stop offset="1" stopColor="#111b18" stopOpacity=".55"/></linearGradient>
    </defs>
-   <image href={media('chishui-relief')} width={chishuiMap.width} height={chishuiMap.height}/>
+   <image className="cartographic-terrain" href={media('chishui-relief')} width={chishuiMap.width} height={chishuiMap.height}/>
+   <MapSurface id="chishui-etching" width={chishuiMap.width} height={chishuiMap.height}/>
    <g className="terrain-rivers">{chishuiMap.riverPaths.map((river,index)=><g key={index}><path d={river} className="terrain-river-edge"/><path d={river} className="terrain-river-water"/></g>)}</g>
    <rect width={chishuiMap.width} height={chishuiMap.height} fill="url(#crossing-map-edge)"/>
    {chishuiMap.towns.map(town=><text className="terrain-region" key={town.name} x={town.point[0]} y={town.point[1]} transform={`rotate(${town.angle} ${town.point.join(' ')})`}>{town.name}</text>)}
@@ -116,7 +122,7 @@ function Route(){
  const [offset,setOffset]=useState({x:0,y:0});
  const drag=useRef<{x:number;y:number;ox:number;oy:number}|null>(null);
  const stop=routeStories[selected];
- const story=eventNotes[selected];
+ const reading=routeReadings[selected];
  const context=routeContexts[selected];
  const crossing=crossings[step];
  function zoom(value:number){
@@ -125,8 +131,7 @@ function Route(){
   setOffset(({x,y})=>({x:Math.max(-395*(next-1),Math.min(395*(next-1),x)),y:Math.max(-270*(next-1),Math.min(270*(next-1),y))}));
  }
  return <section id="route" className="section route">
-  <div className="wrap"><header className="section-title"><h2 className="type-chapter" id="route-title" tabIndex={-1}>山河为证</h2></header>
-  
+  <div className="wrap"><header className="section-title"><h2 className="type-chapter" id="route-title" tabIndex={-1}>山河为证</h2><p className="route-reading-lead">沿中央红军的九处节点，读懂地形、渡口与补给如何影响行军；会宁、将台堡另标1936年会师地点。</p></header>
   <div className="atlas">
    <div className="atlas-column">
     <div className="atlas-location">
@@ -156,15 +161,14 @@ function Route(){
      onPointerDown={e=>{if(scale===1||(e.target as Element).closest('[role=button]'))return;drag.current={x:e.clientX,y:e.clientY,ox:offset.x,oy:offset.y};e.currentTarget.setPointerCapture(e.pointerId);}}
      onPointerMove={e=>{if(!drag.current)return;const ratio=790/e.currentTarget.getBoundingClientRect().width;setOffset({x:Math.max(-395*(scale-1),Math.min(395*(scale-1),drag.current.ox+(e.clientX-drag.current.x)*ratio)),y:Math.max(-270*(scale-1),Math.min(270*(scale-1),drag.current.oy+(e.clientY-drag.current.y)*ratio))});}}
      onPointerUp={()=>{drag.current=null;}} onPointerCancel={()=>{drag.current=null;}}>
-     <defs><pattern id="grid" x="30" y="32" width="72" height="64" patternUnits="userSpaceOnUse"><path d="M 72 0 H 0 V 64" fill="none" stroke="#d1bea4" strokeOpacity=".14"/></pattern></defs>
+     <desc>按原有关键地点和参考点顺序绘制的概化路线，不代表两地间的精确行军轨迹。1936年会师地点另列，不连接至中央红军行军主线。</desc>
      <rect width="790" height="540" fill="#242d2b"/>
      <g transform={`translate(${offset.x+395*(1-scale)} ${offset.y+270*(1-scale)}) scale(${scale})`}>
-      <image href={media('atlas-relief')} width="790" height="540" preserveAspectRatio="none"/>
-      <rect width="790" height="540" fill="url(#grid)"/>
+      <image className="cartographic-terrain" href={media('atlas-relief')} width="790" height="540" preserveAspectRatio="none"/>
+      <MapSurface id="atlas-etching"/>
       <g className="atlas-rivers">{rivers.map((river,index)=><path key={index} d={river}/>)}</g>
       {([[97,32,'横断山脉'],[101.4,35.8,'岷 山'],[109.2,33.8,'秦 岭'],[111.5,30.4,'长 江'],[103.5,28.8,'金沙江'],[114,29.35,'鄱阳湖流域']] as const).map(([lon,lat,label])=>{const [x,y]=coordinates([lon,lat]);return <text key={label} className="region-label" x={x} y={y}>{label}</text>;})}
-      <path d={path} className="route-shadow" fill="none"/>
-      <path d={path} className="route-line" pathLength="1" fill="none"/>
+      <InkRoute id="atlas-ink"/>
       {waypoints.map(({name,coords})=>{const [x,y]=coordinates(coords);return <g className="atlas-waypoint" key={name} transform={`translate(${x} ${y})`}><circle r="2.8"/><title>{name} · 路线参考点</title></g>;})}
       {[...mapLocations].sort((first,second)=>Number(first.index===selected)-Number(second.index===selected)).map(({name,coords,label:[dx,dy],index})=>{
        const [x,y]=coordinates(coords);
@@ -179,6 +183,7 @@ function Route(){
         }}>
         <circle r="18" fill="transparent"/>
         <line className="pin-leader" x2={dx*.9} y2={dy*.86}/>
+        <path className="pin-seal" d="M0-13L13 0 0 13-13 0Z"/>
         <circle className="pin-halo" r="10"/>
         <circle className="pin" r="4"/>
         <text className="pin-number" textAnchor="middle" dominantBaseline="central">{index+1}</text>
@@ -196,7 +201,7 @@ function Route(){
    {!local&&<>
     {selected===3&&<button type="button" ref={localEntry} className="crossing-entry" aria-expanded={false} onClick={()=>{setStep(0);setLocal(true);}}>
      <span className="crossing-entry-preview"><CrossingPreview/></span>
-     <span className="crossing-entry-copy"><strong>进入四渡赤水图解</strong><span>沿四次渡河，看清战局、选择与结果</span></span>
+     <span className="crossing-entry-copy"><strong>进入四渡赤水图解</strong><span>从土城到茅台，逐次查看渡口与行军方向</span></span>
      <ArrowUpRight size={27} aria-hidden="true"/>
     </button>}
     <div className="station-nav" aria-label="前后站点">
@@ -211,30 +216,26 @@ function Route(){
      ))}
     </div>
     <section className="route-context" aria-label={stop.title+'的行军形势'}>
-     <h4 className="type-detail">山河与抉择</h4>
-     <ol className="route-context-flow" aria-label="局势、选择与转机">{context.stages.map((stage,index)=><li key={index} className={index===1?'is-decision':undefined}><small>{['局势','选择','转机'][index]}</small><strong>{stage}</strong></li>)}</ol>
-     <dl><div><dt>地形制约</dt><dd>{context.terrain}</dd></div><div><dt>行动取舍</dt><dd>{context.choice}</dd></div></dl>
+     <h4 className="type-detail">{context.heading}</h4>
+     <ol className="route-context-flow" aria-label="行军节点的接续">{context.stages.map((stage,index)=><li key={index} className={index===1?'is-decision':undefined}><strong>{stage}</strong></li>)}</ol>
+     <dl><div><dt>{context.terrainLabel}</dt><dd>{context.terrain}</dd></div><div><dt>{context.actionLabel}</dt><dd>{context.choice}</dd></div></dl>
     </section>
    </>}
    </div>
    <article className={'atlas-text'+(local?' is-crossing-story':'')} aria-live="polite">
     <p className="atlas-date">{stop.date} / {stop.place}</p>
     <h3 className="type-event" tabIndex={-1}>{stop.title}</h3>
-    <figure key={selected} className={`station-image battle-${battleArt[selected]}`}>
+    <figure key={selected} className="station-figure"><div className={`station-image battle-${battleArt[selected]}`}>
      <img src={media(exhibits[selected].file)} alt={exhibits[selected].label} loading="lazy" decoding="async"/>
-    </figure>
+    </div></figure>
     {local?<div className="story-copy crossing-story" id="crossing-story" role="tabpanel" aria-labelledby={`crossing-tab-${step}`}>
      <p className="crossing-story-date">{crossing.name} · {crossing.date}</p>
      <h4 className="type-detail">{crossing.heading}</h4>
      <p className="crossing-story-port">{crossing.port}</p>
-     <dl className="crossing-analysis">
-      <div><dt>当时局势</dt><dd>{crossing.context}</dd></div>
-      <div><dt>行动选择</dt><dd>{crossing.decision}</dd></div>
-      <div><dt>带来的变化</dt><dd>{crossing.result}</dd></div>
-     </dl>
-    </div>:<div className="story-copy">
-     <h4 className="type-detail">{story.heading}</h4>
-     {story.paragraphs.map(paragraph=><p key={paragraph}>{paragraph}</p>)}
+     <div className="crossing-analysis">{crossing.paragraphs.map(paragraph=><p key={paragraph}>{paragraph}</p>)}</div>
+    </div>:<div className="story-copy route-reading">
+     <h4 className="type-detail">{reading.heading}</h4>
+     <div className="station-reading-prose">{reading.paragraphs.map(paragraph=><p key={paragraph}>{paragraph}</p>)}</div>
     </div>}
    </article>
   </div>
@@ -337,15 +338,13 @@ function App(){
    <div hidden={active!=='home'} className="home-chapter">
    <section id="home" className="hero">
     <div className="hero-layer"><div className="hero-visual">
-     <img className="hero-poster" src={media(coverExhibit.file)} alt={coverExhibit.label} fetchPriority="high"/>
+     <HeroArtwork active={active==='home'} reduced={Boolean(reduce)}/>
     </div></div>
     <div className="hero-veil"/><div className="hero-dissolve"/>
     <div className="hero-body wrap">
-     
      <h1 className="hero-word type-cover" aria-label="长征"><span className="hero-readable">长</span><span>征</span></h1>
      <div className="hero-caption hero-intro">
-      
-      <p className="hero-line">从于都出发，越过万水千山。沿着地图，重访长征的重要时刻。</p>
+      <p className="hero-introduction">1934年10月，第五次反“围剿”失利后，中央红军从江西于都出发，实行战略转移。本展以其1934—1935年的行军为主线，并接续介绍其他红军队伍的长征与1936年会师。</p>
      </div>
     </div>
     <div className="hero-dates hero-intro"><span>1934</span><i/><span>1936</span></div>
@@ -356,7 +355,6 @@ function App(){
     <div className="wrap">
      <div className="origin-heading"><Heading>征途的起点</Heading>
      </div>
-     
      <div className="origin-grid origin-evidence">
       <div className="origin-copy"><div className="eyebrow"><span>1934.10</span><i/> 江西于都</div><h3 className="type-chapter">为什么从于都出发</h3><div className="origin-narrative">{originNotes.map(paragraph=><p key={paragraph}>{paragraph}</p>)}</div></div>
       <div className="origin-evidence-gallery"><Photo image={historyImages.ferry}/><Photo image={historyImages.archive}/><Photo image={historyImages.relief}/></div>
@@ -367,7 +365,7 @@ function App(){
       <li><time>1934 年 11—12 月</time><h3 className="type-detail">湘江之后</h3><p>突破第四道封锁线付出重大代价，继续向湘西北行军又面临重兵堵截。</p></li>
       <li><time>1934 年 12 月</time><h3 className="type-detail">转兵黔北</h3><p>黎平会议决定改向贵州北部。此后渡过乌江、进入遵义，迎来新的转折。</p></li>
      </ol>
-     
+     <ForceOverview/>
     </div>
    </section>
    <section hidden={active!=='events'} id="events" className="events" aria-label="重要历史">
@@ -375,44 +373,24 @@ function App(){
     <div className="history-gallery">
      {routeStories.map((stop,index)=>{
       const exhibit=exhibits[index];
+      const reading=historyReadings[index];
       return <figure id={'events-'+(index+1)} className={'battle-scene battle-'+battleArt[index]} key={stop.title}>
-       <div className="event-artwork"><img src={media(exhibit.file)} width={exhibit.width} height={exhibit.height} alt={exhibit.label} loading="lazy" decoding="async"/>
-       </div>
+       <div className="event-image-column"><div className="event-artwork"><img src={media(exhibit.file)} width={exhibit.width} height={exhibit.height} alt={exhibit.label} loading="lazy" decoding="async"/>
+       </div></div>
        <figcaption>
         <div className="eyebrow"><span>{String(index+1).padStart(2,'0')} / 10</span><i/>{stop.place}</div>
         <time>{stop.date}</time>
         <h3 className="type-event" tabIndex={-1}><a href={'#route-'+(index+1)} onClick={navigateChapter}>{stop.title}</a></h3>
-        <p>{stop.summary}</p>
-        <p className="event-significance">{stop.significance}</p>
+        <h4 className="type-detail event-reading-title">{reading.heading}</h4>
+        <div className="event-reading-prose">{reading.paragraphs.map(paragraph=><p key={paragraph}>{paragraph}</p>)}</div>
        </figcaption>
       </figure>;
      })}
     </div>
    </section>
    <div hidden={active!=='route'}><Route/></div>
-   <section hidden={active!=='spirit'} id="spirit" className="spirit">
-    <div className="spirit-cover">
-     <img src={media(coverExhibit.file)} alt="" loading="lazy" decoding="async"/>
-     <div className="wrap"><Heading>长征精神</Heading></div>
-    </div>
-    <div className="wrap spirit-reading">
-     <ol className="spirit-list">
-      {themes.map(([first,second],index)=>(
-       <li key={first}>
-        <h3 className="type-spirit" aria-label={first+'、'+second}><span>{first}</span><span>{second}</span></h3>
-        <div className="spirit-explanation">{spiritNotes[index].map(paragraph=><p key={paragraph}>{paragraph}</p>)}</div>
-       </li>
-      ))}
-     </ol>
-     <section className="spirit-scenes" aria-labelledby="spirit-scenes-title">
-      <header className="section-title"><h2 className="type-chapter" id="spirit-scenes-title">把信念化为行动</h2><p className="spirit-scenes-intro">从会议上的判断、雪山上的接力，到草地里的分担与会师后的协同，长征精神落实在一个个具体的行动中。</p></header>
-      <div className="spirit-scenes-reading">{spiritScenes.map(scene=><article className={'spirit-scene scene-'+scene.id} key={scene.id}>
-       <figure className="spirit-scene-image"><img src={media(scene.file)} width={scene.width} height={scene.height} alt={scene.alt} loading="lazy" decoding="async"/></figure>
-       <div className="spirit-scene-copy"><p className="scene-meta">{scene.time} / {scene.place}</p><h3 className="type-event">{scene.title}</h3>{scene.paragraphs.map(paragraph=><p key={paragraph}>{paragraph}</p>)}</div>
-      </article>)}</div>
-     </section>
-    </div>
-   </section>
+   <SpiritFilm hidden={active!=='spirit'} reduced={Boolean(reduce)}/>
+   <People hidden={active!=='people'} reduced={Boolean(reduce)}/>
   </main>
  </div>;
 }
