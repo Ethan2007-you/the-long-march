@@ -65,5 +65,81 @@
       },
       "sharedImageTransition": true
     }
+  ],
+  "homeEntranceAndAutoplay": [
+    {
+      "width": 1440,
+      "height": 900,
+      "offline": true,
+      "numbering": [
+        "01",
+        "02",
+        "03",
+        "04",
+        "05"
+      ],
+      "destinations": 5,
+      "equalPanels": true,
+      "desktopOneRow": true,
+      "autoplayAllowedStartsWithoutGesture": true,
+      "manualPausePreservedAcrossNavigation": true,
+      "manualResume": true,
+      "audioRequests": 18,
+      "overflow": false,
+      "errors": [],
+      "failed": []
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "offline": true,
+      "numbering": [
+        "01",
+        "02",
+        "03",
+        "04",
+        "05"
+      ],
+      "destinations": 5,
+      "equalPanels": true,
+      "desktopOneRow": false,
+      "autoplayAllowedStartsWithoutGesture": true,
+      "manualPausePreservedAcrossNavigation": true,
+      "manualResume": true,
+      "audioRequests": 18,
+      "overflow": false,
+      "errors": [],
+      "failed": []
+    },
+    {
+      "width": 1440,
+      "height": 900,
+      "autoplayRejectionSimulated": true,
+      "blockedInitially": true,
+      "firstGesture": "click",
+      "gestureStartsMusic": true,
+      "pauseStaysPaused": true,
+      "errors": []
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "autoplayRejectionSimulated": true,
+      "blockedInitially": true,
+      "firstGesture": "tap",
+      "gestureStartsMusic": true,
+      "pauseStaysPaused": true,
+      "errors": []
+    },
+    {
+      "width": 1440,
+      "height": 900,
+      "autoplayRejectionSimulated": true,
+      "blockedInitially": true,
+      "firstGesture": "keyboard",
+      "gestureStartsMusic": true,
+      "pauseStaysPaused": true,
+      "errors": []
+    }
   ]
 }

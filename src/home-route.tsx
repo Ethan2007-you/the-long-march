@@ -73,9 +73,10 @@ export function HomeRoute({navigate,reduced}:Props){
      ['events','重要历史','十个关键时刻','archive','行军前的红军队伍'],
      ['route','征途路线','山河为证','atlas-relief','长征沿线山川地形'],
      ['spirit','长征精神','信念的力量','conference','长征纪念浮雕'],
+     ['people','征途群像','人物与事迹','mao','毛泽东肖像'],
     ] as const).map(([chapter,title,subtitle,image,alt],index)=><motion.a className="home-chapter-panel" href={'#'+chapter} onClick={navigate} key={chapter} initial={reduced?false:{opacity:0,y:45}} whileInView={{opacity:1,y:0}} viewport={{once:true,amount:.15}} transition={{duration:.65,delay:reduced?0:index*.08}}>
      <img src={media(image)} alt={alt} loading="lazy" decoding="async"/>
-     <span className="panel-number">{String(index+2).padStart(2,'0')}</span><h3 className="type-event">{title}</h3><span className="panel-subtitle">{subtitle}<ArrowUpRight size={18}/></span>
+     <span className="panel-number">{String(index+1).padStart(2,'0')}</span><h3 className="type-event">{title}</h3><span className="panel-subtitle">{subtitle}<ArrowUpRight size={18}/></span>
     </motion.a>)}
    </div>
   </section>

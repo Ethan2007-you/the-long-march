@@ -250,26 +250,56 @@ function App(){
  const [active,setActive]=useState(currentPage);
  const [scrolled,setScrolled]=useState(false);
  const music=useRef<HTMLAudioElement>(null);
+ const musicWanted=useRef(true);
+ const startMusic=useRef<(()=>void)|null>(null);
  const [musicPlaying,setMusicPlaying]=useState(false);
  const [musicUnavailable,setMusicUnavailable]=useState(false);
- const [musicLoading,setMusicLoading]=useState(false);
- async function toggleMusic(){
+ const [musicLoading,setMusicLoading]=useState(true);
+ useEffect(()=>{
+  const track=music.current;
+  if(!track)return;
+  let disposed=false,starting=false;
+  const removeGestureListeners=()=>{
+   document.removeEventListener('click',retryAfterGesture,true);
+   document.removeEventListener('keydown',retryAfterGesture,true);
+  };
+  const start=()=>{
+   if(disposed||!musicWanted.current||!track.src||!track.paused||starting)return;
+   starting=true;
+   void track.play().then(()=>{
+    if(disposed||!musicWanted.current){track.pause();return;}
+    removeGestureListeners();
+   }).catch((error:unknown)=>{
+    if(disposed||!musicWanted.current)return;
+    // Autoplay restrictions keep the normal playback control available.
+    if(error instanceof DOMException&&(error.name==='NotAllowedError'||error.name==='AbortError'))return;
+    setMusicUnavailable(true);removeGestureListeners();
+   }).finally(()=>{starting=false;});
+  };
+  function retryAfterGesture(event:Event){
+   // The playback button handles its own intent, including a deliberate pause.
+   if(event.target instanceof Element&&event.target.closest('.music-toggle'))return;
+   if(event instanceof KeyboardEvent&&(event.repeat||event.ctrlKey||event.metaKey||event.altKey||event.key==='Tab'||event.key==='Escape'))return;
+   start();
+  }
+  startMusic.current=start;
+  document.addEventListener('click',retryAfterGesture,true);
+  document.addEventListener('keydown',retryAfterGesture,true);
+  track.volume=.38;
+  void loadSoundtrack().then(url=>{
+   if(disposed)return;
+   track.src=url;setMusicLoading(false);start();
+  }).catch(()=>{
+   if(disposed)return;
+   setMusicLoading(false);setMusicUnavailable(true);removeGestureListeners();
+  });
+  return()=>{disposed=true;startMusic.current=null;removeGestureListeners();track.pause();};
+ },[]);
+ function toggleMusic(){
   const track=music.current;
   if(!track||musicLoading)return;
-  if(!track.paused){
-   track.pause();
-   return;
-  }
-  setMusicLoading(true);
-  try{
-   if(!track.src)track.src=await loadSoundtrack();
-   track.volume=.38;
-   await track.play();
-  }catch(error){
-   if(!(error instanceof DOMException&&error.name==='NotAllowedError'))setMusicUnavailable(true);
-  }finally{
-   setMusicLoading(false);
-  }
+  if(!track.paused){musicWanted.current=false;track.pause();return;}
+  musicWanted.current=true;startMusic.current?.();
  }
  const reduce=useReducedMotion();
  useEffect(()=>{
@@ -331,7 +361,7 @@ function App(){
     <span>{musicUnavailable?'配乐不可用':musicLoading?'载入配乐…':musicPlaying?'暂停配乐':'播放配乐'}</span>
    </button>
   </header>
-  <audio ref={music} loop preload="none"
+  <audio ref={music} autoPlay loop preload="auto"
    onPlay={()=>setMusicPlaying(true)} onPause={()=>setMusicPlaying(false)}
    onError={()=>{setMusicPlaying(false);setMusicUnavailable(true);}}/>
   <main ref={main}>

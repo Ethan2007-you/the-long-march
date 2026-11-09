@@ -891,13 +891,14 @@ body:has([data-shared-photo]){overflow-anchor:none}
 .home-map-source a:hover{text-decoration:underline}
 .home-chapters{padding:65px 0 110px}
 .home-chapters h2{font:500 clamp(30px,3.4vw,50px)/1.5 var(--serif);margin:15px 0 40px}
-.home-chapter-panels{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;align-items:stretch}
+.home-chapter-panels{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:18px;align-items:stretch}
 .home-chapter-panel{position:relative;isolation:isolate;display:flex;flex-direction:column;min-height:390px;overflow:hidden;padding:25px;background:#262c24}
 
 .home-chapter-panel img{position:absolute;inset:0;z-index:-2;width:100%;height:100%;object-fit:cover;filter:saturate(.4);transition:transform .7s}
 .home-chapter-panel:after{content:'';position:absolute;inset:0;z-index:-1;background:linear-gradient(0deg,#101b15eb,transparent 85%),#14201955}
 .home-chapter-panel:nth-child(2):after{background:linear-gradient(0deg,#3e211cea,transparent 85%),#45271e44}
 .home-chapter-panel:nth-child(4):after{background:linear-gradient(0deg,#1e2c35ea,transparent 85%),#1c30485c}
+.home-chapter-panel:nth-child(5):after{background:linear-gradient(0deg,#381d22ed,transparent 85%),#39242a40}
 .home-chapter-panel:hover img{transform:scale(1.045)}
 .panel-number{font:12px var(--mono);color:#dbcaac}
 .home-chapter-panel h3{writing-mode:vertical-rl;font:500 32px/1.5 var(--serif);letter-spacing:.15em;margin:20px 0 auto}
