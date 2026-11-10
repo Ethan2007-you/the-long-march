@@ -1,10 +1,8 @@
 import {defineConfig} from 'vite';
-import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
   base:'./',
   plugins:[
-    tailwindcss(),
     {
       name:'offline-html-entry',
       apply:'build',

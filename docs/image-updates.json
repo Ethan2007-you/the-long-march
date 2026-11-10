@@ -1,0 +1,100 @@
+{
+  "date": "2026-11-10",
+  "updates": [
+    {
+      "file": "art-chishui.webp",
+      "title": "《四渡赤水》",
+      "author": "申根源、梅肖青、孙向阳、王天任",
+      "year": "1976",
+      "previousSize": [
+        440,
+        305
+      ],
+      "sourceSize": [
+        3600,
+        2496
+      ],
+      "outputSize": [
+        1800,
+        1248
+      ],
+      "sourcePage": "https://www.sohu.com/a/1038774464_267106",
+      "sourceImage": "https://q3.itc.cn/images03/20260619/7716f57d31d74e4199ad6c7418f81fb7.jpeg",
+      "sourceSHA256": "d4095511fc0dfced810c39b1cce749029793528c41f9be295f68585ec1d602f7",
+      "outputSHA256": "6007b927bebb660a70f96ab9e074185d805a35b785f63d00680cc5a73c9bed6c",
+      "bytes": 871580,
+      "treatment": "Converted to WebP; downsampled only when larger than the display target. No upscaling, generative alteration, watermark removal or retouching."
+    },
+    {
+      "file": "collection-reunion.webp",
+      "title": "《三大主力会师》",
+      "author": "蔡亮、张自薿",
+      "year": "1977",
+      "previousSize": [
+        433,
+        234
+      ],
+      "sourceSize": [
+        960,
+        478
+      ],
+      "outputSize": [
+        960,
+        478
+      ],
+      "sourcePage": "https://www.sznews.com/news/content/2021-10/22/content_24666922.htm",
+      "sourceImage": "https://www.sznews.com/news/pic/2021-10/22/c6857fed-2b1a-45ce-9504-e3c6f1d8280d.jpg",
+      "sourceSHA256": "2a721b1e5ef569b340f054b4cd7663136e0e5dfe320e06a0d84040bad5b4b540",
+      "outputSHA256": "8588196fa4660f4b5b57144af075cc9edbbd61ffe61acfa065eb8e8ceda6816d",
+      "bytes": 139846,
+      "treatment": "Converted to WebP; downsampled only when larger than the display target. No upscaling, generative alteration, watermark removal or retouching."
+    },
+    {
+      "file": "memorial-wuqi.webp",
+      "title": "吴起中央红军长征胜利纪念馆内长征主题雕塑",
+      "author": "Flying wolf（原图署名）",
+      "year": "",
+      "previousSize": [
+        400,
+        300
+      ],
+      "sourceSize": [
+        1024,
+        681
+      ],
+      "outputSize": [
+        1024,
+        681
+      ],
+      "sourcePage": "https://k.sina.com.cn/article_1644674721_6207bea100100ldvm.html",
+      "sourceImage": "https://n.sinaimg.cn/sinacn10116/105/w1024h681/20191109/6e79-iieqapt0406776.jpg",
+      "sourceSHA256": "1724b62beaf53aa0d3794ebcd23404dfdbc48ebff46ecba5019484d885bd04e4",
+      "outputSHA256": "a82ddaca1de465b965ace8a53cca92a699e396d8afe127f5f1779b1b4ffcd1c0",
+      "bytes": 204934,
+      "treatment": "Converted to WebP; downsampled only when larger than the display target. No upscaling, generative alteration, watermark removal or retouching."
+    },
+    {
+      "file": "spirit-film-discipline-unframed.webp",
+      "replaces": "collection-luding.webp",
+      "title": "《飞夺泸定桥》",
+      "author": "刘国枢",
+      "year": "1959",
+      "previousSize": [
+        455,
+        309
+      ],
+      "sourceSize": [
+        1022,
+        739
+      ],
+      "outputSize": [
+        1022,
+        739
+      ],
+      "sourcePage": "https://news.cri.cn/uc-eco/20210622/7cd41be9-317c-1743-ad7d-3093a30f3147.html",
+      "outputSHA256": "3d4347e27aeb400837ad932a10fc7f9e166c1ec71770cbd867c4f1a5f925e4be",
+      "bytes": 840676,
+      "treatment": "Reused the existing local higher-resolution artwork; no resampling or new duplicate asset."
+    }
+  ]
+}

@@ -4,3 +4,8 @@ qa/
 *.log
 .DS_Store
 Thumbs.db
+
+# Local competition documents contain personal information.
+/docs/team.json
+/README.submission.md
+/README.anonymous.md

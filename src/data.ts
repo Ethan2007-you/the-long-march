@@ -20,7 +20,7 @@ export const stops: Stop[] = [
  {place:'贵州 · 遵义',title:'遵义会议',date:'1935.01.15—17',coords:[106.93,27.70],image:'art-zunyi-unframed',summary:'中共中央政治局召开扩大会议，总结第五次反“围剿”和长征初期的经验教训，解决当时最迫切的军事和组织问题。',significance:'会议是党的历史上一个生死攸关的转折点。',source:0,label:[13,-20]},
  {place:'川黔交界 · 赤水河',title:'四渡赤水',date:'1935.01—03',coords:[105.98,28.28],image:'art-chishui',summary:'面对多路部队围追堵截，中央红军在川、黔、滇交界地区反复机动，先后四次渡过赤水河。',significance:'红军逐步摆脱被动局面，争取到战略转移的主动权。',source:3,label:[-79,-13]},
  {place:'云南 · 皎平渡',title:'巧渡金沙江',date:'1935.05',coords:[102.51,26.30],image:'art-jinsha-unframed',summary:'中央红军主力经皎平渡跨过金沙江。渡口船只有限，部队组织昼夜摆渡，陆续转至北岸。',significance:'跨越金沙江后，中央红军跳出了敌军围追堵截的包围圈。',source:4,label:[-18,32]},
- {place:'四川 · 泸定',title:'飞夺泸定桥',date:'1935.05.29',coords:[102.23,29.91],image:'collection-luding',summary:'红一军团红四团急行军抵达泸定桥，突击队冒着火力夺取铁索桥，部队随后过桥。',significance:'夺桥保障了主力渡过大渡河，为继续北上打开通路。',source:0,label:[-105,8]},
+ {place:'四川 · 泸定',title:'飞夺泸定桥',date:'1935.05.29',coords:[102.23,29.91],image:'spirit-film-discipline-unframed',summary:'红一军团红四团急行军抵达泸定桥，突击队冒着火力夺取铁索桥，部队随后过桥。',significance:'夺桥保障了主力渡过大渡河，为继续北上打开通路。',source:0,label:[-105,8]},
  {place:'四川 · 夹金山',title:'翻越夹金山',date:'1935.06',coords:[102.72,30.88],image:'art-snow-unframed',summary:'中央红军翻越夹金山。高寒、缺氧和骤变的天气，使行军和伤员转运面临严峻困难。',significance:'翻越雪山后，中央红军在懋功地区与红四方面军会师。',source:0,label:[-90,-5]},
  {place:'川西北 · 松潘草地一带',title:'穿越水草地',date:'1935.08',coords:[102.84,32.96],image:'art-marsh-unframed',summary:'红军进入川西北水草地，泥沼与道路难以分辨，沿途粮食补给不足。队伍在恶劣环境下相互扶助，继续向北。',significance:'走出草地为后续向甘南、陕北转进创造条件。',source:0,label:[-75,-14]},
  {place:'陕西 · 吴起镇',title:'抵达吴起镇',date:'1935.10.19',coords:[108.17,36.93],image:'memorial-wuqi',summary:'陕甘支队抵达吴起镇，进入陕甘根据地，中央红军主力完成了长征。',significance:'陕北成为此后开展革命斗争的重要立足点。',source:0,label:[13,-13]},

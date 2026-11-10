@@ -29,6 +29,9 @@ export function useChapterMotion(
     target?.scrollIntoView({block:'start',behavior:'instant'});
     target?.querySelector<HTMLElement>('h3')?.focus({preventScroll:true});
    }else if(chapter==='route'&&/^#route-(?:[1-9]|10)$/.test(hash)){
+    if(window.matchMedia('(max-width:720px)').matches){
+     content.querySelector<HTMLElement>('.atlas-text')?.scrollIntoView({block:'start',behavior:'instant'});
+    }
     content.querySelector<HTMLElement>('.atlas-text h3')?.focus({preventScroll:true});
    }else if(chapter==='home'&&(hash==='#home-route'||history.state?.homeMap)){
     const {homeScroll,homeWidth}=history.state??{};

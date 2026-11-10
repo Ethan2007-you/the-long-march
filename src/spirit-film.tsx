@@ -2,6 +2,7 @@ import React,{useEffect,useRef} from 'react';
 import {themes} from './data';
 import {spiritFilmScenes} from './spirit-film-data';
 import './spirit-film.css';
+import {useCompactLayout} from './mobile-experience';
 
 type Props={hidden:boolean;reduced:boolean};
 const media=(name:string)=>import.meta.env.BASE_URL+'media/'+name+'.webp';
@@ -9,8 +10,9 @@ const media=(name:string)=>import.meta.env.BASE_URL+'media/'+name+'.webp';
 /** Desktop dissolves behind natural text; compact layouts attach art to each passage. */
 export function SpiritFilm({hidden,reduced}:Props){
  const root=useRef<HTMLElement>(null);
+ const compact=useCompactLayout();
  useEffect(()=>{
-  if(hidden||!root.current)return;
+  if(hidden||compact||!root.current)return;
   const host=root.current;
   const scenes=Array.from(host.querySelectorAll<HTMLElement>('.film-scene'));
   const frames=Array.from(host.querySelectorAll<HTMLElement>('.film-frame'));
@@ -51,11 +53,11 @@ export function SpiritFilm({hidden,reduced}:Props){
   window.addEventListener('resize',schedule);
   const observer=new ResizeObserver(schedule);observer.observe(host);
   return()=>{cancelAnimationFrame(raf);observer.disconnect();window.removeEventListener('scroll',schedule);window.removeEventListener('resize',schedule);};
- },[hidden,reduced]);
+ },[hidden,reduced,compact]);
  return <section hidden={hidden} id="spirit" className="spirit spirit-film" ref={root} aria-labelledby="spirit-title">
   <div className="film-screen" aria-hidden="true">
    {spiritFilmScenes.map((scene,index)=><div className={'film-frame frame-'+scene.id+' film-'+scene.side} key={scene.id} style={{opacity:index===0?1:0,visibility:index===0?'visible':'hidden'}}>
-    <img src={hidden?undefined:media(scene.image)} alt="" loading="eager" decoding="async"/>
+    <img src={hidden||compact?undefined:media(scene.image)} alt="" loading="eager" decoding="async"/>
     <div className="film-frame-shade"/>
    </div>)}
    <div className="film-screen-edges"/>
@@ -64,7 +66,7 @@ export function SpiritFilm({hidden,reduced}:Props){
    {spiritFilmScenes.map((scene,index)=>{
     const [first,second]=themes[scene.theme];
     return <article className={'film-scene scene-'+scene.id+' film-'+scene.side} key={scene.id} aria-labelledby={'film-title-'+scene.id}>
-     <div className="film-mobile-art" aria-hidden="true"><img src={hidden?undefined:media(scene.image)} alt="" loading="lazy" decoding="async"/><div/></div>
+     <div className="film-mobile-art" aria-hidden="true"><img src={hidden||!compact?undefined:media(scene.image)} alt="" loading="lazy" decoding="async"/><div/></div>
      {index===0&&<h2 className="type-chapter film-chapter-name" id="spirit-title" tabIndex={-1}>长征精神</h2>}
      <div className="film-composition">
       <h3 className="type-spirit film-theme" id={'film-title-'+scene.id}><span>{first}</span><span>{second}</span></h3>

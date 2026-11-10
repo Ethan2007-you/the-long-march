@@ -1,0 +1,52 @@
+/* Project-authored defaults for the exhibition's own elements. */
+html {
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+  tab-size: 4;
+}
+
+.site :where(h1, h2, h3, h4, p, figure, ol, ul, dl, dd) {
+  margin: 0;
+  padding: 0;
+}
+
+.site :where(h1, h2, h3, h4) {
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+.site :where(ol, ul) {
+  list-style: none;
+}
+
+.site :where(button) {
+  font: inherit;
+  letter-spacing: inherit;
+  padding: 0;
+  border: 0 solid;
+  border-radius: 0;
+  background: transparent;
+}
+
+.site *, .site *::before, .site *::after {
+  border-width: 0;
+  border-style: solid;
+}
+
+.site :where(img, svg, audio) {
+  display: block;
+  vertical-align: middle;
+}
+
+.site :where(img) {
+  max-width: 100%;
+  height: auto;
+}
+
+.site small {
+  font-size: 80%;
+}
+
+[hidden] {
+  display: none !important;
+}

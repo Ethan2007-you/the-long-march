@@ -12,6 +12,7 @@ import {crossings,crossingOverview} from './crossings';
 import {useChapterMotion,type Chapter} from './chapter-motion';
 import {captureSharedPhoto,type SharedPhoto} from './shared-photo';
 import {loadSoundtrack} from './soundtrack';
+import './exhibition-base.css';
 import './style.css';
 import {coordinates,waypoints,routeStories,mapLocations} from './route-geometry';
 import {InkRoute,MapSurface} from './cartography';
@@ -23,6 +24,8 @@ import {People} from './people';
 import {HeroArtwork} from './hero-artwork';
 import {ForceOverview} from './editorial';
 import {historyReadings,routeReadings} from './narrative-data';
+import {MobileHistoryIndex,revealCompactContent,useCompactLayout} from './mobile-experience';
+import './mobile.css';
 
 const nav=[['home','首页'],['origin','历史背景'],['events','重要历史'],['route','征途路线'],['spirit','长征精神'],['people','征途群像']] as const;
 function currentPage():Chapter{
@@ -95,6 +98,9 @@ function CrossingPreview(){
 }
 
 function Route(){
+ const compact=useCompactLayout();
+ const readingElement=useRef<HTMLElement>(null);
+ const mapElement=useRef<HTMLDivElement>(null);
  const [selected,setSelected]=useState(()=>linkedStation()??0);
  const [local,setLocal]=useState(false);
  const [step,setStep]=useState(0);
@@ -111,12 +117,27 @@ function Route(){
   return ()=>window.removeEventListener('hashchange',syncStation);
  },[]);
  useEffect(()=>{
-  if(local)localHeading.current?.focus();
-  else if(returning.current){localEntry.current?.focus();returning.current=false;}
- },[local]);
+  if(local){
+   if(compact)revealCompactContent(localHeading.current,localHeading.current);
+   else localHeading.current?.focus();
+  }else if(returning.current){
+   if(compact){localEntry.current?.focus({preventScroll:true});revealCompactContent(mapElement.current);}
+   else localEntry.current?.focus();
+   returning.current=false;
+  }
+ },[local,compact]);
  function resetMap(){setScale(1);setOffset({x:0,y:0});}
  function returnToOverview(){returning.current=true;setLocal(false);resetMap();}
- function selectStation(index:number){setSelected(index);resetMap();}
+ function showReading(){revealCompactContent(readingElement.current,readingElement.current?.querySelector('h3'));}
+ function showMap(){revealCompactContent(mapElement.current);}
+ function selectStation(index:number,fromMap=false){
+  setSelected(index);
+  if(!fromMap||compact)resetMap();
+  if(compact){
+   history.replaceState(history.state,'','#route-'+(index+1));
+   showReading();
+  }
+ }
 
  const [scale,setScale]=useState(1);
  const [offset,setOffset]=useState({x:0,y:0});
@@ -153,9 +174,9 @@ function Route(){
     }}><span>{item.name}</span><small>{item.shortDate}</small></button>)}</div>
     <CrossingDiagram step={step}/>
    </div>
-   <div className="crossing-copy" aria-live="polite"><p className="crossing-direction">{crossing.direction}</p><p>{crossing.note}</p></div>
+   <div className="crossing-copy" aria-live="polite"><p className="crossing-direction">{crossing.direction}</p><p>{crossing.note}</p>{compact&&<button type="button" className="mobile-crossing-read" onClick={showReading}>阅读{crossing.name}详情 ↓</button>}</div>
    <div className="crossing-overview"><h4 className="type-detail">{crossingOverview.title}</h4><p>{crossingOverview.significance}</p></div>
-  </div>:<div className="atlas-map">
+  </div>:<div className="atlas-map" ref={mapElement}>
     <div className="map-stamp"><Compass size={23}/> <span>中央红军长征路线<br/><small>1934—1935 · 另标 1936 年会师地</small></span></div>
     <svg className={'atlas-svg '+(scale>1?'is-zoomed':'')} viewBox="0 0 790 540" aria-label="中央红军长征关键地点经纬度示意图"
      onPointerDown={e=>{if(scale===1||(e.target as Element).closest('[role=button]'))return;drag.current={x:e.clientX,y:e.clientY,ox:offset.x,oy:offset.y};e.currentTarget.setPointerCapture(e.pointerId);}}
@@ -178,8 +199,8 @@ function Route(){
        return <g className={`marker ${active?'selected':''} ${endpoint?'endpoint':''} ${isMeeting?'meeting-pin':''}`}
         key={name} transform={`translate(${x} ${y})`} role="button" tabIndex={0}
         aria-label={name+' · '+routeStories[index].title} aria-pressed={active}
-        onClick={()=>setSelected(index)} onKeyDown={event=>{
-         if(event.key==='Enter'||event.key===' '){event.preventDefault();setSelected(index);}
+        onClick={()=>selectStation(index,true)} onKeyDown={event=>{
+         if(event.key==='Enter'||event.key===' '){event.preventDefault();selectStation(index,true);}
         }}>
         <circle r="18" fill="transparent"/>
         <line className="pin-leader" x2={dx*.9} y2={dy*.86}/>
@@ -193,6 +214,7 @@ function Route(){
      </g>
     </svg>
     <div className="map-controls">
+     {compact&&<span className="mobile-map-help">{scale>1?'放大后可拖动 · 复位查看全线':'点击地点或选择站点阅读'}</span>}
      <button onClick={()=>zoom(scale+.4)} disabled={scale>=2.6} aria-label="放大地图"><Plus size={18}/></button>
      <button onClick={()=>zoom(scale-.4)} disabled={scale<=1} aria-label="缩小地图"><Minus size={18}/></button>
      <button onClick={resetMap} aria-label="返回全线"><RotateCcw size={15}/></button>
@@ -204,6 +226,7 @@ function Route(){
      <span className="crossing-entry-copy"><strong>进入四渡赤水图解</strong><span>从土城到茅台，逐次查看渡口与行军方向</span></span>
      <ArrowUpRight size={27} aria-hidden="true"/>
     </button>}
+    {compact&&<div className="mobile-station-picker"><label htmlFor="mobile-route-stop">选择站点</label><select id="mobile-route-stop" value={selected} onChange={event=>selectStation(Number(event.currentTarget.value))}>{routeStories.map((station,index)=><option key={station.title} value={index}>{String(index+1).padStart(2,'0')} · {station.title}</option>)}</select></div>}
     <div className="station-nav" aria-label="前后站点">
      <button disabled={selected===0} onClick={()=>selectStation(selected-1)}>← 上一站</button>
      <button disabled={selected===routeStories.length-1} onClick={()=>selectStation(selected+1)}>下一站 →</button>
@@ -222,7 +245,8 @@ function Route(){
     </section>
    </>}
    </div>
-   <article className={'atlas-text'+(local?' is-crossing-story':'')} aria-live="polite">
+   <article className={'atlas-text'+(local?' is-crossing-story':'')} aria-live="polite" ref={readingElement}>
+    {compact&&<div className="mobile-reading-tools"><span>{local?crossing.name:String(selected+1).padStart(2,'0')+' / 10'}</span><button type="button" onClick={()=>local?revealCompactContent(localHeading.current,localHeading.current):showMap()}>{local?'返回渡河图 ↑':'返回地图 ↑'}</button></div>}
     <p className="atlas-date">{stop.date} / {stop.place}</p>
     <h3 className="type-event" tabIndex={-1}>{stop.title}</h3>
     <figure key={selected} className="station-figure"><div className={`station-image battle-${battleArt[selected]}`}>
@@ -237,6 +261,7 @@ function Route(){
      <h4 className="type-detail">{reading.heading}</h4>
      <div className="station-reading-prose">{reading.paragraphs.map(paragraph=><p key={paragraph}>{paragraph}</p>)}</div>
     </div>}
+    {compact&&!local&&<div className="mobile-story-actions" aria-label="继续阅读路线"><button type="button" disabled={selected===0} onClick={()=>selectStation(selected-1)}>← 上一站</button><button type="button" disabled={selected===routeStories.length-1} onClick={()=>selectStation(selected+1)}>下一站 →</button></div>}
    </article>
   </div>
   </div>
@@ -248,6 +273,13 @@ function App(){
  const pendingPhoto=useRef<SharedPhoto|null>(null);
  const navigationIntent=useRef(0);
  const [active,setActive]=useState(currentPage);
+ const compact=useCompactLayout();
+ useEffect(()=>{
+  if(!compact)return;
+  const bar=document.getElementById('site-nav');
+  const tab=bar?.querySelector<HTMLElement>('[aria-current]');
+  if(bar&&tab)bar.scrollTo({left:tab.offsetLeft-(bar.clientWidth-tab.offsetWidth)/2,behavior:'instant'});
+ },[active,compact]);
  const [scrolled,setScrolled]=useState(false);
  const music=useRef<HTMLAudioElement>(null);
  const musicWanted=useRef(true);
@@ -327,6 +359,12 @@ function App(){
   const hash=link.getAttribute('href')??'';
   const intent=++navigationIntent.current;
   const fromHash=window.location.hash;
+  if(compact&&hash==='#'+active){
+   event.preventDefault();
+   history.replaceState(null,'',hash);
+   window.scrollTo({top:0,behavior:reduce?'instant':'smooth'});
+   return;
+  }
   if(hash===window.location.hash){
    if(hash==='#home'){
     event.preventDefault();
@@ -352,7 +390,7 @@ function App(){
  }
  return <div className="site">
   <a className="skip" href={'#'+active}>跳到展览正文</a>
-  <motion.div className="progress pointer-events-none" aria-hidden="true" style={{scaleX:reduce?scrollYProgress:spring}}/>
+  <motion.div className="progress" aria-hidden="true" style={{scaleX:reduce?scrollYProgress:spring}}/>
   <header className={'masthead '+(active!=='home'||scrolled?'solid':'')}><a href="#home" className="brand" onClick={navigateChapter}><img className="brand-emblem" src={import.meta.env.BASE_URL+'march-emblem.svg'} width="44" height="44" alt="" aria-hidden="true"/><span className="brand-title">长征 · 不朽征途</span></a>
    <nav id="site-nav" aria-label="展览导航">{nav.map(([id,label])=><a key={id} className="chapter-tab" href={'#'+id} onClick={navigateChapter} aria-current={active===id?'location':undefined}>{label}</a>)}</nav>
    <button className="music-toggle" type="button" onClick={toggleMusic}
@@ -376,6 +414,7 @@ function App(){
      <div className="hero-caption hero-intro">
       <p className="hero-introduction">1934年10月，第五次反“围剿”失利后，中央红军从江西于都出发，实行战略转移。本展以其1934—1935年的行军为主线，并接续介绍其他红军队伍的长征与1936年会师。</p>
      </div>
+     {compact&&<a className="mobile-cover-link" href="#home-route" onClick={navigateChapter}>沿着足迹，开始观展 <span aria-hidden="true">↓</span></a>}
     </div>
     <div className="hero-dates hero-intro"><span>1934</span><i/><span>1936</span></div>
    </section>
@@ -400,6 +439,7 @@ function App(){
    </section>
    <section hidden={active!=='events'} id="events" className="events" aria-label="重要历史">
     <header className="history-heading wrap"><div className="eyebrow">重要历史 · 1934—1936</div><Heading>征途中的十个时刻</Heading></header>
+    {compact&&<MobileHistoryIndex/>}
     <div className="history-gallery">
      {routeStories.map((stop,index)=>{
       const exhibit=exhibits[index];

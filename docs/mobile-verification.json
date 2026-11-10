@@ -1,0 +1,262 @@
+{
+  "date": "2026-11-10",
+  "browser": "Microsoft Edge 157.0.4341.42",
+  "mode": "Chromium browser touch emulation",
+  "breakpoint": "max-width:720px",
+  "mobileScreens": [
+    {
+      "width": 320,
+      "height": 740,
+      "chapters": 6,
+      "pageHorizontalOverflow": false,
+      "openingTextBeforePhoto": true,
+      "openingTextInFirstScreen": true,
+      "eventJump": {
+        "hash": "#events-10",
+        "index": "9",
+        "targetTop": 189.625,
+        "railBottom": 175
+      },
+      "selectedStation": {
+        "hash": "#route-7",
+        "title": "翻越夹金山",
+        "titleTop": 233.921875,
+        "navBottom": 108,
+        "contextAfterStory": true
+      },
+      "touchDrag": true,
+      "crossingSteps": 4,
+      "routeStations": 10,
+      "people": 6,
+      "spiritPicturesLoaded": true,
+      "hiddenDesktopPictureSources": 0,
+      "errors": [],
+      "failed": []
+    },
+    {
+      "width": 360,
+      "height": 800,
+      "chapters": 6,
+      "pageHorizontalOverflow": false,
+      "openingTextBeforePhoto": true,
+      "openingTextInFirstScreen": true,
+      "eventJump": {
+        "hash": "#events-10",
+        "index": "9",
+        "targetTop": 189.765625,
+        "railBottom": 175
+      },
+      "selectedStation": {
+        "hash": "#route-7",
+        "title": "翻越夹金山",
+        "titleTop": 234.359375,
+        "navBottom": 108,
+        "contextAfterStory": true
+      },
+      "touchDrag": true,
+      "crossingSteps": 4,
+      "routeStations": 10,
+      "people": 6,
+      "spiritPicturesLoaded": true,
+      "hiddenDesktopPictureSources": 0,
+      "errors": [],
+      "failed": []
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "chapters": 6,
+      "pageHorizontalOverflow": false,
+      "openingTextBeforePhoto": true,
+      "openingTextInFirstScreen": true,
+      "eventJump": {
+        "hash": "#events-10",
+        "index": "9",
+        "targetTop": 190.4375,
+        "railBottom": 175
+      },
+      "selectedStation": {
+        "hash": "#route-7",
+        "title": "翻越夹金山",
+        "titleTop": 233.875,
+        "navBottom": 108,
+        "contextAfterStory": true
+      },
+      "touchDrag": true,
+      "crossingSteps": 4,
+      "routeStations": 10,
+      "people": 6,
+      "spiritPicturesLoaded": true,
+      "hiddenDesktopPictureSources": 0,
+      "errors": [],
+      "failed": []
+    },
+    {
+      "width": 430,
+      "height": 932,
+      "chapters": 6,
+      "pageHorizontalOverflow": false,
+      "openingTextBeforePhoto": true,
+      "openingTextInFirstScreen": true,
+      "eventJump": {
+        "hash": "#events-10",
+        "index": "9",
+        "targetTop": 190.046875,
+        "railBottom": 175
+      },
+      "selectedStation": {
+        "hash": "#route-7",
+        "title": "翻越夹金山",
+        "titleTop": 234.21875,
+        "navBottom": 108,
+        "contextAfterStory": true
+      },
+      "touchDrag": true,
+      "crossingSteps": 4,
+      "routeStations": 10,
+      "people": 6,
+      "spiritPicturesLoaded": true,
+      "hiddenDesktopPictureSources": 0,
+      "errors": [],
+      "failed": []
+    },
+    {
+      "width": 600,
+      "height": 900,
+      "chapters": 6,
+      "pageHorizontalOverflow": false,
+      "openingTextBeforePhoto": true,
+      "openingTextInFirstScreen": true,
+      "eventJump": {
+        "hash": "#events-10",
+        "index": "9",
+        "targetTop": 189.96875,
+        "railBottom": 175
+      },
+      "selectedStation": {
+        "hash": "#route-7",
+        "title": "翻越夹金山",
+        "titleTop": 234.421875,
+        "navBottom": 108,
+        "contextAfterStory": true
+      },
+      "touchDrag": true,
+      "crossingSteps": 4,
+      "routeStations": 10,
+      "people": 6,
+      "spiritPicturesLoaded": true,
+      "hiddenDesktopPictureSources": 0,
+      "errors": [],
+      "failed": []
+    },
+    {
+      "width": 720,
+      "height": 1000,
+      "chapters": 6,
+      "pageHorizontalOverflow": false,
+      "openingTextBeforePhoto": true,
+      "openingTextInFirstScreen": true,
+      "eventJump": {
+        "hash": "#events-10",
+        "index": "9",
+        "targetTop": 190.46875,
+        "railBottom": 175
+      },
+      "selectedStation": {
+        "hash": "#route-7",
+        "title": "翻越夹金山",
+        "titleTop": 233.546875,
+        "navBottom": 108,
+        "contextAfterStory": true
+      },
+      "touchDrag": true,
+      "crossingSteps": 4,
+      "routeStations": 10,
+      "people": 6,
+      "spiritPicturesLoaded": true,
+      "hiddenDesktopPictureSources": 0,
+      "errors": [],
+      "failed": []
+    }
+  ],
+  "desktopComparison": [
+    {
+      "width": 1440,
+      "height": 900,
+      "chapters": 6,
+      "changedRecordedElements": 0,
+      "layoutAndComputedStylesUnchanged": true,
+      "errors": [],
+      "failed": []
+    },
+    {
+      "width": 1920,
+      "height": 1080,
+      "chapters": 6,
+      "changedRecordedElements": 0,
+      "layoutAndComputedStylesUnchanged": true,
+      "errors": [],
+      "failed": []
+    }
+  ],
+  "normalMotion": {
+    "browser": "157.0.4341.42",
+    "normalMotion": true,
+    "touchEmulation": true,
+    "errors": [],
+    "failed": [],
+    "homeMap": {
+      "hash": "#home-route",
+      "scroll": 769,
+      "pan": 220,
+      "pointVisible": true
+    },
+    "activeChapterTop": 1,
+    "shared": {
+      "hash": "#route-4",
+      "overlays": 0,
+      "title": "四渡赤水",
+      "top": 233.875
+    },
+    "reload": {
+      "hash": "#route-7",
+      "title": "翻越夹金山",
+      "top": 233.875
+    },
+    "musicPausePreserved": true,
+    "desktopRestored": {
+      "mobileControls": 0,
+      "desktopImages": 6,
+      "mobileImages": 0
+    },
+    "mobileRestored": 0,
+    "landscape": [
+      {
+        "chapter": "home",
+        "overflow": false
+      },
+      {
+        "chapter": "origin",
+        "overflow": false
+      },
+      {
+        "chapter": "events",
+        "overflow": false
+      },
+      {
+        "chapter": "route",
+        "overflow": false
+      },
+      {
+        "chapter": "spirit",
+        "overflow": false
+      },
+      {
+        "chapter": "people",
+        "overflow": false
+      }
+    ]
+  },
+  "build": "TypeScript noEmit and Vite production build passed",
+  "newThirdPartyDependencies": []
+}

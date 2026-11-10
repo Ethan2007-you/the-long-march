@@ -1,5 +1,3 @@
-@import "tailwindcss" source(none);
-@source "./main.tsx";
 :root{color-scheme:dark;--ink:#090a0c;--rock:#191a1c;--ivory:#eae5dc;--muted:#bab2a4;--gold:#c5a36a;--red:#a52a27;--line:#eae5dc27;--serif:"Noto Serif SC","Songti SC","STSong","SimSun",serif;--sans:"Microsoft YaHei","PingFang SC",sans-serif;--latin:Georgia,serif;--mono:Consolas,monospace}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--ink);color:var(--ivory);font:16px/1.8 var(--sans)}button,a{touch-action:manipulation}a{color:inherit;text-decoration:none}button{color:inherit;cursor:pointer}button:disabled{opacity:.42;cursor:default}button:focus-visible,a:focus-visible,summary:focus-visible,[role=button]:focus-visible{outline:2px solid #e5d7c2;outline-offset:4px}::selection{background:var(--red);color:white}img{display:block;width:100%}section[id],footer[id]{scroll-margin-top:75px}.wrap{width:min(1320px,calc(100% - 12vw));margin-inline:auto}.section{padding:clamp(88px,11vw,170px) 0}.eyebrow{font:600 11px/1.6 var(--mono);letter-spacing:.19em;color:var(--gold);display:flex;align-items:center;gap:13px;text-transform:uppercase}.eyebrow i,.nav-index i,.hero-side i{width:28px;height:1px;display:inline-block;background:currentColor;opacity:.5}.section-title h2{font:600 clamp(44px,7vw,111px)/1.25 var(--serif);letter-spacing:.025em;margin:17px 0 28px}.intro{color:var(--muted);max-width:48rem;margin:0 0 40px;line-height:1.9}.intro .reference{margin-left:12px}.skip{position:fixed;z-index:30;top:12px;left:12px;padding:8px 18px;background:var(--ivory);color:var(--ink);transform:translateY(-160%)}.skip:focus{transform:none}.progress{position:fixed;inset:0 0 auto;height:2px;z-index:21;transform-origin:left;background:var(--gold);pointer-events:none}
 .nav-index{display:flex;gap:9px;align-items:center;color:var(--gold);font:11px var(--mono);letter-spacing:.12em}.nav-index i{width:12px}.menu-button{display:none}
@@ -1173,3 +1171,7 @@ html.chapter-transition::view-transition-new(march-route-heading){animation:rout
 
 /* Programmatic chapter focus must not draw a frame around headings or scenes. */
 .site :is(h1,h2,h3,h4)[tabindex="-1"]:focus{outline:none}
+
+/* Keep the main figures visible in the higher-resolution replacement images. */
+.history-gallery .battle-chishui img,.station-image.battle-chishui img{object-position:center 15%}
+.history-gallery .battle-wuqi img,.station-image.battle-wuqi img{object-position:center 15%}

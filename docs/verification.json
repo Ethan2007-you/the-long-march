@@ -1,32 +1,60 @@
 {
-  "browser": "Microsoft Edge",
-  "productionEntry": "dist/index.html",
-  "build": "TypeScript and Vite production build passed",
+  "date": "2026-11-10",
+  "browser": "Microsoft Edge 157.0.4341.42",
+  "build": "TypeScript noEmit and Vite production build passed",
+  "entry": "dist/index.html",
+  "targetBrowser": "Chrome 129",
+  "targetBrowserDirectlyTested": false,
+  "backend": false,
+  "thirdPartyStyleLibraries": [],
+  "styleMigration": {
+    "baseline": "Original local build before removing the style framework",
+    "check": "Computed style and element rectangle comparisons across six chapters at four viewports",
+    "changedRecordedElements": 0
+  },
   "results": [
     {
       "width": 1440,
       "height": 900,
       "offline": true,
-      "reducedMotion": true,
       "chapters": 6,
-      "eventReadings": 10,
       "routeStations": 10,
+      "people": 6,
       "crossingSteps": 4,
-      "spiritScenes": 6,
-      "portraits": 6,
-      "keyboard": true,
-      "mapZoomReset": true,
-      "unframedArtLoaded": true,
-      "deletedSectionsAbsent": true,
-      "sourceLabelsAbsent": true,
+      "keyboardCrossing": true,
+      "mapZoom": true,
+      "mapReset": true,
       "overflow": false,
-      "pose": {
-        "titleRight": 715.015625,
-        "titleTop": 258.703125,
-        "figuresLeft": 763.1875,
-        "figuresBottom": 900
-      },
-      "musicDuration": 358.088912,
+      "errors": [],
+      "failed": []
+    },
+    {
+      "width": 1920,
+      "height": 1080,
+      "offline": true,
+      "chapters": 6,
+      "routeStations": 10,
+      "people": 6,
+      "crossingSteps": 4,
+      "keyboardCrossing": true,
+      "mapZoom": true,
+      "mapReset": true,
+      "overflow": false,
+      "errors": [],
+      "failed": []
+    },
+    {
+      "width": 720,
+      "height": 1000,
+      "offline": true,
+      "chapters": 6,
+      "routeStations": 10,
+      "people": 6,
+      "crossingSteps": 4,
+      "keyboardCrossing": true,
+      "mapZoom": true,
+      "mapReset": true,
+      "overflow": false,
       "errors": [],
       "failed": []
     },
@@ -34,112 +62,110 @@
       "width": 390,
       "height": 844,
       "offline": true,
-      "reducedMotion": true,
       "chapters": 6,
-      "eventReadings": 10,
       "routeStations": 10,
+      "people": 6,
       "crossingSteps": 4,
-      "spiritScenes": 6,
-      "portraits": 6,
-      "keyboard": true,
-      "mapZoomReset": true,
-      "unframedArtLoaded": true,
-      "deletedSectionsAbsent": true,
-      "sourceLabelsAbsent": true,
+      "keyboardCrossing": true,
+      "mapZoom": true,
+      "mapReset": true,
       "overflow": false,
-      "pose": {
-        "titleRight": 354,
-        "titleTop": 452.328125,
-        "figuresLeft": 0,
-        "figuresBottom": 344
-      },
-      "musicDuration": null,
       "errors": [],
       "failed": []
-    },
-    {
-      "normalMotion": true,
-      "pointerShift": {
-        "x": 3.944,
-        "y": 2.361
-      },
-      "sharedImageTransition": true
     }
   ],
-  "homeEntranceAndAutoplay": [
-    {
-      "width": 1440,
-      "height": 900,
-      "offline": true,
-      "numbering": [
-        "01",
-        "02",
-        "03",
-        "04",
-        "05"
-      ],
-      "destinations": 5,
-      "equalPanels": true,
-      "desktopOneRow": true,
-      "autoplayAllowedStartsWithoutGesture": true,
-      "manualPausePreservedAcrossNavigation": true,
-      "manualResume": true,
-      "audioRequests": 18,
-      "overflow": false,
-      "errors": [],
-      "failed": []
+  "finalImages": {
+    "date": "2026-11-10",
+    "normalMotion": true,
+    "loaded": [
+      {
+        "file": "art-chishui.webp",
+        "loaded": true,
+        "width": 1800,
+        "height": 1248,
+        "displayWidth": 726
+      },
+      {
+        "file": "spirit-film-discipline-unframed.webp",
+        "loaded": true,
+        "width": 1022,
+        "height": 739,
+        "displayWidth": 726
+      },
+      {
+        "file": "memorial-wuqi.webp",
+        "loaded": true,
+        "width": 1024,
+        "height": 681,
+        "displayWidth": 726
+      },
+      {
+        "file": "collection-reunion.webp",
+        "loaded": true,
+        "width": 960,
+        "height": 478,
+        "displayWidth": 726
+      }
+    ],
+    "sourcePixelsUpscaled": false,
+    "focalPointAdjusted": [
+      "art-chishui.webp",
+      "memorial-wuqi.webp"
+    ]
+  },
+  "normalMotion": {
+    "normalMotion": true,
+    "errors": [],
+    "failed": [],
+    "sharedTransition": {
+      "hash": "#route-4",
+      "title": "四渡赤水",
+      "remainingOverlays": 0
     },
-    {
-      "width": 390,
-      "height": 844,
-      "offline": true,
-      "numbering": [
-        "01",
-        "02",
-        "03",
-        "04",
-        "05"
-      ],
-      "destinations": 5,
-      "equalPanels": true,
-      "desktopOneRow": false,
-      "autoplayAllowedStartsWithoutGesture": true,
-      "manualPausePreservedAcrossNavigation": true,
-      "manualResume": true,
-      "audioRequests": 18,
-      "overflow": false,
-      "errors": [],
-      "failed": []
+    "playingBeforePause": true,
+    "pausePreserved": true,
+    "historyBack": "#route-4"
+  },
+  "finalBuild": "TypeScript noEmit and Vite production build passed",
+  "finalResourceSync": "Every public file matches its dist copy byte for byte",
+  "mobileResponsive": {
+    "completed": true,
+    "breakpoint": "max-width:720px",
+    "mode": "Chromium browser touch emulation",
+    "testedWidths": [
+      320,
+      360,
+      390,
+      430,
+      600,
+      720
+    ],
+    "landscape": {
+      "width": 844,
+      "height": 390,
+      "chapters": 6,
+      "overflow": false
     },
-    {
-      "width": 1440,
-      "height": 900,
-      "autoplayRejectionSimulated": true,
-      "blockedInitially": true,
-      "firstGesture": "click",
-      "gestureStartsMusic": true,
-      "pauseStaysPaused": true,
-      "errors": []
-    },
-    {
-      "width": 390,
-      "height": 844,
-      "autoplayRejectionSimulated": true,
-      "blockedInitially": true,
-      "firstGesture": "tap",
-      "gestureStartsMusic": true,
-      "pauseStaysPaused": true,
-      "errors": []
-    },
-    {
-      "width": 1440,
-      "height": 900,
-      "autoplayRejectionSimulated": true,
-      "blockedInitially": true,
-      "firstGesture": "keyboard",
-      "gestureStartsMusic": true,
-      "pauseStaysPaused": true,
-      "errors": []
-    }
-  ]
+    "desktopUnchanged": [
+      {
+        "width": 1440,
+        "height": 900,
+        "chapters": 6,
+        "changedRecordedElements": 0,
+        "layoutAndComputedStylesUnchanged": true,
+        "errors": [],
+        "failed": []
+      },
+      {
+        "width": 1920,
+        "height": 1080,
+        "chapters": 6,
+        "changedRecordedElements": 0,
+        "layoutAndComputedStylesUnchanged": true,
+        "errors": [],
+        "failed": []
+      }
+    ],
+    "details": "docs/mobile-verification.json"
+  }
 }

@@ -2,12 +2,14 @@ import React,{useEffect,useState} from 'react';
 import {AnimatePresence,motion} from 'framer-motion';
 import {peopleStories} from './people-stories';
 import {personScenes} from './exhibit-interactions';
+import {revealCompactContent,useCompactLayout} from './mobile-experience';
 
 type Props={hidden:boolean;reduced:boolean};
 const media=(name:string)=>import.meta.env.BASE_URL+'media/'+name+'.webp';
 
 export function People({hidden,reduced}:Props){
  const [selected,setSelected]=useState(0);
+ const compact=useCompactLayout();
  const person=peopleStories[selected],scene=personScenes[person.id];
  function choose(index:number){setSelected(index);}
  function moveTab(event:React.KeyboardEvent<HTMLButtonElement>,index:number){
@@ -46,6 +48,7 @@ export function People({hidden,reduced}:Props){
     <div><h3 className="type-detail" id="person-reading-title">{person.title}</h3><div className="people-narrative">{person.paragraphs.map(paragraph=><p key={paragraph}>{paragraph}</p>)}</div></div>
     <div className="people-character"><h4 className="type-detail">{person.quality}</h4><p>{person.meaning}</p></div>
    </article>
+   {compact&&<button type="button" className="mobile-people-return" onClick={()=>revealCompactContent(document.querySelector<HTMLElement>('.cast-selector'),document.querySelector<HTMLButtonElement>('.cast-selector [aria-selected="true"]'))}>返回人物选择 ↑</button>}
    <span className="sr-only" role="status" aria-live="polite">当前人物：{person.name}</span>
   </div>
  </section>;

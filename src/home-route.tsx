@@ -1,7 +1,8 @@
-import React, {useRef,useState} from 'react';
+import React, {useEffect,useRef,useState} from 'react';
 import {motion,useScroll,useTransform} from 'framer-motion';
 import {ArrowUpRight,Compass} from 'lucide-react';
 import rivers from './rivers.json';
+import {useCompactLayout} from './mobile-experience';
 import {warmStation} from './station-media';
 import {InkRoute,MapSurface} from './cartography';
 import {coordinates,mapLocations,routeStories,waypoints} from './route-geometry';
@@ -11,23 +12,33 @@ const media=(name:string)=>import.meta.env.BASE_URL+'media/'+name+'.webp';
 
 export function HomeRoute({navigate,reduced}:Props){
  const scene=useRef<HTMLElement>(null);
+ const compact=useCompactLayout();
+ const map=useRef<HTMLDivElement>(null);
  const [selected,setSelected]=useState(()=>{const station=history.state?.homeStation;return Number.isInteger(station)&&station>=0&&station<routeStories.length?station:0;});
  const {scrollYProgress}=useScroll({target:scene,offset:['start end','end end']});
  const scale=useTransform(scrollYProgress,[0,.52,1],[.88,1,1]);
  const titleY=useTransform(scrollYProgress,[0,.5],[50,0]);
  const drawing=useTransform(scrollYProgress,[.12,.8],[0,1]);
+ useEffect(()=>{
+  if(!compact||!map.current)return;
+  const frame=map.current;
+  const selectedPoint=frame.querySelector<SVGAElement>('.home-map-stop.is-selected');
+  if(!selectedPoint)return;
+  const point=selectedPoint.getBoundingClientRect(),bounds=frame.getBoundingClientRect();
+  frame.scrollTo({left:frame.scrollLeft+point.left-bounds.left-(frame.clientWidth-point.width)/2,behavior:'instant'});
+ },[compact,selected]);
  const selectedStop=routeStories[selected];
  const select=(index:number)=>{setSelected(index);void warmStation(index);};
  return <>
   <section id="home-route" ref={scene} className="home-route" aria-labelledby="home-route-title">
    <div className="home-route-stage wrap">
-    <motion.header className="home-route-heading" style={reduced?undefined:{y:titleY}}>
+    <motion.header className="home-route-heading" style={reduced||compact?undefined:{y:titleY}}>
      <p className="eyebrow">沿着红色的足迹 / 1934—1936</p>
      <h2 className="type-chapter" id="home-route-title">万水千山，<br className="mobile-break"/>一程一故事。</h2>
      <p>这条主线连接中央红军1934—1935年的行军节点，终点是吴起镇。<br/>另标会宁、将台堡，交代1936年三大主力相继会师。点击地点，了解事件中的决策与影响。</p>
     </motion.header>
-    <motion.div className="home-atlas" style={reduced?undefined:{scale}}>
-     <div className="home-map-frame">
+    <motion.div className="home-atlas" style={reduced||compact?undefined:{scale}}>
+     <div className="home-map-frame" ref={map}>
       <div className="home-map-heading"><Compass size={23}/><span>中央红军长征路线<small>九个行军节点 · 另标 1936 年会师地</small></span></div>
       <svg className="home-route-svg" viewBox="120 65 670 455" role="group" aria-label="长征路线示意图，点击地点查看重要历史">
        <desc>原有地理节点之间的概化连线，以朱砂笔迹呈现，不是精确实测行军轨迹。</desc>
@@ -37,7 +48,7 @@ export function HomeRoute({navigate,reduced}:Props){
        {([[98.6,32.3,'横断山脉'],[104.5,31.3,'四川'],[108.5,28.7,'贵州'],[101,25.6,'云南'],[113.7,27.7,'江西'],[110.1,34,'秦岭'],[103.4,37.7,'甘肃'],[110.4,37.8,'陕西']] as const).map(([lon,lat,name])=>{
         const [x,y]=coordinates([lon,lat]);return <text key={name} className="home-map-region" x={x} y={y}>{name}</text>;
        })}
-       <InkRoute id="home-ink" progress={reduced?undefined:drawing}/>
+       <InkRoute id="home-ink" progress={reduced||compact?undefined:drawing}/>
        {waypoints.map(({name,coords})=>{const [x,y]=coordinates(coords);return <circle key={name} cx={x} cy={y} r="2" className="home-waypoint"><title>{name} · 途经地点</title></circle>;})}
        {mapLocations.map(({name,coords,label:[dx,dy],index})=>{
         const [x,y]=coordinates(coords);

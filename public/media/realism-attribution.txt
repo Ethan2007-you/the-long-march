@@ -48,9 +48,7 @@ second, documented present-day photographs third. No AI depiction remains in the
 active exhibition. Maps are geographic data renderings, not generated landscapes.
 New files below are resized/re-encoded as WebP without retouching or invented detail.
 The gallery displays the complete images. The cover and chapter panels crop at display time.
-Copyright in the new artworks and publication photographs remains with the respective
-rights holders. No blanket open license is asserted; the source pages are provenance,
-not licenses. Existing Commons assets above retain their original license conditions.
+Existing Commons assets retain their original attribution and license records.
 
 File: evidence-yudu.webp
 Title: 星夜渡过雩都河
@@ -97,18 +95,18 @@ The source publication's frames are retained in the gallery.
 File: art-chishui.webp
 Title: 四渡赤水 (1976).
 Artists: 申根源、梅肖青、孙向阳、王天任.
-Source: 北京组工, 庆祝中国共产党成立100周年.
-https://zt.bjdj.gov.cn/rdztarticle/29714.html
-Image: https://ks3-cn-beijing.ksyun.com/zgw/article/29714/content/20210519161525_171.jpg
+Source: 新华社, 美术里的长征, 搜狐刊载.
+https://www.sohu.com/a/1038774464_267106
+Image: https://q3.itc.cn/images03/20260619/7716f57d31d74e4199ad6c7418f81fb7.jpeg
+Source size: 3600 x 2496; local WebP: 1800 x 1248.
 
 File: memorial-wuqi.webp
-Subject: victory-reunion memorial sculpture, Central Red Army Long March Victory
-Memorial Museum, Shengli Mountain, Wuqi. This is a modern memorial photograph.
-Source: 中国纪检监察报 / 延安纪检监察网, 胜利山上再出发.
-https://yanan.qinfeng.gov.cn/info/1178/27011.htm
-Image: https://yanan.qinfeng.gov.cn/__local/F/66/A8/7997F6A570DFA716350C464010D_219FABF1_397E0.png
-The publication provides no named photographer or sculptor in its caption;
-they are not invented here.
+Subject: Long March-themed sculpture inside the Central Red Army Long March Victory Memorial Museum, Wuqi.
+Modern museum photograph; original Flying wolf credit retained.
+Source: 征师胜利到吴起, 新浪, 2019.
+https://k.sina.com.cn/article_1644674721_6207bea100100ldvm.html
+Image: https://n.sinaimg.cn/sinacn10116/105/w1024h681/20191109/6e79-iieqapt0406776.jpg
+Local WebP: 1024 x 681.
 
 File: evidence-reunion.webp
 Subject: cadres of the First, Second and Fourth Front Armies, 1936, Gonghe town,
@@ -125,7 +123,6 @@ Depicts the Red Army departure and crossing of the Yudu River.
 Article: https://www.sohu.com/a/1084709142_100282992
 Original digital image: https://q3.itc.cn/images01/20261007/02686500af544314ab318c05dfc751eb.jpeg
 Original image dimensions 1080 x 646. Encoded as WebP; displayed with layout cropping.
-Copyright remains with the original rightsholder. Publication is not an open license.
 This provenance record is distributed as a file, not shown in exhibition UI.
 
 art-xiang-clean.webp
@@ -134,12 +131,11 @@ Clean, fuller digital reproduction replaces the SZU-branded web derivative throu
 Publication: https://finance.sina.com.cn/wm/2026-10-18/doc-inivrrfn1041286.shtml
 Image: https://n.sinaimg.cn/spider20261018/786/w1080h506/20261018/5f23-d49c26fa5a1dbc501df3c7def983eb8e.jpg
 Digital source dimensions 1080 x 506. Encoded as WebP. No generative retouching of the painting.
-Copyright remains with the original rightsholder; publication is not an open license.
 
-User-selected supplemental images (collection-*.webp)
-See collection-manifest.json for the exact provided files, image sizes, and SHA-256 checksums.
-Two paintings replace the Luding and reunion lead illustrations; three further paintings accompany the four new spirit readings.
-The original reunion photograph remains in the spirit reading with its original archival identification.
-The reunion painting is identified against https://www.caa.edu.cn/info/1333/3428.htm
-Other unverified authorships are not asserted. The grassland painting is illustrative, not an image of Zhou Guangcai's specific experience.
-Source folders remain unchanged. Copyright remains with original rightsholders.
+
+Current supplemental images
+See collection-manifest.json and docs/image-updates.json for exact image dimensions and SHA-256 checksums.
+collection-reunion.webp: 蔡亮、张自薿, 红军三大主力会师 (1977), same painting in a 960 x 478 reproduction.
+https://www.sznews.com/news/content/2021-10/22/content_24666922.htm
+spirit-film-discipline-unframed.webp: 刘国枢, 飞夺泸定桥 (1959), existing 1022 x 739 local artwork reused across related chapters.
+https://news.cri.cn/uc-eco/20210622/7cd41be9-317c-1743-ad7d-3093a30f3147.html

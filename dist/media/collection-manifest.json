@@ -1,27 +1,32 @@
 {
-  "providedImages": 24,
   "selectedImages": [
     {
       "file": "collection-reunion.webp",
-      "providedFile": "三军会师/348dad17d8a8ff49f38afc476d346f16_720.png",
-      "originalSize": [
-        433,
-        234
+      "title": "《三大主力会师》",
+      "author": "蔡亮、张自薿",
+      "year": "1977",
+      "outputSize": [
+        960,
+        478
       ],
-      "originalSHA256": "c8a19e25a04c00b9fbd5cfb3f0de78c1a91e701d7fa6e7f78b5fff0fc73ba3dc",
-      "treatment": "Encoded as WebP without generative alteration. Cropped only by the shared 16:9 layout."
+      "sourcePage": "https://www.sznews.com/news/content/2021-10/22/content_24666922.htm",
+      "sourceImage": "https://www.sznews.com/news/pic/2021-10/22/c6857fed-2b1a-45ce-9504-e3c6f1d8280d.jpg",
+      "outputSHA256": "8588196fa4660f4b5b57144af075cc9edbbd61ffe61acfa065eb8e8ceda6816d",
+      "treatment": "Converted to WebP; downsampled only when larger than the display target. No upscaling, generative alteration, watermark removal or retouching."
     },
     {
-      "file": "collection-luding.webp",
-      "providedFile": "飞夺泸定桥/6376f2a8920a887eebc0f565e065b821_720.png",
-      "originalSize": [
-        455,
-        309
+      "file": "spirit-film-discipline-unframed.webp",
+      "title": "《飞夺泸定桥》",
+      "author": "刘国枢",
+      "year": "1959",
+      "outputSize": [
+        1022,
+        739
       ],
-      "originalSHA256": "636c52718c52914599de4f10239c3788be626f5cf0238becd741c880da78b74c",
-      "treatment": "Encoded as WebP without generative alteration. Cropped only by the shared 16:9 layout."
+      "sourcePage": "https://news.cri.cn/uc-eco/20210622/7cd41be9-317c-1743-ad7d-3093a30f3147.html",
+      "outputSHA256": "3d4347e27aeb400837ad932a10fc7f9e166c1ec71770cbd867c4f1a5f925e4be",
+      "treatment": "Reused the existing local higher-resolution artwork; no resampling or new duplicate asset."
     }
   ],
-  "rights": "User-provided online images; copyright remains with original rightsholders. No open-license claim.",
   "selectedCount": 2
 }

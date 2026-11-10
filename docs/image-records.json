@@ -39,8 +39,8 @@
     "created": "1976年",
     "eventTime": "1935年1—3月",
     "event": "四渡赤水题材的指挥与行军场景",
-    "sourceLabel": "北京组工 · 作品刊载",
-    "sourceUrl": "https://zt.bjdj.gov.cn/rdztarticle/29714.html",
+    "sourceLabel": "新华社 · 美术里的长征（搜狐刊载高清图）",
+    "sourceUrl": "https://www.sohu.com/a/1038774464_267106",
     "note": "概括战役的主题画，不是某一次渡河的现场影像。"
   },
   "art-jinsha-unframed": {
@@ -53,16 +53,6 @@
     "sourceLabel": "共产党员网 · 图步长征路",
     "sourceUrl": "https://www.12371.cn/2021/10/21/ARTI1634810104798403.shtml",
     "note": "后世艺术创作。"
-  },
-  "collection-luding": {
-    "title": "泸定桥夺桥主题画（原图未题名）",
-    "kind": "主题绘画",
-    "author": "尚未核实",
-    "created": "尚未核实",
-    "eventTime": "1935年5月29日",
-    "event": "红军突击队夺取泸定桥的战斗",
-    "sourceLabel": "项目本地素材库（原始出版信息未详）",
-    "note": "后世主题绘画，原始出版信息尚待考，不作为战场现场影像。"
   },
   "art-snow-unframed": {
     "title": "《红军过雪山》",
@@ -87,15 +77,15 @@
     "note": "艺术化场景，并非某日草地行军的现场记录。"
   },
   "memorial-wuqi": {
-    "title": "吴起胜利山纪念馆会师雕塑",
+    "title": "吴起中央红军长征胜利纪念馆内长征主题雕塑",
     "kind": "纪念地实景照片",
-    "author": "摄影者、雕塑作者原刊未署名",
-    "created": "拍摄日期未注明",
+    "author": "Flying wolf（原图署名）",
+    "created": "2019年刊载",
     "eventTime": "纪念1935年中央红军到达陕北",
     "event": "吴起胜利山纪念设施",
-    "sourceLabel": "延安纪检监察网 · 胜利山上再出发",
-    "sourceUrl": "https://yanan.qinfeng.gov.cn/info/1178/27011.htm",
-    "note": "现代纪念设施，不是1935年会师现场。"
+    "sourceLabel": "新浪 · 征师胜利到吴起",
+    "sourceUrl": "https://k.sina.com.cn/article_1644674721_6207bea100100ldvm.html",
+    "note": "现代纪念馆实景照片，保留原图摄影署名，不是1935年现场影像。"
   },
   "collection-reunion": {
     "title": "《红军三大主力会师》",
@@ -104,8 +94,8 @@
     "created": "1977年",
     "eventTime": "1936年10月",
     "event": "三大主力会师的艺术化群像",
-    "sourceLabel": "中国美术学院 · 馆藏作品介绍",
-    "sourceUrl": "https://www.caa.edu.cn/info/1333/3428.htm",
+    "sourceLabel": "央视新闻 · 深圳新闻网刊载同画高清版",
+    "sourceUrl": "https://www.sznews.com/news/content/2021-10/22/content_24666922.htm",
     "note": "综合表现会师喜悦，不等同于会宁或将台堡某一刻的实景。"
   },
   "origin-yudu-ferry": {
@@ -180,10 +170,10 @@
     "author": "刘国枢",
     "created": "1959年",
     "eventTime": "1935年5月29日",
-    "event": "红军突击队沿铁索夺桥",
+    "event": "夺取泸定桥",
     "sourceLabel": "中央广播电视总台 · 美术经典中的党史",
     "sourceUrl": "https://news.cri.cn/uc-eco/20210622/7cd41be9-317c-1743-ad7d-3093a30f3147.html",
-    "note": "后世绘画，与重要历史中的另一幅泸定桥主题画分别说明。"
+    "note": "使用项目已有的高清彩色版本，同时服务历史、路线、精神和人物章节。"
   },
   "spirit-film-people": {
     "title": "《半条被子》",
